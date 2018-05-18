@@ -19,6 +19,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.0.0-rc.10",
         "prismjs": "^1.14.0",
         "vue-prism-component": "^1.0.1",
         "vue-router": "^3.0.1"
