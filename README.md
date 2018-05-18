@@ -1,2 +1,0 @@
-# LCMS for Programming
-
