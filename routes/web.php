@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/course', 'CourseController');
-Route::resource('/page', 'PageController');
+Route::resource('/courses', 'CourseController');
+Route::resource('/pages', 'PageController');
 /*, ['except' => [
     'show',
 ]]);*/

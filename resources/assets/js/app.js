@@ -9,15 +9,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-// Prism - syntax highlighting
-import 'prismjs';
-import 'prismjs/themes/prism.css';
-
 // Bootstrap Vue
 import BootstrapVue from 'bootstrap-vue';
 Vue.use(BootstrapVue);
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+// Prism - syntax highlighting
+import 'prismjs';
+import 'prismjs/themes/prism.css';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -25,6 +25,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('layoutheader', require('./components/LayoutHeader.vue'));
 Vue.component('courses', require('./components/Courses.vue'));
 Vue.component('page', require('./components/Page.vue'));
 
