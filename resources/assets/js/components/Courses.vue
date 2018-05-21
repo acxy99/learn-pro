@@ -1,9 +1,25 @@
 <template>
     <div class="container">
-        <h1>Courses</h1>
-        <div class="card card-body mb-2" v-for="course in courses" v-bind:key="course.id">
-            <h4>{{ course.code }} {{ course.title }}</h4>
-            <p>{{ course.description }}</p>
+        <h2>Courses</h2><hr>
+
+        <!-- <b-card-group columns>
+            <b-card 
+                v-for="course in courses" 
+                v-bind:key="course.id"
+                v-bind:title="course.title">
+                    <b-card-img :src="getImageUrl(course)" top/>
+                    <p class="card-text">{{ course.description }}</p>
+            </b-card>
+        </b-card-group> -->
+
+        <div class="card-columns">
+            <div class="card" v-for="course in courses" v-bind:key="course.id">
+                <img class="card-img-top" :src="getImageUrl(course)" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                </div>
+            </div>
         </div>
 
         <ul class="pagination">
@@ -23,8 +39,10 @@
                     id: '',
                     code: '',
                     title: '',
-                    description: ''
+                    description: '',
+                    image: ''
                 },
+                default_image: 'storage/courses/placeholder-image.png',
                 course_id: '',
                 pagination: {},
                 edit: false
@@ -46,6 +64,9 @@
                         vm.makePagination(res);
                     })
                     .catch(err => console.log(err));
+            },
+            getImageUrl(course) {
+                return course.image ? course.image : this.default_image;
             },
             makePagination(res) {
                 let pagination = {

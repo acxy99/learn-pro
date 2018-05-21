@@ -19,7 +19,7 @@
     <div class="container">
         <h3>Create Page</h3><br>
         {!! Form::model($page, [
-            'route' => ['page.store'],
+            'route' => ['pages.store'],
         ]) !!}
 
         <!-- Title -->

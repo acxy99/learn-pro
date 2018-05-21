@@ -27,7 +27,7 @@
     </nav>
 </template>-->
 <template>
-    <b-navbar type="dark" variant="dark" toggleable>
+    <b-navbar type="dark" variant="dark" class="mb-5" toggleable>
         <b-navbar-brand>LEARN<b>PRO</b></b-navbar-brand>
 
         <b-navbar-nav>

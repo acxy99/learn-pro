@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-3">
-        <b-alert show>Default Alert</b-alert>
+        <!--<b-alert show>Default Alert</b-alert>
         <b-alert variant="success" show>Success Alert</b-alert>
 
         <div class="alert alert-primary" role="alert">
@@ -8,7 +8,7 @@
         </div>
         <div class="alert alert-secondary" role="alert">
             This is a secondary alert—check it out!
-        </div>
+        </div>-->
 
         <h3>{{ article.title }}</h3><hr />
         <p v-html="article.body"></p>
