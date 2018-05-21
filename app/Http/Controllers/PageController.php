@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Page;
-use App\Http\Resources\Page as PageResource;
+use App\Http\Resources\PageResource;
 
 class PageController extends Controller {
 

@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use App\Course;
-use App\Http\Resources\Course as CourseResource;
+use App\Http\Resources\CourseResource;
+use App\Http\Resources\CourseResourceCollection;
 use App\Page;
-use App\Http\Resources\Page as PageResource;
+use App\Http\Resources\PageResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('course', function() { return new CourseResource(Course::paginate(5)); });
-//Route::get('course/{id}', 'CourseController@show');
+Route::get('courses', function() { return new CourseResourceCollection(Course::paginate(5)); });
+Route::get('courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
 //Route::post('course', 'CourseController@store');
 //Route::put('course/{id}', 'CourseController@update');
 //Route::delete('course/{id}', 'CourseController@destroy');
 
 //Route::get('page', 'PageController@index');
-Route::get('page/{id}', function($id) { return new PageResource(Page::find($id)); });
+Route::get('pages/{id}', function($id) { return new PageResource(Page::find($id)); });
 //Route::post('page', 'PageController@store');

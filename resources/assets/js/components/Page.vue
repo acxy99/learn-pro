@@ -10,8 +10,8 @@
             This is a secondary alert—check it out!
         </div>-->
 
-        <h3>{{ article.title }}</h3><hr />
-        <p v-html="article.body"></p>
+        <h3>{{ page.title }}</h3><hr />
+        <p v-html="page.body"></p>
     </div>
 </template>
 
@@ -23,7 +23,7 @@
 
         data() {
             return {
-                article: {
+                page: {
                     id: '',
                     title: '',
                     body: '',
@@ -38,10 +38,10 @@
 
         methods: {
             fetchPage: function() {
-                fetch('/api/page/' + this.id)
+                fetch('/api/pages/' + this.id)
                     .then(res => res.json())
                     .then(res => {
-                        this.article = res.data;
+                        this.page = res.data;
                     })
                     .catch(err => console.log(err));
             }

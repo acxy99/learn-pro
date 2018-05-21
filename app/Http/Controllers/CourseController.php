@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Course;
-use App\Http\Resources\Course as CourseResource;
+use App\Http\Resources\CourseResource;
 
 class CourseController extends Controller {
 
@@ -32,7 +32,7 @@ class CourseController extends Controller {
     public function show($id) {
         $course = Course::findOrFail($id);
 
-        return new CourseResource($course);
+        return view('courses.show', ['course' => $course]);
     }
 
     public function edit($id) {

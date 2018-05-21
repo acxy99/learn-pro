@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <h2>Courses</h2><hr>
+        <button type="button" class="btn btn-outline-primary mb-3">Add New Course</button>
 
         <!-- <b-card-group columns>
             <b-card 
@@ -56,24 +57,24 @@
         methods: {
             fetchCourses(page_url) {
                 let vm = this;
-                page_url = page_url || '/api/course';
+                page_url = page_url || '/api/courses';
                 fetch(page_url)
                     .then(res => res.json()) // map response to json
                     .then(res => {
                         this.courses = res.data;
-                        vm.makePagination(res);
+                        vm.makePagination(res.links, res.meta);
                     })
                     .catch(err => console.log(err));
             },
             getImageUrl(course) {
                 return course.image ? course.image : this.default_image;
             },
-            makePagination(res) {
+            makePagination(links, meta) {
                 let pagination = {
-                    current_page: res.current_page,
-                    last_page: res.last_page,
-                    prev_page_url: res.prev_page_url,
-                    next_page_url: res.next_page_url,
+                    current_page: meta.current_page,
+                    last_page: meta.last_page,
+                    prev_page_url: links.prev,
+                    next_page_url: links.next,
                 };
                 this.pagination = pagination;
             }

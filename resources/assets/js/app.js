@@ -27,6 +27,7 @@ import 'prismjs/themes/prism.css';
 
 Vue.component('layoutheader', require('./components/LayoutHeader.vue'));
 Vue.component('courses', require('./components/Courses.vue'));
+Vue.component('course', require('./components/Course.vue'));
 Vue.component('page', require('./components/Page.vue'));
 
 const app = new Vue({
