@@ -8,5 +8,4 @@ use App\Course;
 
 @section('content')
     <courses></courses>
-    {{-- {{ $courses->links() }} --}}
 @endsection

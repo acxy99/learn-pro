@@ -12,22 +12,37 @@
                     <p class="card-text">{{ course.description }}</p>
             </b-card>
         </b-card-group> -->
-
-        <div class="card-columns">
-            <div class="card" v-for="course in courses" v-bind:key="course.id">
-                <img class="card-img-top" :src="getImageUrl(course)" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
-                    <p class="card-text">{{ course.description }}</p>
+        
+        <div v-if="courses.length">
+            <div class="card-columns">
+                <div class="card" v-for="course in courses" v-bind:key="course.id">
+                    <img class="card-img-top" :src="getImageUrl(course)">
+                    <div class="card-body">
+                        <h5 class="card-title"><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
+                        <p class="card-text">{{ course.description }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <ul class="pagination">
-            <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="fetchCourses(pagination.prev_page_url)">Previous</a></li>
-            <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-            <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="fetchCourses(pagination.next_page_url)">Next</a></li>
-        </ul>
+            <!-- <div style="padding: 15px">
+                <div class="row mb-2" style="border: 1px solid #ccc;" v-for="(course, i) in courses" v-bind:key="course.id">
+                    <div class="col-md-4" style="padding-left: 0px; padding-right: 0px; overflow: hidden;">
+                        <img class="img-fluid" :src="getImageUrl(i)"/>
+                    </div>
+                    <div class="col-md-8" style="padding: 1.25rem">
+                        <h5><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
+                        <p>{{ course.description }}</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <ul class="pagination">
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="fetchCourses(pagination.prev_page_url)">Previous</a></li>
+                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="fetchCourses(pagination.next_page_url)">Next</a></li>
+            </ul>
+        </div>
+        <div v-else>No courses to display</div>
     </div>
 </template>
 
@@ -43,7 +58,6 @@
                     description: '',
                     image: ''
                 },
-                default_image: 'storage/courses/placeholder-image.png',
                 course_id: '',
                 pagination: {},
                 edit: false
@@ -67,7 +81,7 @@
                     .catch(err => console.log(err));
             },
             getImageUrl(course) {
-                return course.image ? course.image : this.default_image;
+                return 'storage/courses/' + course.image;
             },
             getCourseUrl(course) {
                 return '/courses/' + course.id;

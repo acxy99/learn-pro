@@ -9,10 +9,7 @@ use App\Http\Resources\CourseResource;
 class CourseController extends Controller {
 
     public function index() {
-        $courses = Course::paginate(5);
-
-        //return CourseResource::collection($courses);
-        return view('courses.index', ['courses' => $courses]);
+        return view('courses.index');
     }
 
     public function create() {
@@ -23,8 +20,15 @@ class CourseController extends Controller {
 
     public function store(Request $request) {
         $course = new Course();
-        $course->fill($request->all());
+        $course->fill($request->except('image'));
+        $course->image = 'placeholder-image.png';
         $course->save();
+
+        if($request->hasFile('image')) {
+            $course->image = 'course_' . $course->id . '.jpg';
+            $request->file('image')->storeAs('public/courses', $course->image);
+            $course->save();
+        }
         
         return view('courses.show', ['course' => $course]);
     }

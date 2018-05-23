@@ -1,17 +1,21 @@
 <template>
     <b-container>
-        <h3>{{ course.code }} {{ course.title }}</h3><hr>
+        <h3>{{ course.code }} {{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+        <hr>
 
         <b-button class="mb-3" variant="primary" :to="getCreatePageUrl()">Add New Page</b-button>
         
-        
-        <div class="card mb-2" v-for="page in course.pages" v-bind:key="page.id">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <b-link :to="getPageUrl(page.id)">{{ page.title }} [{{ page.id }}]</b-link>
-                </h5>
+        <div v-if="course.pages.length">
+            <div class="card mb-2" v-for="page in course.pages" v-bind:key="page.id">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <b-link :to="getPageUrl(page.id)">{{ page.title }} [{{ page.id }}]</b-link>
+                    </h5>
+                </div>
             </div>
         </div>
+        <div v-else>No pages to display</div>
     </b-container>
 </template>
 

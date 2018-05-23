@@ -8,6 +8,7 @@
         <h3>Create Course</h3><hr>
         {!! Form::model($course, [
             'route' => ['courses.store'],
+            'enctype' => 'multipart/form-data',
         ]) !!}
 
         <!-- Code -->
@@ -33,6 +34,14 @@
             {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
             {!! Form::textarea('description', null, [
                 'class' => 'form-control'
+            ]) !!}
+        </div>
+
+        <!-- Image -->
+        <div class="form-group">
+            {!! Form::label('image', 'Select File', ['class' => 'control-label col-sm-3']) !!}
+            {!! Form::file('image', [
+                'class' => 'form-control',
             ]) !!}
         </div>
 
