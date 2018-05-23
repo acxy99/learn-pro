@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2>Courses</h2><hr>
-        <button type="button" class="btn btn-outline-primary mb-3">Add New Course</button>
+        <b-button class="mb-3" variant="primary" href="/courses/create">Add New Course</b-button>
 
         <!-- <b-card-group columns>
             <b-card 
@@ -17,7 +17,7 @@
             <div class="card" v-for="course in courses" v-bind:key="course.id">
                 <img class="card-img-top" :src="getImageUrl(course)" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">{{ course.title }}</h5>
+                    <h5 class="card-title"><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
                     <p class="card-text">{{ course.description }}</p>
                 </div>
             </div>
@@ -68,6 +68,9 @@
             },
             getImageUrl(course) {
                 return course.image ? course.image : this.default_image;
+            },
+            getCourseUrl(course) {
+                return '/courses/' + course.id;
             },
             makePagination(links, meta) {
                 let pagination = {

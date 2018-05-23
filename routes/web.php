@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/courses', 'CourseController');
-Route::resource('/pages', 'PageController');
-/*, ['except' => [
-    'show',
-]]);*/
+
+Route::resource('/pages', 'PageController', ['except' => ['create','show']]);
+Route::get('/courses/{course_id}/pages/create', 'PageController@create');
+Route::get('/courses/{course_id}/pages/{id}', 'PageController@show');

@@ -14,10 +14,10 @@ class PageController extends Controller {
         return view('pages.index', ['pages' => $pages]);
     }
 
-    public function create() {
+    public function create($course_id) {
         $page = new Page;
 
-        return view('pages.create', ['page' => $page]);
+        return view('pages.create', ['page' => $page, 'course_id' => $course_id]);
     }
 
     public function store(Request $request) {
@@ -28,8 +28,8 @@ class PageController extends Controller {
         return view('pages.show', ['page' => $page]);
     }
 
-    public function show($id) {
-        $page = Page::findOrFail($id);
+    public function show($course_id, $page_id) {
+        $page = Page::findOrFail($page_id);
 
         return view('pages.show', ['page' => $page]);
     }

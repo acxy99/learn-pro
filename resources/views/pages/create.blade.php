@@ -23,30 +23,28 @@
         ]) !!}
 
         <!-- Title -->
-        <div class="row">
-            <div class="form-group col-sm-6">
-                {!! Form::label('title', 'Title', ['class' => 'control-label']) !!}
-                {!! Form::text('title', null, [
-                    'class' => 'form-control',
-                    'maxlength' => 50,
-                ]) !!}
-            </div>
+        <div class="form-group">
+            {!! Form::label('title', 'Title', ['class' => 'control-label']) !!}
+            {!! Form::text('title', null, [
+                'class' => 'form-control',
+                'maxlength' => 50,
+            ]) !!}
+        </div>
+
+        <!-- Course ID -->
+        <div class="form-group">
+            {!! Form::label('course_id', 'Course ID', ['class' => 'control-label']) !!}
+            {!! Form::text('course_id', $course_id, [
+                'class' => 'form-control col-sm-3',
+                'maxlength' => 50,
+                'disabled'
+            ]) !!}
         </div>
 
         <!-- Body -->
-        {!! Form::label('body', 'Content', ['class' => 'control-label']) !!}
-        {!! Form::textarea('body', null) !!}
-        <br>
-
-        <!-- Course ID -->
-        <div class="row">
-            <div class="form-group col-sm-6">
-                {!! Form::label('course_id', 'Course ID', ['class' => 'control-label']) !!}
-                {!! Form::text('course_id', 1, [
-                    'class' => 'form-control',
-                    'maxlength' => 50,
-                ]) !!}
-            </div>
+        <div class="form-group">
+            {!! Form::label('body', 'Content', ['class' => 'control-label']) !!}
+            {!! Form::textarea('body', null) !!}
         </div>
 
         <!-- Submit Button -->

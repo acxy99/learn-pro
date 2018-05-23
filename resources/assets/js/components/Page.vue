@@ -1,21 +1,18 @@
 <template>
     <div class="container mt-3">
-        <!--<b-alert show>Default Alert</b-alert>
-        <b-alert variant="success" show>Success Alert</b-alert>
-
-        <div class="alert alert-primary" role="alert">
-            This is a primary alert—check it out!
-        </div>
-        <div class="alert alert-secondary" role="alert">
-            This is a secondary alert—check it out!
-        </div>-->
-
-        <h3>{{ page.title }}</h3><hr />
+        <h3>{{ page.title }}</h3><hr>
         <p v-html="page.body"></p>
+        <!-- <p id="content">{{ page.body }}</p> -->
     </div>
 </template>
 
 <script>
+
+    // Prism - syntax highlighting
+    // window.Prism = require('prismjs');
+    import 'prismjs/prism';
+    import 'prismjs/themes/prism.css';
+
     export default {
         props: {
             id: { type: String, required: true }
@@ -28,12 +25,18 @@
                     title: '',
                     body: '',
                     course_id: ''
-                }
+                },
+                content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
             }
         },
 
+        // components: {
+        //     Prism
+        // },
+
         created() {
             this.fetchPage();
+            // this.highlightCode();
         },
 
         methods: {
@@ -44,7 +47,30 @@
                         this.page = res.data;
                     })
                     .catch(err => console.log(err));
-            }
+            },
+            // highlightCode: function() {
+            //     this.$nextTick(()=> Prism.highlightAll());
+            // }
         },
+
+        watch: {
+            // Note : page.body is declared as string and assume page is defined in Vue data
+            'page.body': function(value) {
+                // let content = document.querySelector('#content');
+                // content.innerHTML = value;
+                this.$nextTick(()=> Prism.highlightAll());
+                // console.log('watched');
+            }
+        }
+        // mounted() {
+        //     Prism.highlightAll();
+        //     this.$nextTick(function () {
+        //         Prism.highlightElement();
+        //     })
+        // },
+
+        // ready () {
+        //     Prism.highlightAll()
+        // }
     }
 </script>

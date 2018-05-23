@@ -18,7 +18,7 @@ class CourseController extends Controller {
     public function create() {
         $course = new Course();
 
-        // return create form
+        return view('courses.create', ['course' => $course]);
     }
 
     public function store(Request $request) {
@@ -26,7 +26,7 @@ class CourseController extends Controller {
         $course->fill($request->all());
         $course->save();
         
-        // redirect to index
+        return view('courses.show', ['course' => $course]);
     }
 
     public function show($id) {

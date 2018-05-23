@@ -9847,10 +9847,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_bootstrap_dist_css_bootstrap_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_bootstrap_dist_css_bootstrap_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bootstrap_vue_dist_bootstrap_vue_css__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bootstrap_vue_dist_bootstrap_vue_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_bootstrap_vue_dist_bootstrap_vue_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prismjs__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prismjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prismjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prismjs_themes_prism_css__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prismjs_themes_prism_css__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -9865,10 +9861,6 @@ window.Vue = __webpack_require__(99);
 // Bootstrap Vue
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_bootstrap_vue__["a" /* default */]);
-
-
-
-// Prism - syntax highlighting
 
 
 
@@ -63216,6 +63208,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getImageUrl: function getImageUrl(course) {
             return course.image ? course.image : this.default_image;
         },
+        getCourseUrl: function getCourseUrl(course) {
+            return '/courses/' + course.id;
+        },
         makePagination: function makePagination(links, meta) {
             var pagination = {
                 current_page: meta.current_page,
@@ -63236,101 +63231,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h2", [_vm._v("Courses")]),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-primary mb-3",
-        attrs: { type: "button" }
-      },
-      [_vm._v("Add New Course")]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-columns" },
-      _vm._l(_vm.courses, function(course) {
-        return _c("div", { key: course.id, staticClass: "card" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: _vm.getImageUrl(course), alt: "Card image cap" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(course.title))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(_vm._s(course.description))
-            ])
-          ])
-        ])
-      })
-    ),
-    _vm._v(" "),
-    _c("ul", { staticClass: "pagination" }, [
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("h2", [_vm._v("Courses")]),
+      _c("hr"),
+      _vm._v(" "),
       _c(
-        "li",
+        "b-button",
         {
-          staticClass: "page-item",
-          class: [{ disabled: !_vm.pagination.prev_page_url }]
+          staticClass: "mb-3",
+          attrs: { variant: "primary", href: "/courses/create" }
         },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.fetchCourses(_vm.pagination.prev_page_url)
-                }
-              }
-            },
-            [_vm._v("Previous")]
-          )
-        ]
+        [_vm._v("Add New Course")]
       ),
       _vm._v(" "),
-      _c("li", { staticClass: "page-item disabled" }, [
-        _c("a", { staticClass: "page-link text-dark", attrs: { href: "#" } }, [
-          _vm._v(
-            "Page " +
-              _vm._s(_vm.pagination.current_page) +
-              " of " +
-              _vm._s(_vm.pagination.last_page)
-          )
-        ])
-      ]),
-      _vm._v(" "),
       _c(
-        "li",
-        {
-          staticClass: "page-item",
-          class: [{ disabled: !_vm.pagination.next_page_url }]
-        },
-        [
+        "div",
+        { staticClass: "card-columns" },
+        _vm._l(_vm.courses, function(course) {
+          return _c("div", { key: course.id, staticClass: "card" }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: { src: _vm.getImageUrl(course), alt: "Card image cap" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("h5", { staticClass: "card-title" }, [
+                _c("a", { attrs: { href: _vm.getCourseUrl(course) } }, [
+                  _vm._v(_vm._s(course.title))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(course.description))
+              ])
+            ])
+          ])
+        })
+      ),
+      _vm._v(" "),
+      _c("ul", { staticClass: "pagination" }, [
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.prev_page_url }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.fetchCourses(_vm.pagination.prev_page_url)
+                  }
+                }
+              },
+              [_vm._v("Previous")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item disabled" }, [
           _c(
             "a",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.fetchCourses(_vm.pagination.next_page_url)
-                }
-              }
-            },
-            [_vm._v("Next")]
+            { staticClass: "page-link text-dark", attrs: { href: "#" } },
+            [
+              _vm._v(
+                "Page " +
+                  _vm._s(_vm.pagination.current_page) +
+                  " of " +
+                  _vm._s(_vm.pagination.last_page)
+              )
+            ]
           )
-        ]
-      )
-    ])
-  ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.next_page_url }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.fetchCourses(_vm.pagination.next_page_url)
+                  }
+                }
+              },
+              [_vm._v("Next")]
+            )
+          ]
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -63409,6 +63415,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -63446,6 +63456,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (err) {
                 return console.log(err);
             });
+        },
+        getPageUrl: function getPageUrl(page_id) {
+            return '/courses/' + this.course.id + '/pages/' + page_id;
+        },
+        getCreatePageUrl: function getCreatePageUrl() {
+            return '/courses/' + this.course.id + '/pages/create';
         }
     }
 });
@@ -63459,20 +63475,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "container" },
+    "b-container",
     [
       _c("h3", [
         _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
       ]),
       _c("hr"),
       _vm._v(" "),
+      _c(
+        "b-button",
+        {
+          staticClass: "mb-3",
+          attrs: { variant: "primary", to: _vm.getCreatePageUrl() }
+        },
+        [_vm._v("Add New Page")]
+      ),
+      _vm._v(" "),
       _vm._l(_vm.course.pages, function(page) {
         return _c("div", { key: page.id, staticClass: "card mb-2" }, [
           _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(page.title) + " [" + _vm._s(page.id) + "]")
-            ])
+            _c(
+              "h5",
+              { staticClass: "card-title" },
+              [
+                _c("b-link", { attrs: { to: _vm.getPageUrl(page.id) } }, [
+                  _vm._v(_vm._s(page.title) + " [" + _vm._s(page.id) + "]")
+                ])
+              ],
+              1
+            )
           ])
         ])
       })
@@ -63543,6 +63574,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs_prism__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__);
 //
 //
 //
@@ -63551,15 +63586,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
+// Prism - syntax highlighting
+// window.Prism = require('prismjs');
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -63573,11 +63605,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: '',
                 body: '',
                 course_id: ''
-            }
+            },
+            content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
         };
     },
+
+
+    // components: {
+    //     Prism
+    // },
+
     created: function created() {
         this.fetchPage();
+        // this.highlightCode();
     },
 
 
@@ -63593,8 +63633,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return console.log(err);
             });
         }
-    }
-});
+        // highlightCode: function() {
+        //     this.$nextTick(()=> Prism.highlightAll());
+        // }
+    },
+
+    watch: {
+        // Note : page.body is declared as string and assume page is defined in Vue data
+        'page.body': function pageBody(value) {
+            // let content = document.querySelector('#content');
+            // content.innerHTML = value;
+            this.$nextTick(function () {
+                return Prism.highlightAll();
+            });
+            // console.log('watched');
+        }
+        // mounted() {
+        //     Prism.highlightAll();
+        //     this.$nextTick(function () {
+        //         Prism.highlightElement();
+        //     })
+        // },
+
+        // ready () {
+        //     Prism.highlightAll()
+        // }
+    } });
 
 /***/ }),
 /* 234 */
