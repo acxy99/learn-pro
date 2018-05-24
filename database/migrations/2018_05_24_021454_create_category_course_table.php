@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateCategoryCourseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->text('body');
+        Schema::create('category_course', function (Blueprint $table) {
+            $table->unsignedInteger('category_id');
             $table->unsignedInteger('course_id');
-            $table->timestamps();
 
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('course_id')->references('id')->on('courses');
         });
     }
@@ -31,6 +29,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('category_course');
     }
 }
