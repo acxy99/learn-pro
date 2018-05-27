@@ -31,8 +31,8 @@
         <b-navbar-brand>LEARN<b>PRO</b></b-navbar-brand>
 
         <b-navbar-nav>
+            <b-nav-item href="/categories">Categories</b-nav-item>
             <b-nav-item to="/courses">Courses</b-nav-item>
-            <b-nav-item href="#" disabled>Pages</b-nav-item>
         </b-navbar-nav>
     </b-navbar>
 </template>

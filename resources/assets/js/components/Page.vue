@@ -24,9 +24,9 @@
                     id: '',
                     title: '',
                     body: '',
-                    course_id: ''
+                    course_id: '',
                 },
-                content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
+                // content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
             }
         },
 

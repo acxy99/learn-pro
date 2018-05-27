@@ -56,11 +56,11 @@
                     code: '',
                     title: '',
                     description: '',
-                    image: ''
+                    image: '',
                 },
                 course_id: '',
                 pagination: {},
-                edit: false
+                edit: false,
             }
         },
 

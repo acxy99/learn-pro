@@ -33,7 +33,7 @@
                     code: '',
                     title: '',
                     description: '',
-                    pages: []
+                    pages: [],
                 }
             }
         },

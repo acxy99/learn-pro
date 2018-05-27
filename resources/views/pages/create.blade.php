@@ -37,7 +37,7 @@
             {!! Form::text('course_id', $course_id, [
                 'class' => 'form-control col-sm-3',
                 'maxlength' => 50,
-                'disabled'
+                'readonly'
             ]) !!}
         </div>
 
