@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('/categories', 'CategoryController');
+
 Route::resource('/courses', 'CourseController');
 
 Route::resource('/pages', 'PageController', ['except' => ['create','show']]);

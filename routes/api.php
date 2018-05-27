@@ -1,9 +1,14 @@
 <?php
-
 use Illuminate\Http\Request;
+
+use App\Category;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CategoryResourceCollection;
+
 use App\Course;
 use App\Http\Resources\CourseResource;
 use App\Http\Resources\CourseResourceCollection;
+
 use App\Page;
 use App\Http\Resources\PageResource;
 
@@ -21,6 +26,9 @@ use App\Http\Resources\PageResource;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('categories', function() { return new CategoryResourceCollection(Category::paginate(5)); });
+Route::get('categories/{id}', function($id) { return new CategoryResource(Category::find($id)); });
 
 Route::get('courses', function() { return new CourseResourceCollection(Course::paginate(5)); });
 Route::get('courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
