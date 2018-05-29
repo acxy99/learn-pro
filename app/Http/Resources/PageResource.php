@@ -16,4 +16,11 @@ class PageResource extends Resource
     {
         return parent::toArray($request);
     }
+
+    public function with($request)
+    {
+        return [
+            'data' => ['course' => $this->course,]
+        ];
+    }
 }

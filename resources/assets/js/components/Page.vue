@@ -1,5 +1,8 @@
 <template>
     <div class="container mt-3">
+        <small>
+            <a :href="getCourseUrl()" style="text-decoration: none">{{ page.course.code }} {{ page.course.title }}</a>
+        </small>
         <h3>{{ page.title }}</h3><hr>
         <p v-html="page.body"></p>
         <!-- <p id="content">{{ page.body }}</p> -->
@@ -25,6 +28,7 @@
                     title: '',
                     body: '',
                     course_id: '',
+                    course: {},
                 },
                 // content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
             }
@@ -47,6 +51,9 @@
                         this.page = res.data;
                     })
                     .catch(err => console.log(err));
+            },
+            getCourseUrl() {
+                return '/courses/' + this.page.course.code;
             },
             // highlightCode: function() {
             //     this.$nextTick(()=> Prism.highlightAll());

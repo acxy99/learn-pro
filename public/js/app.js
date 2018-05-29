@@ -63553,7 +63553,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return course.image;
         },
         getCourseUrl: function getCourseUrl(course) {
-            return 'courses/' + course.code;
+            return '/courses/' + course.code;
         },
         makePagination: function makePagination(links, meta) {
             var pagination = {
@@ -63948,6 +63948,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 // Prism - syntax highlighting
@@ -63966,7 +63969,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id: '',
                 title: '',
                 body: '',
-                course_id: ''
+                course_id: '',
+                course: {}
             }
             // content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
         };
@@ -63994,10 +63998,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (err) {
                 return console.log(err);
             });
+        },
+        getCourseUrl: function getCourseUrl() {
+            return '/courses/' + this.page.course.code;
         }
-        // highlightCode: function() {
-        //     this.$nextTick(()=> Prism.highlightAll());
-        // }
     },
 
     watch: {
@@ -64098,6 +64102,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container mt-3" }, [
+    _c("small", [
+      _c(
+        "a",
+        {
+          staticStyle: { "text-decoration": "none" },
+          attrs: { href: _vm.getCourseUrl() }
+        },
+        [
+          _vm._v(
+            _vm._s(_vm.page.course.code) + " " + _vm._s(_vm.page.course.title)
+          )
+        ]
+      )
+    ]),
+    _vm._v(" "),
     _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
     _c("hr"),
     _vm._v(" "),

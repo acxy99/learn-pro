@@ -84,7 +84,7 @@
                 return course.image;
             },
             getCourseUrl(course) {
-                return 'courses/' + course.code;
+                return '/courses/' + course.code;
             },
             makePagination(links, meta) {
                 let pagination = {
