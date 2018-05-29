@@ -63550,10 +63550,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         getImageUrl: function getImageUrl(course) {
-            return 'storage/courses/' + course.image;
+            return course.image;
         },
         getCourseUrl: function getCourseUrl(course) {
-            return '/courses/' + course.code;
+            return 'courses/' + course.code;
         },
         makePagination: function makePagination(links, meta) {
             var pagination = {

@@ -23,4 +23,8 @@ class Course extends Model
     public function getRouteKeyName() {
         return 'code';
     }
+
+    public function getImageAttribute($value) {
+        return 'storage/courses/' . $value;
+    }
 }

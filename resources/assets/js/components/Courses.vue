@@ -81,10 +81,10 @@
                     .catch(err => console.log(err));
             },
             getImageUrl(course) {
-                return 'storage/courses/' + course.image;
+                return course.image;
             },
             getCourseUrl(course) {
-                return '/courses/' + course.code;
+                return 'courses/' + course.code;
             },
             makePagination(links, meta) {
                 let pagination = {
