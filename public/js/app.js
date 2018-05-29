@@ -62970,7 +62970,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -62998,11 +62997,7 @@ var render = function() {
             _vm._v("Categories")
           ]),
           _vm._v(" "),
-          _c("b-nav-item", { attrs: { to: "/courses" } }, [_vm._v("Courses")]),
-          _vm._v(" "),
-          _c("b-nav-item", { attrs: { href: "#", disabled: "" } }, [
-            _vm._v("Nav")
-          ])
+          _c("b-nav-item", { attrs: { to: "/courses" } }, [_vm._v("Courses")])
         ],
         1
       )
@@ -63558,7 +63553,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return 'storage/courses/' + course.image;
         },
         getCourseUrl: function getCourseUrl(course) {
-            return '/courses/' + course.id;
+            return '/courses/' + course.code;
         },
         makePagination: function makePagination(links, meta) {
             var pagination = {
@@ -63815,10 +63810,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         getPageUrl: function getPageUrl(page_id) {
-            return '/courses/' + this.course.id + '/pages/' + page_id;
+            return '/courses/' + this.course.code + '/pages/' + page_id;
         },
         getCreatePageUrl: function getCreatePageUrl() {
-            return '/courses/' + this.course.id + '/pages/create';
+            return '/courses/' + this.course.code + '/pages/create';
         }
     }
 });

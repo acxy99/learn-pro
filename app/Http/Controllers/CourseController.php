@@ -33,8 +33,9 @@ class CourseController extends Controller {
         return view('courses.show', ['course' => $course]);
     }
 
-    public function show($id) {
-        $course = Course::findOrFail($id);
+    public function show($code) {
+        // $course = Course::findOrFail($id);
+        $course = Course::where('code', $code)->firstOrFail();
 
         return view('courses.show', ['course' => $course]);
     }

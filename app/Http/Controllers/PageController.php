@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Page;
 use App\Http\Resources\PageResource;
+use App\Course;
 
 class PageController extends Controller {
 
@@ -14,10 +15,11 @@ class PageController extends Controller {
         return view('pages.index', ['pages' => $pages]);
     }
 
-    public function create($course_id) {
+    public function create($course_code) {
         $page = new Page;
+        $course = Course::where('code', $course_code)->firstOrFail();
 
-        return view('pages.create', ['page' => $page, 'course_id' => $course_id]);
+        return view('pages.create', ['page' => $page, 'course_id' => $course->id]);
     }
 
     public function store(Request $request) {
@@ -28,8 +30,9 @@ class PageController extends Controller {
         return view('pages.show', ['page' => $page]);
     }
 
-    public function show($course_id, $page_id) {
-        $page = Page::findOrFail($page_id);
+    public function show($course_code, $page_id) {
+        $course = Course::where('code', $course_code)->firstOrFail();
+        $page = Page::where('id', $page_id)->where('course_id', $course->id)->firstOrFail();
 
         return view('pages.show', ['page' => $page]);
     }

@@ -55,10 +55,10 @@
                     .catch(err => console.log(err));
             },
             getPageUrl(page_id) {
-                return '/courses/' + this.course.id + '/pages/' + page_id;
+                return '/courses/' + this.course.code + '/pages/' + page_id;
             },
             getCreatePageUrl() {
-                return '/courses/' + this.course.id + '/pages/create';
+                return '/courses/' + this.course.code + '/pages/create';
             }
         }
     }
