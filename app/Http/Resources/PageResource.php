@@ -14,13 +14,16 @@ class PageResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-    }
-
-    public function with($request)
-    {
+        // return parent::toArray($request);
         return [
-            'data' => ['course' => $this->course,]
+            'id' => $this->id,
+            'title' => $this->title,
+            'body' => $this->body,
+            'course_id' => $this->course_id,
+            'course' => $this->course,
+            'parent_id' => $this->parent_id,
+            'children' => $this->children,
+            'slug' => $this->slug,
         ];
     }
 }

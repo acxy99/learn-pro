@@ -17,13 +17,15 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->string('title')->index();
             $table->text('body');
-            $table->unsignedInteger('course_id')->index();
+            $table->unsignedInteger('course_id');
+            $table->unsignedInteger('parent_id')->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
 
             $table->unique(['title', 'course_id']);
 
             $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('parent_id')->references('id')->on('pages');
         });
     }
 

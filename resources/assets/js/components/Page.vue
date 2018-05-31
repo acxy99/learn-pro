@@ -1,11 +1,16 @@
 <template>
-    <div class="container mt-3">
+    <div class="container">
         <small>
             <a :href="getCourseUrl()" style="text-decoration: none">{{ page.course.code }} {{ page.course.title }}</a>
         </small>
         <h3>{{ page.title }}</h3><hr>
-        <p v-html="page.body"></p>
-        <!-- <p id="content">{{ page.body }}</p> -->
+        <p v-html="page.body"></p><hr>
+        
+        <div v-if="page.children.length">
+            <h5 v-for="child in page.children" v-bind:key="child.id">
+                <a :href="getChildUrl(child.id)">{{ child.title }}</a>
+            </h5>
+        </div>
     </div>
 </template>
 
@@ -29,6 +34,7 @@
                     body: '',
                     course_id: '',
                     course: {},
+                    children: [],
                 },
                 // content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
             }
@@ -54,6 +60,9 @@
             },
             getCourseUrl() {
                 return '/courses/' + this.page.course.code;
+            },
+            getChildUrl(child_id) {
+                return '/courses/' + this.page.course.code + '/pages/' + child_id;
             },
             // highlightCode: function() {
             //     this.$nextTick(()=> Prism.highlightAll());

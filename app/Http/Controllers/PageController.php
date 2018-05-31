@@ -19,7 +19,7 @@ class PageController extends Controller {
         $page = new Page;
         $course = Course::where('code', $course_code)->firstOrFail();
 
-        return view('pages.create', ['page' => $page, 'course_id' => $course->id]);
+        return view('pages.create', ['page' => $page, 'course' => $course]);
     }
 
     public function store(Request $request) {

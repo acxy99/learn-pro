@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
+use App\Http\Resources\PageResource;
 
 class CourseResource extends Resource
 {
@@ -14,19 +15,15 @@ class CourseResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-        // return [
-        //     'id' => $this->id,
-        //     'code' => $this->code,
-        //     'title' => $this->title,
-        //     'description' => $this->description,
-        // ];
-    }
-
-    public function with($request)
-    {
+        // return parent::toArray($request);
         return [
-            'data' => ['pages' => $this->pages,]
+            'id' => $this->id,
+            'code' => $this->code,
+            'title' => $this->title,
+            'description' => $this->description,
+            'image' => $this->image,
+            'slug' => $this->slug,
+            'pages' => PageResource::collection($this->pages)->where('parent_id', null),
         ];
     }
 }

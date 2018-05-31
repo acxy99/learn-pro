@@ -62992,13 +62992,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-navbar-nav",
-        [
-          _c("b-nav-item", { attrs: { href: "/categories", disabled: "" } }, [
-            _vm._v("Categories")
-          ]),
-          _vm._v(" "),
-          _c("b-nav-item", { attrs: { to: "/courses" } }, [_vm._v("Courses")])
-        ],
+        [_c("b-nav-item", { attrs: { to: "/courses" } }, [_vm._v("Courses")])],
         1
       )
     ],
@@ -63770,6 +63764,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63814,6 +63814,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getCreatePageUrl: function getCreatePageUrl() {
             return '/courses/' + this.course.code + '/pages/create';
+        },
+        isRoot: function isRoot(page) {
+            return page.parent_id == null;
+        },
+        hasChildren: function hasChildren(page) {
+            return page.children.length;
         }
     }
 });
@@ -63827,14 +63833,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "b-container",
+    "div",
+    { staticClass: "container" },
     [
       _c("h3", [
         _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
       ]),
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.course.description))]),
-      _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
       _c(
@@ -63850,20 +63856,36 @@ var render = function() {
         ? _c(
             "div",
             _vm._l(_vm.course.pages, function(page) {
-              return _c("div", { key: page.id, staticClass: "card mb-2" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "h5",
-                    { staticClass: "card-title" },
-                    [
-                      _c("b-link", { attrs: { to: _vm.getPageUrl(page.id) } }, [
-                        _vm._v(
-                          _vm._s(page.title) + " [" + _vm._s(page.id) + "]"
+              return _c("div", { key: page.id }, [
+                _c("div", { staticClass: "card mb-2" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c(
+                      "h5",
+                      { staticClass: "mb-0" },
+                      [
+                        _c(
+                          "b-link",
+                          { attrs: { to: _vm.getPageUrl(page.id) } },
+                          [_vm._v(_vm._s(page.title))]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.hasChildren(page)
+                    ? _c("div", [
+                        _c(
+                          "div",
+                          { staticClass: "card-body" },
+                          _vm._l(page.children, function(child) {
+                            return _c("li", { key: child.id }, [
+                              _vm._v(_vm._s(child.title))
+                            ])
+                          })
                         )
                       ])
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ])
               ])
             })
@@ -63951,6 +63973,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 // Prism - syntax highlighting
@@ -63970,7 +63997,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: '',
                 body: '',
                 course_id: '',
-                course: {}
+                course: {},
+                children: []
             }
             // content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
         };
@@ -64001,6 +64029,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getCourseUrl: function getCourseUrl() {
             return '/courses/' + this.page.course.code;
+        },
+        getChildUrl: function getChildUrl(child_id) {
+            return '/courses/' + this.page.course.code + '/pages/' + child_id;
         }
     },
 
@@ -64101,7 +64132,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mt-3" }, [
+  return _c("div", { staticClass: "container" }, [
     _c("small", [
       _c(
         "a",
@@ -64120,7 +64151,21 @@ var render = function() {
     _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
     _c("hr"),
     _vm._v(" "),
-    _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } })
+    _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } }),
+    _c("hr"),
+    _vm._v(" "),
+    _vm.page.children.length
+      ? _c(
+          "div",
+          _vm._l(_vm.page.children, function(child) {
+            return _c("h5", { key: child.id }, [
+              _c("a", { attrs: { href: _vm.getChildUrl(child.id) } }, [
+                _vm._v(_vm._s(child.title))
+              ])
+            ])
+          })
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
