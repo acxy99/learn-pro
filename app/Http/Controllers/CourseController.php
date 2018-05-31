@@ -20,8 +20,9 @@ class CourseController extends Controller {
 
     public function store(Request $request) {
         $course = new Course();
-        $course->fill($request->except('image'));
+        $course->fill($request->except('image', 'slug'));
         $course->image = 'placeholder-image.png';
+        $course->slug = str_slug($request->code);
         $course->save();
 
         if($request->hasFile('image')) {

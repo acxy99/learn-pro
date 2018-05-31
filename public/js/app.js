@@ -62993,7 +62993,7 @@ var render = function() {
       _c(
         "b-navbar-nav",
         [
-          _c("b-nav-item", { attrs: { href: "/categories" } }, [
+          _c("b-nav-item", { attrs: { href: "/categories", disabled: "" } }, [
             _vm._v("Categories")
           ]),
           _vm._v(" "),

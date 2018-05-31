@@ -24,7 +24,8 @@ class PageController extends Controller {
 
     public function store(Request $request) {
         $page = new Page;
-        $page->fill($request->all());
+        $page->fill($request->except('slug'));
+        $page->slug = str_slug($request->course_id . ' ' . $request->title);
         $page->save();
 
         return view('pages.show', ['page' => $page]);
