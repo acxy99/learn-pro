@@ -5,12 +5,9 @@
         </small>
         <h3>{{ page.title }}</h3><hr>
         <p v-html="page.body"></p><hr>
-        
-        <div v-if="page.children.length">
-            <h5 v-for="child in page.children" v-bind:key="child.id">
-                <a :href="getChildUrl(child.id)">{{ child.title }}</a>
-            </h5>
-        </div>
+        <h5 v-for="child in page.children" v-bind:key="child.id">
+            <a :href="getChildUrl(child.id)">{{ child.title }}</a>
+        </h5>
     </div>
 </template>
 
@@ -36,7 +33,6 @@
                     course: {},
                     children: [],
                 },
-                // content: '<pre class="language-python"><code>#!/usr/bin/env python import socket import subprocess import sys from datetime import datetime</code></pre>'
             }
         },
 

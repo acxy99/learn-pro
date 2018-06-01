@@ -15,7 +15,9 @@
                     </div>
                     <div v-if="hasChildren(page)">
                         <div class="card-body">
-                            <li v-for="child in page.children" v-bind:key="child.id">{{ child.title }}</li>
+                            <h6 v-for="child in page.children" v-bind:key="child.id">
+                                <a :href="getChildUrl(child.id)" style="text-decoration: none">{{ child.title }}</a>
+                            </h6>
                         </div>
                     </div>
                 </div>
@@ -66,11 +68,11 @@
             getCreatePageUrl() {
                 return '/courses/' + this.course.code + '/pages/create';
             },
-            isRoot(page) {
-                return page.parent_id == null;
-            },
             hasChildren(page) {
                 return page.children.length;
+            },
+            getChildUrl(child_id) {
+                return '/courses/' + this.course.code + '/pages/' + child_id;
             },
         }
     }
