@@ -38,4 +38,5 @@ Route::get('courses/{id}', function($id) { return new CourseResource(Course::fin
 
 //Route::get('page', 'PageController@index');
 Route::get('pages/{id}', function($id) { return new PageResource(Page::find($id)); });
+Route::put('pages', 'PageController@store');
 //Route::post('page', 'PageController@store');

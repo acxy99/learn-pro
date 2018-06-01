@@ -7,19 +7,19 @@ use App\Page;
 
 @section('title', '| Create Page')
 
-@section('stylesheets')
+{{--@section('stylesheets')
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=jvygsti8vfl669gfq2jxa3h5qr00kuj22sgdd3tfhibp14yj"></script>
     <script>
         tinymce.init({ 
             selector:'textarea',
             height: '500',
-            plugins: 'codesample',
-            toolbar: 'codesample',
+            plugins: 'codesample, link',
+            toolbar: 'codesample, link',
         });
     </script>
-@endsection
+@endsection--}}
 
-@section('content')
+{{--@section('content')
 
     <div class="container">
         <small>
@@ -48,7 +48,7 @@ use App\Page;
             ]) !!}
         </div>
 
-        {{-- Parent ID --}}
+        <!-- Parent ID -->
         <div class="form-group">
             {!! Form::label('parent_id', 'Parent ID', ['class' => 'control-label']) !!}
             {!! Form::select('parent_id', Page::where('course_id', $course->id)->where('parent_id', null)->pluck('title', 'id'), null, [
@@ -75,4 +75,8 @@ use App\Page;
 
     </div>
 
+@endsection--}}
+
+@section('content')
+    <createpage :course="{{ $course }}" :parents="{{ $parents }}"></createpage>
 @endsection

@@ -18,8 +18,9 @@ class PageController extends Controller {
     public function create($course_code) {
         $page = new Page;
         $course = Course::where('code', $course_code)->firstOrFail();
+        $parents = Page::where('course_id', $course->id)->where('parent_id', null)->select('title', 'id')->get();
 
-        return view('pages.create', ['page' => $page, 'course' => $course]);
+        return view('pages.create', ['page' => $page, 'course' => $course, 'parents' => $parents]);
     }
 
     public function store(Request $request) {
@@ -28,7 +29,8 @@ class PageController extends Controller {
         $page->slug = str_slug($request->course_id . ' ' . $request->title);
         $page->save();
 
-        return view('pages.show', ['page' => $page]);
+        // return view('pages.show', ['page' => $page]);
+        return new PageResource($page);
     }
 
     public function show($course_code, $page_id) {
