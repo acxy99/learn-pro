@@ -29,8 +29,7 @@ class PageController extends Controller {
         $page->slug = str_slug($request->course_id . ' ' . $request->title);
         $page->save();
 
-        // return view('pages.show', ['page' => $page]);
-        return new PageResource($page);
+        return response()->json(['page' => $page]);
     }
 
     public function show($course_code, $page_id) {
