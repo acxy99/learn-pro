@@ -64276,25 +64276,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// import Tinymce from '@tinymce/tinymce-vue';
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
-    selector: '#body',
-    plugins: 'link, codesample',
-    height: '400'
-});
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['course', 'parents'],
@@ -64309,14 +64293,6 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
         };
     },
 
-    components: {
-        // 'tinymce': Tinymce,
-    },
-    created: function created() {
-        // console.log(this.course);
-        // console.log(this.parents);
-    },
-
     methods: {
         getCourseUrl: function getCourseUrl(course_code) {
             return '/courses/' + course_code;
@@ -64325,7 +64301,6 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
             var _this = this;
 
             this.page.course_id = this.course.id;
-            this.page.body = __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.get('body').getContent();
             console.log(this.page.body);
 
             fetch('/api/page', {
