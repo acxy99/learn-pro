@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <small>
-            <a :href="getCourseUrl(course.code)" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
+            <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
         <h3>Create Page</h3><hr>
 
@@ -57,8 +57,8 @@ export default {
         }
     },
     methods: {
-        getCourseUrl(course_code) {
-            return '/courses/' + course_code;
+        getCourseUrl() {
+            return '/courses/' + this.course.slug;
         },
         createPage() {
             this.page.course_id = this.course.id;
@@ -77,7 +77,7 @@ export default {
             }).then(
                 response => {
                     if(response.status === 200) {
-                        window.location.href = this.getCourseUrl(this.course.code);
+                        window.location.href = this.getCourseUrl(this.course.slug);
                     }
                 }
             )

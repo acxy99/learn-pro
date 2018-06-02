@@ -63811,17 +63811,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return console.log(err);
             });
         },
-        getPageUrl: function getPageUrl(page_id) {
-            return '/courses/' + this.course.code + '/pages/' + page_id;
+        getPageUrl: function getPageUrl(page) {
+            return '/courses/' + this.course.slug + '/pages/' + page.slug;
         },
         getCreatePageUrl: function getCreatePageUrl() {
-            return '/courses/' + this.course.code + '/pages/create';
+            return '/courses/' + this.course.slug + '/pages/create';
         },
         hasChildren: function hasChildren(page) {
             return page.children.length;
         },
-        getChildUrl: function getChildUrl(child_id) {
-            return '/courses/' + this.course.code + '/pages/' + child_id;
+        getChildUrl: function getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
         }
     }
 });
@@ -63865,11 +63865,9 @@ var render = function() {
                       "h5",
                       { staticClass: "mb-0" },
                       [
-                        _c(
-                          "b-link",
-                          { attrs: { to: _vm.getPageUrl(page.id) } },
-                          [_vm._v(_vm._s(page.title))]
-                        )
+                        _c("b-link", { attrs: { to: _vm.getPageUrl(page) } }, [
+                          _vm._v(_vm._s(page.title))
+                        ])
                       ],
                       1
                     )
@@ -63886,7 +63884,7 @@ var render = function() {
                                 "a",
                                 {
                                   staticStyle: { "text-decoration": "none" },
-                                  attrs: { href: _vm.getChildUrl(child.id) }
+                                  attrs: { href: _vm.getChildUrl(child) }
                                 },
                                 [_vm._v(_vm._s(child.title))]
                               )
@@ -64033,10 +64031,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         getCourseUrl: function getCourseUrl() {
-            return '/courses/' + this.page.course.code;
+            return '/courses/' + this.page.course.slug;
         },
-        getChildUrl: function getChildUrl(child_id) {
-            return '/courses/' + this.page.course.code + '/pages/' + child_id;
+        getChildUrl: function getChildUrl(child) {
+            return '/courses/' + this.page.course.slug + '/pages/' + child.slug;
         }
     },
 
@@ -64164,7 +64162,7 @@ var render = function() {
       _vm._v(" "),
       _vm._l(_vm.page.children, function(child) {
         return _c("h5", { key: child.id }, [
-          _c("a", { attrs: { href: _vm.getChildUrl(child.id) } }, [
+          _c("a", { attrs: { href: _vm.getChildUrl(child) } }, [
             _vm._v(_vm._s(child.title))
           ])
         ])
@@ -64300,8 +64298,8 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
     },
 
     methods: {
-        getCourseUrl: function getCourseUrl(course_code) {
-            return '/courses/' + course_code;
+        getCourseUrl: function getCourseUrl() {
+            return '/courses/' + this.course.slug;
         },
         createPage: function createPage() {
             var _this = this;
@@ -64321,7 +64319,7 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
                 body: JSON.stringify(this.page)
             }).then(function (response) {
                 if (response.status === 200) {
-                    window.location.href = _this.getCourseUrl(_this.course.code);
+                    window.location.href = _this.getCourseUrl(_this.course.slug);
                 }
             }).catch(function (err) {
                 return console.log(err);
@@ -101626,7 +101624,7 @@ var render = function() {
         "a",
         {
           staticStyle: { "text-decoration": "none" },
-          attrs: { href: _vm.getCourseUrl(_vm.course.code) }
+          attrs: { href: _vm.getCourseUrl() }
         },
         [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
       )

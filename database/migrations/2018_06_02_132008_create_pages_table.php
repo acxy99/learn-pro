@@ -19,7 +19,7 @@ class CreatePagesTable extends Migration
             $table->text('body');
             $table->unsignedInteger('course_id');
             $table->unsignedInteger('parent_id')->nullable();
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->timestamps();
 
             $table->unique(['title', 'course_id']);

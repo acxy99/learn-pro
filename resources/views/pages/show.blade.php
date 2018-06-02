@@ -7,5 +7,5 @@ use App\Page;
 @section('title', '| Page')
 
 @section('content')
-    <page id="{{ $page->id }}"></page>
+    <page id="{{ $page_id }}"></page>
 @endsection

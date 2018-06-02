@@ -10,13 +10,13 @@
                 <div class="card mb-2">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <b-link :to="getPageUrl(page.id)">{{ page.title }}</b-link>
+                            <b-link :to="getPageUrl(page)">{{ page.title }}</b-link>
                         </h5>
                     </div>
                     <div v-if="hasChildren(page)">
                         <div class="card-body">
                             <h6 v-for="child in page.children" v-bind:key="child.id">
-                                <a :href="getChildUrl(child.id)" style="text-decoration: none">{{ child.title }}</a>
+                                <a :href="getChildUrl(child)" style="text-decoration: none">{{ child.title }}</a>
                             </h6>
                         </div>
                     </div>
@@ -61,17 +61,17 @@ export default {
                 })
                 .catch(err => console.log(err));
         },
-        getPageUrl(page_id) {
-            return '/courses/' + this.course.code + '/pages/' + page_id;
+        getPageUrl(page) {
+            return '/courses/' + this.course.slug + '/pages/' + page.slug;
         },
         getCreatePageUrl() {
-            return '/courses/' + this.course.code + '/pages/create';
+            return '/courses/' + this.course.slug + '/pages/create';
         },
         hasChildren(page) {
             return page.children.length;
         },
-        getChildUrl(child_id) {
-            return '/courses/' + this.course.code + '/pages/' + child_id;
+        getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
         },
     }
 }

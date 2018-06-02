@@ -6,7 +6,7 @@
         <h3>{{ page.title }}</h3><hr>
         <p v-html="page.body"></p><hr>
         <h5 v-for="child in page.children" v-bind:key="child.id">
-            <a :href="getChildUrl(child.id)">{{ child.title }}</a>
+            <a :href="getChildUrl(child)">{{ child.title }}</a>
         </h5>
     </div>
 </template>
@@ -55,10 +55,10 @@
                     .catch(err => console.log(err));
             },
             getCourseUrl() {
-                return '/courses/' + this.page.course.code;
+                return '/courses/' + this.page.course.slug;
             },
-            getChildUrl(child_id) {
-                return '/courses/' + this.page.course.code + '/pages/' + child_id;
+            getChildUrl(child) {
+                return '/courses/' + this.page.course.slug + '/pages/' + child.slug;
             },
             // highlightCode: function() {
             //     this.$nextTick(()=> Prism.highlightAll());
