@@ -22,6 +22,7 @@
         "@tinymce/tinymce-vue": "^1.0.8",
         "bootstrap-vue": "^2.0.0-rc.10",
         "prismjs": "^1.14.0",
+        "tinymce": "^4.7.13",
         "vue-prism-component": "^1.0.1",
         "vue-router": "^3.0.1"
     }
