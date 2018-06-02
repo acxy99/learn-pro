@@ -3,13 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Course extends Model
 {
+    use Sluggable;
+    use SluggableScopeHelpers;
+
     protected $fillable = [
         'code',
         'title',
         'description',
+        'slug',
     ];
 
     public function pages() {
@@ -20,8 +26,16 @@ class Course extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function sluggable() {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+
     public function getRouteKeyName() {
-        return 'code';
+        return 'slug';
     }
 
     public function getImageAttribute($value) {

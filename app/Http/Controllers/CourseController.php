@@ -21,23 +21,21 @@ class CourseController extends Controller {
 
     public function store(Request $request) {
         $course = new Course();
-        $course->fill($request->except('image', 'slug'));
+        $course->fill($request->except('image'));
         $course->image = 'placeholder-image.png';
-        $course->slug = str_slug($request->code);
         $course->save();
 
         if($request->hasFile('image')) {
-            $course->image = 'course_' . $course->id . '.jpg';
+            $course->image = $course->slug . '.jpg';
             $request->file('image')->storeAs('public/courses', $course->image);
             $course->save();
         }
         
-        return view('courses.show', ['course' => $course]);
+        return redirect()->route('courses.show', $course->slug);
     }
 
-    public function show($code) {
-        // $course = Course::findOrFail($id);
-        $course = Course::where('code', $code)->firstOrFail();
+    public function show($slug) {
+        $course = Course::findBySlugOrFail($slug);
 
         return view('courses.show', ['course_id' => $course->id]);
     }
@@ -47,7 +45,7 @@ class CourseController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        //
+        // update slug
     }
 
     public function destroy($id) {

@@ -63548,7 +63548,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return course.image;
         },
         getCourseUrl: function getCourseUrl(course) {
-            return '/courses/' + course.code;
+            return '/courses/' + course.slug;
         },
         makePagination: function makePagination(links, meta) {
             var pagination = {
@@ -64280,6 +64280,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+__WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
+    selector: '#body',
+    plugins: 'link, codesample',
+    height: '400'
+});
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['course', 'parents'],
     data: function data() {
@@ -64301,6 +64307,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.page.course_id = this.course.id;
+            this.page.body = __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.get('body').getContent();
             console.log(this.page.body);
 
             fetch('/api/page', {
