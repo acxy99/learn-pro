@@ -735,12 +735,12 @@ var codesample = (function () {
       var node = getSelectedCodeSample(editor);
       code = global$1.DOM.encode(code);
       if (node) {
-        editor.dom.setAttrib(node, 'class', 'language-' + language);
+        editor.dom.setAttrib(node, 'class', 'language-' + language + ' line-numbers');
         node.innerHTML = code;
         Prism.highlightElement(node);
         editor.selection.select(node);
       } else {
-        editor.insertContent('<pre id="__new" class="language-' + language + '">' + code + '</pre>');
+        editor.insertContent('<pre id="__new" class="language-' + language + ' line-numbers">' + code + '</pre>');
         editor.selection.select(editor.$('#__new').removeAttr('id')[0]);
       }
     });
