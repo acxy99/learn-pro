@@ -28,52 +28,51 @@
 </template>
 
 <script>
+export default {
+    props: {
+        id: { type: String, required: true }
+    },
 
-    export default {
-        props: {
-            id: { type: String, required: true }
-        },
-
-        data() {
-            return {
-                course: {
-                    id: '',
-                    code: '',
-                    title: '',
-                    description: '',
-                    pages: [],
-                }
+    data() {
+        return {
+            course: {
+                id: '',
+                code: '',
+                title: '',
+                description: '',
+                pages: [],
             }
-        },
-
-        created() {
-            this.fetchCourse();
-        },
-
-        methods: {
-            fetchCourse(page_url) {
-                //let vm = this;
-                page_url = page_url || ('/api/courses/' + this.id);
-                fetch(page_url)
-                    .then(res => res.json()) // map response to json
-                    .then(res => {
-                        this.course = res.data;
-                        //vm.makePagination(res);
-                    })
-                    .catch(err => console.log(err));
-            },
-            getPageUrl(page_id) {
-                return '/courses/' + this.course.code + '/pages/' + page_id;
-            },
-            getCreatePageUrl() {
-                return '/courses/' + this.course.code + '/pages/create';
-            },
-            hasChildren(page) {
-                return page.children.length;
-            },
-            getChildUrl(child_id) {
-                return '/courses/' + this.course.code + '/pages/' + child_id;
-            },
         }
+    },
+
+    created() {
+        this.fetchCourse();
+    },
+
+    methods: {
+        fetchCourse(page_url) {
+            //let vm = this;
+            page_url = page_url || ('/api/courses/' + this.id);
+            fetch(page_url)
+                .then(res => res.json()) // map response to json
+                .then(res => {
+                    this.course = res.data;
+                    //vm.makePagination(res);
+                })
+                .catch(err => console.log(err));
+        },
+        getPageUrl(page_id) {
+            return '/courses/' + this.course.code + '/pages/' + page_id;
+        },
+        getCreatePageUrl() {
+            return '/courses/' + this.course.code + '/pages/create';
+        },
+        hasChildren(page) {
+            return page.children.length;
+        },
+        getChildUrl(child_id) {
+            return '/courses/' + this.course.code + '/pages/' + child_id;
+        },
     }
+}
 </script>

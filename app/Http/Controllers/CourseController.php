@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Course;
 use App\Http\Resources\CourseResource;
+use App\Page;
 
 class CourseController extends Controller {
 
@@ -38,7 +39,7 @@ class CourseController extends Controller {
         // $course = Course::findOrFail($id);
         $course = Course::where('code', $code)->firstOrFail();
 
-        return view('courses.show', ['course' => $course]);
+        return view('courses.show', ['course_id' => $course->id]);
     }
 
     public function edit($id) {
