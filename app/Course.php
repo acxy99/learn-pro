@@ -29,7 +29,7 @@ class Course extends Model
     public function sluggable() {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'code'
             ]
         ];
     }

@@ -32,8 +32,8 @@ class PageController extends Controller {
         return response()->json(['page' => $page]);
     }
 
-    public function show($course_code, $page_id) {
-        $course = Course::where('code', $course_code)->firstOrFail();
+    public function show($course_slug, $page_id) {
+        $course = Course::findBySlugOrFail($course_slug);
         $page = Page::where('id', $page_id)->where('course_id', $course->id)->firstOrFail();
 
         return view('pages.show', ['page' => $page]);
