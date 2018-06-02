@@ -730,17 +730,21 @@ var codesample = (function () {
     }
     return null;
   };
-  var insertCodeSample = function (editor, language, code) {
+  var insertCodeSample = function (editor, language, linenumbers, code) {
     editor.undoManager.transact(function () {
       var node = getSelectedCodeSample(editor);
+      var classValue = 'language-' + language;
+      if(linenumbers) {
+        classValue += ' line-numbers';
+      }
       code = global$1.DOM.encode(code);
       if (node) {
-        editor.dom.setAttrib(node, 'class', 'language-' + language + ' line-numbers');
+        editor.dom.setAttrib(node, 'class', classValue);
         node.innerHTML = code;
         Prism.highlightElement(node);
         editor.selection.select(node);
       } else {
-        editor.insertContent('<pre id="__new" class="language-' + language + ' line-numbers">' + code + '</pre>');
+        editor.insertContent('<pre id="__new" class="' + classValue + '">' + code + '</pre>');
         editor.selection.select(editor.$('#__new').removeAttr('id')[0]);
       }
     });
@@ -842,6 +846,12 @@ var codesample = (function () {
             values: currentLanguages
           },
           {
+            type: 'checkbox',
+            name: 'linenumbers',
+            label: 'Include line numbers',
+            checked: 'true'
+          },
+          {
             type: 'textbox',
             name: 'code',
             multiline: true,
@@ -855,7 +865,7 @@ var codesample = (function () {
           }
         ],
         onSubmit: function (e) {
-          $_9zg93m9zjh8lyzx4.insertCodeSample(editor, e.data.language, e.data.code);
+          $_9zg93m9zjh8lyzx4.insertCodeSample(editor, e.data.language, e.data.linenumbers, e.data.code);
         }
       });
     }
