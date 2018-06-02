@@ -6,14 +6,15 @@
         <h3>Create Page</h3><hr>
 
         <form @submit.prevent="createPage">
-            <div class="form-group">
-                <label for="course_id">Course ID</label>
-                <input type="text" class="form-control" id="course_id" v-model="page.course_id" :placeholder="course.id" readonly>
+            <div class="form-group" hidden>
+                <label for="course_id">Course</label>
+                <input type="text" class="form-control" id="course_id" :value="course.id" readonly>
             </div>
 
             <div class="form-group">
-                <label for="parent_id">Parent ID</label>
+                <label for="parent_id">Parent</label>
                 <select class="custom-select" v-model="page.parent_id">
+                    <option selected value="">None</option>
                     <option v-for="parent in parents" v-bind:key="parent.id" :value="parent.id">{{ parent.title }}</option>
                 </select>
             </div>
@@ -25,26 +26,23 @@
 
             <div class="form-group">
                 <label for="body">Body</label>
-                <!-- <textarea class="form-control" id="body"></textarea> -->
-                <tinymce 
-                    api-key="jvygsti8vfl669gfq2jxa3h5qr00kuj22sgdd3tfhibp14yj" 
-                    :init="{
-                        height: '300',
-                        plugins: 'codesample, link'
-                    }"
-                    v-model="page.body">
-                </tinymce>
-                <!-- <editor api-key='jvygsti8vfl669gfq2jxa3h5qr00kuj22sgdd3tfhibp14yj' cloud-channel='dev' :init="{/* your settings */}"></editor> -->
+                <textarea class="form-control" id="body"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
-            <!-- parent, title, body, submit button -->
         </form>
     </div>
 </template>
 
 <script>
-import Tinymce from '@tinymce/tinymce-vue';
+import tinymce from 'tinymce/tinymce.js';
+import 'tinymce/themes/modern/theme';
+
+tinymce.init({
+    selector: '#body',
+    plugins: 'link, codesample',
+    height: '400',
+});
 
 export default {
     props: ['course','parents'],
@@ -58,28 +56,33 @@ export default {
             },
         }
     },
-    components: {
-        'tinymce': Tinymce,
-    },
-    created() {
-        console.log(this.course);
-        console.log(this.parents);
-    },
     methods: {
-        createPage() {
-            fetch('/api/pages', {
-                method: 'put',
-                body: JSON.stringify(this.page),
-                headers: {
-                    'content-type': 'application/json',
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-                .catch(err => console.log(err));
-        },
         getCourseUrl(course_code) {
             return '/courses/' + course_code;
-        }
+        },
+        createPage() {
+            this.page.course_id = this.course.id;
+            this.page.body = tinymce.get('body').getContent();
+            console.log(this.page.body);
+
+            fetch('/api/page', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': Laravel.csrfToken,
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(this.page),
+            }).then(
+                response => {
+                    if(response.status === 200) {
+                        window.location.href = this.getCourseUrl(this.course.code);
+                    }
+                }
+            )
+            .catch((err)=>console.log(err));
+        },
     },
 }
 </script>
