@@ -6,19 +6,17 @@
         <b-button class="mb-3" variant="primary" :to="getCreatePageUrl()">Add New Page</b-button>
         
         <div v-if="course.pages.length">
-            <div v-for="page in course.pages" v-bind:key="page.id">
-                <div class="card mb-2">
-                    <div class="card-header">
-                        <h5 class="mb-0">
-                            <b-link :to="getPageUrl(page)">{{ page.title }}</b-link>
-                        </h5>
-                    </div>
-                    <div v-if="hasChildren(page)">
-                        <div class="card-body">
-                            <h6 v-for="child in page.children" v-bind:key="child.id">
-                                <a :href="getChildUrl(child)" style="text-decoration: none">{{ child.title }}</a>
-                            </h6>
-                        </div>
+            <div class="card mb-2" v-for="page in course.pages" v-bind:key="page.id">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <b-link :to="getPageUrl(page)">{{ page.title }}</b-link>
+                    </h5>
+                </div>
+                <div v-if="hasChildren(page)">
+                    <div class="card-body">
+                        <h6 v-for="child in page.children" v-bind:key="child.id">
+                            <a :href="getChildUrl(child)" style="text-decoration: none">{{ child.title }}</a>
+                        </h6>
                     </div>
                 </div>
             </div>
