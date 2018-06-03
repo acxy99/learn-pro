@@ -63,7 +63,6 @@ export default {
         createPage() {
             this.page.course_id = this.course.id;
             this.page.body = tinymce.get('body').getContent();
-            console.log(this.page.body);
 
             fetch('/api/page', {
                 method: 'POST',
@@ -76,8 +75,10 @@ export default {
                 body: JSON.stringify(this.page),
             }).then(
                 response => {
-                    if(response.status === 200) {
+                    if(response.ok) { /* redirect */
                         window.location.href = this.getCourseUrl(this.course.slug);
+                    } else {
+                        throw Error([response.status, response.statusText].join(' '));
                     }
                 }
             )
