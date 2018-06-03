@@ -865,7 +865,27 @@ var codesample = (function () {
             style: 'direction: ltr; text-align: left',
             classes: 'monospace',
             value: currentCode,
-            autofocus: true
+            autofocus: true,
+            onKeyDown: function(e) {
+              if(e.keyCode == 9) {
+                e.preventDefault();
+
+                var target = e.target;
+                var value = target.value;
+
+                // get caret position
+                var start = target.selectionStart;
+                var end = target.selectionEnd;
+
+                // insert tab based on caret position
+                target.value = value.substring(0, start) + "\t" + value.substring(end);
+
+                // reset caret position
+                target.selectionStart = target.selectionEnd = start + 1;
+                
+                return false;
+              }
+            }
           }
         ],
         onSubmit: function (e) {
