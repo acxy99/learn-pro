@@ -32,11 +32,10 @@ Route::get('categories/{id}', function($id) { return new CategoryResource(Catego
 
 Route::get('courses', function() { return new CourseResourceCollection(Course::paginate(5)); });
 Route::get('courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
-//Route::post('course', 'CourseController@store');
+Route::post('course', 'CourseController@store');
 //Route::put('course/{id}', 'CourseController@update');
 //Route::delete('course/{id}', 'CourseController@destroy');
 
 //Route::get('page', 'PageController@index');
 Route::get('pages/{id}', function($id) { return new PageResource(Page::find($id)); });
 Route::post('page', 'PageController@store');
-//Route::post('page', 'PageController@store');

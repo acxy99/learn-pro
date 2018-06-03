@@ -2,7 +2,7 @@
 
 @section('title', '| Create Course')
 
-@section('content')
+{{-- @section('content')
 
     <div class="container">
         <h3>Create Course</h3><hr>
@@ -39,7 +39,7 @@
 
         <!-- Image -->
         <div class="form-group">
-            {!! Form::label('image', 'Select File', ['class' => 'control-label col-sm-3']) !!}
+            {!! Form::label('image', 'Select Image', ['class' => 'control-label col-sm-3']) !!}
             {!! Form::file('image', [
                 'class' => 'form-control',
             ]) !!}
@@ -57,4 +57,8 @@
 
     </div>
 
+@endsection --}}
+
+@section('content')
+    <courseform></courseform>
 @endsection

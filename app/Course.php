@@ -18,6 +18,10 @@ class Course extends Model
         'slug',
     ];
 
+    protected $appends = [
+        'image_path',
+    ];
+
     public function pages() {
         return $this->hasMany(Page::class);
     }
@@ -38,7 +42,7 @@ class Course extends Model
         return 'slug';
     }
 
-    public function getImageAttribute($value) {
-        return '/storage/courses/' . $value;
+    public function getImagePathAttribute() {
+        return '/storage/courses/' . $this->image;
     }
 }

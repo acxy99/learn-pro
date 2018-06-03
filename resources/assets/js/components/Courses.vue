@@ -16,7 +16,7 @@
         <div v-if="courses.length">
             <div class="card-columns">
                 <div class="card" v-for="course in courses" v-bind:key="course.id">
-                    <img class="card-img-top" :src="getImageUrl(course)">
+                    <img class="card-img-top" :src="getImagePath(course)">
                     <div class="card-body">
                         <h5 class="card-title"><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
                         <p class="card-text">{{ course.description }}</p>
@@ -56,7 +56,7 @@
                     code: '',
                     title: '',
                     description: '',
-                    image: '',
+                    image_path: '',
                 },
                 course_id: '',
                 pagination: {},
@@ -80,8 +80,8 @@
                     })
                     .catch(err => console.log(err));
             },
-            getImageUrl(course) {
-                return course.image;
+            getImagePath(course) {
+                return course.image_path;
             },
             getCourseUrl(course) {
                 return '/courses/' + course.slug;

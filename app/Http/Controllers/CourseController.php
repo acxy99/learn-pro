@@ -22,16 +22,18 @@ class CourseController extends Controller {
     public function store(Request $request) {
         $course = new Course();
         $course->fill($request->except('image'));
-        $course->image = 'placeholder-image.png';
-        $course->save();
 
         if($request->hasFile('image')) {
-            $course->image = $course->slug . '.jpg';
+            $course->image = str_slug($course->code) . '.jpg';
             $request->file('image')->storeAs('public/courses', $course->image);
-            $course->save();
+        } else {
+            $course->image = 'placeholder-image.png';
         }
         
-        return redirect()->route('courses.show', $course->slug);
+        $course->save();
+
+        return response()->json(['course' => $course]);
+        // return redirect()->route('courses.show', $course->slug);
     }
 
     public function show($slug) {

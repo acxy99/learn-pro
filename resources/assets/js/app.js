@@ -22,9 +22,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
  */
 
 Vue.component('layoutheader', require('./components/LayoutHeader.vue'));
-Vue.component('categories', require('./components/Categories.vue'));
-Vue.component('category', require('./components/Category.vue'));
+// Vue.component('categories', require('./components/Categories.vue'));
+// Vue.component('category', require('./components/Category.vue'));
 Vue.component('courses', require('./components/Courses.vue'));
+Vue.component('courseform', require('./components/CourseForm.vue'));
 Vue.component('course', require('./components/Course.vue'));
 Vue.component('page', require('./components/Page.vue'));
 Vue.component('createpage', require('./components/CreatePage.vue'));

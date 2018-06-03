@@ -24,6 +24,7 @@ class CourseResource extends Resource
             'title' => $this->title,
             'description' => $this->description,
             'image' => $this->image,
+            'image_path' => $this->image_path,
             'slug' => $this->slug,
             'pages' => PageResource::collection($pages),
         ];
