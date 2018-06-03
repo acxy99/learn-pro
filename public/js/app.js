@@ -65692,7 +65692,7 @@ Prism.languages.python = {
 
 	Prism.plugins.toolbar.registerButton('copy-to-clipboard', function (env) {
 		var linkCopy = document.createElement('a');
-		linkCopy.textContent = 'Copy';
+		linkCopy.textContent = 'Copy code';
 
 		if (!ClipboardJS) {
 			callbacks.push(registerClipboard);
@@ -65710,7 +65710,7 @@ Prism.languages.python = {
 			});
 
 			clip.on('success', function() {
-				linkCopy.textContent = 'Copied!';
+				linkCopy.textContent = 'Copied to clipboard';
 
 				resetText();
 			});
@@ -65723,7 +65723,7 @@ Prism.languages.python = {
 
 		function resetText() {
 			setTimeout(function () {
-				linkCopy.textContent = 'Copy';
+				linkCopy.textContent = 'Copy code';
 			}, 5000);
 		}
 	});

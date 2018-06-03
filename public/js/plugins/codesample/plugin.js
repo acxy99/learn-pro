@@ -852,6 +852,10 @@ var codesample = (function () {
             checked: 'true'
           },
           {
+            type   : 'container',
+            html   : '<em>* line numbers will not be shown in this editor</em>',
+          },
+          {
             type: 'textbox',
             name: 'code',
             multiline: true,
