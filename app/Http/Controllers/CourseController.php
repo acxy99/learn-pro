@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Course;
+use App\Http\Requests\StoreCourse;
 use App\Http\Resources\CourseResource;
 use App\Page;
 
@@ -19,7 +20,7 @@ class CourseController extends Controller {
         return view('courses.create', ['course' => $course]);
     }
 
-    public function store(Request $request) {
+    public function store(StoreCourse $request) {
         $course = new Course();
         $course->fill($request->except('image'));
 

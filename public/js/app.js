@@ -63384,6 +63384,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id'],
@@ -63395,7 +63398,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: '',
                 description: '',
                 image: ''
-            }
+            },
+            errors: []
         };
     },
     created: function created() {
@@ -63404,6 +63408,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onSubmit: function onSubmit() {
+            this.errors = [];
+
             var formData = new FormData();
             formData.append('code', this.course.code);
             formData.append('title', this.course.title);
@@ -63417,6 +63423,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         createCourse: function createCourse(formData) {
+            var _this = this;
+
             axios.post('/api/course', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -63426,6 +63434,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 window.location.href = '/courses/' + response.data.course.slug;
             }).catch(function (error) {
                 console.log(error);
+                if (error.response.status == 422) {
+                    _this.errors = error.response.data.errors;
+                }
             });
         },
         updateCourse: function updateCourse(formData) {
@@ -63458,7 +63469,7 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "form-group invalid" }, [
           _c("label", { attrs: { for: "code" } }, [_vm._v("Code")]),
           _vm._v(" "),
           _c("input", {
@@ -63481,7 +63492,13 @@ var render = function() {
                 _vm.$set(_vm.course, "code", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors.code
+            ? _c("span", { staticClass: "form-text text-muted" }, [
+                _vm._v(_vm._s(_vm.errors.code[0]))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -63507,7 +63524,13 @@ var render = function() {
                 _vm.$set(_vm.course, "title", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors.title
+            ? _c("span", { staticClass: "form-text text-muted" }, [
+                _vm._v(_vm._s(_vm.errors.title[0]))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -63535,7 +63558,13 @@ var render = function() {
                 _vm.$set(_vm.course, "description", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors.description
+            ? _c("span", { staticClass: "form-text text-muted" }, [
+                _vm._v(_vm._s(_vm.errors.description[0]))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _vm._m(0),
