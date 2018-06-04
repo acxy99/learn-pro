@@ -18,7 +18,6 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "@tinymce/tinymce-vue": "^1.0.8",
         "bootstrap": "^4.1.1",
         "bootstrap-vue": "^2.0.0-rc.10",
         "prismjs": "^1.14.0",
