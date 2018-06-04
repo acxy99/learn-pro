@@ -3,6 +3,7 @@
         <h3>{{ course.code }} {{ course.title }}</h3>
         <p>{{ course.description }}</p><hr>
 
+        <b-button class="mb-3" variant="primary" :to="getEditCourseUrl()">Edit Course</b-button>
         <b-button class="mb-3" variant="primary" :to="getCreatePageUrl()">Add New Page</b-button>
         
         <div v-if="course.pages.length">
@@ -27,10 +28,7 @@
 
 <script>
 export default {
-    props: {
-        id: { type: String, required: true }
-    },
-
+    props: ['slug'],
     data() {
         return {
             course: {
@@ -42,15 +40,13 @@ export default {
             }
         }
     },
-
     created() {
         this.fetchCourse();
     },
-
     methods: {
         fetchCourse(page_url) {
             //let vm = this;
-            page_url = page_url || ('/api/courses/' + this.id);
+            page_url = page_url || ('/api/courses/' + this.slug);
             fetch(page_url)
                 .then(res => res.json()) // map response to json
                 .then(res => {
@@ -58,6 +54,9 @@ export default {
                     //vm.makePagination(res);
                 })
                 .catch(err => console.log(err));
+        },
+        getEditCourseUrl() {
+            return '/courses/' + this.course.slug + '/edit';
         },
         getPageUrl(page) {
             return '/courses/' + this.course.slug + '/pages/' + page.slug;

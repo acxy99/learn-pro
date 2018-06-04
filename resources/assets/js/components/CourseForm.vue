@@ -6,7 +6,7 @@
             <!-- course code -->
             <div class="form-group invalid">
                 <label for="code">Code</label>
-                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8" :readonly="id">
+                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8" :readonly="slug">
                 <span class="form-text text-muted" v-if="errors.code">{{ errors.code[0] }}</span>
             </div>
 
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-    props: ['id'],
+    props: ['slug'],
     data() {
         return {
             title: '',
@@ -51,12 +51,12 @@ export default {
         }
     },
     created() {
-        if (!this.id) {
+        if (!this.slug) {
             this.title = 'Create Course';
         } else {
             this.title = 'Update Course';
 
-            axios.get('/api/courses/' + this.id)
+            axios.get('/api/courses/' + this.slug)
                 .then(response => {
                     console.log(response.data.data);
                     this.course = response.data.data;
@@ -77,7 +77,7 @@ export default {
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
 
-            if (!this.id) {
+            if (!this.slug) {
                 this.createCourse(formData);
             } else {
                 this.updateCourse(formData);
@@ -102,7 +102,7 @@ export default {
         updateCourse(formData) {
             formData.append('_method', 'PUT');
 
-            axios.post('/api/courses/' + this.id, formData, {
+            axios.post('/api/courses/' + this.slug, formData, {
                 _method: 'put',
                 headers: {
                     'Content-Type': 'multipart/form-data',

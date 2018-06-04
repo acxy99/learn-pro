@@ -64941,12 +64941,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
+    props: ['slug'],
     data: function data() {
         return {
             title: '',
             course: {
-                id: '',
                 code: '',
                 title: '',
                 description: '',
@@ -64958,12 +64957,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        if (!this.id) {
+        if (!this.slug) {
             this.title = 'Create Course';
         } else {
             this.title = 'Update Course';
 
-            axios.get('/api/courses/' + this.id).then(function (response) {
+            axios.get('/api/courses/' + this.slug).then(function (response) {
                 console.log(response.data.data);
                 _this.course = response.data.data;
                 console.log(_this.course);
@@ -64983,7 +64982,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
 
-            if (!this.id) {
+            if (!this.slug) {
                 this.createCourse(formData);
             } else {
                 this.updateCourse(formData);
@@ -65010,7 +65009,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             formData.append('_method', 'PUT');
 
-            axios.post('/api/courses/' + this.id, formData, {
+            axios.post('/api/courses/' + this.slug, formData, {
                 _method: 'put',
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -65068,7 +65067,7 @@ var render = function() {
               type: "text",
               id: "code",
               maxlength: "8",
-              readonly: _vm.id
+              readonly: _vm.slug
             },
             domProps: { value: _vm.course.code },
             on: {
@@ -65269,12 +65268,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        id: { type: String, required: true }
-    },
-
+    props: ['slug'],
     data: function data() {
         return {
             course: {
@@ -65290,13 +65287,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.fetchCourse();
     },
 
-
     methods: {
         fetchCourse: function fetchCourse(page_url) {
             var _this = this;
 
             //let vm = this;
-            page_url = page_url || '/api/courses/' + this.id;
+            page_url = page_url || '/api/courses/' + this.slug;
             fetch(page_url).then(function (res) {
                 return res.json();
             }) // map response to json
@@ -65306,6 +65302,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (err) {
                 return console.log(err);
             });
+        },
+        getEditCourseUrl: function getEditCourseUrl() {
+            return '/courses/' + this.course.slug + '/edit';
         },
         getPageUrl: function getPageUrl(page) {
             return '/courses/' + this.course.slug + '/pages/' + page.slug;
@@ -65340,6 +65339,15 @@ var render = function() {
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.course.description))]),
       _c("hr"),
+      _vm._v(" "),
+      _c(
+        "b-button",
+        {
+          staticClass: "mb-3",
+          attrs: { variant: "primary", to: _vm.getEditCourseUrl() }
+        },
+        [_vm._v("Edit Course")]
+      ),
       _vm._v(" "),
       _c(
         "b-button",

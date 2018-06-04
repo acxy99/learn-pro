@@ -40,23 +40,23 @@ class CourseController extends Controller {
     public function show($slug) {
         $course = Course::findBySlugOrFail($slug);
 
-        return view('courses.show', ['course_id' => $course->id]);
+        return view('courses.show', ['slug' => $course->slug]);
     }
 
-    public function edit($id) {
-        $course = Course::findOrFail($id);
+    public function edit($slug) {
+        $course = Course::findBySlugOrFail($slug);
 
-        return view('courses.edit', ['course_id' => $course->id]);
+        return view('courses.edit', ['slug' => $course->slug]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $slug) {
         $request->validate([
             'code' => 'required|unique:courses,code,' . $request->id,
             'title' => 'required',
             'description'  => 'required',
         ]);
 
-        $course = Course::findOrFail($id);
+        $course = Course::findBySlugOrFail($slug);
         $course->fill($request->except('image'));
 
         if($request->hasFile('image')) {

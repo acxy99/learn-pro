@@ -7,5 +7,5 @@ use App\Course;
 @section('title', '| Course')
 
 @section('content')
-    <course id="{{ $course_id }}"></course>
+    <course slug="{{ $slug }}"></course>
 @endsection
