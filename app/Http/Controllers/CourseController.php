@@ -44,11 +44,29 @@ class CourseController extends Controller {
     }
 
     public function edit($id) {
-        //
+        $course = Course::findOrFail($id);
+
+        return view('courses.edit', ['course_id' => $course->id]);
     }
 
     public function update(Request $request, $id) {
-        // update slug
+        $request->validate([
+            'code' => 'required|unique:courses,code,' . $request->id,
+            'title' => 'required',
+            'description'  => 'required',
+        ]);
+
+        $course = Course::findOrFail($id);
+        $course->fill($request->except('image'));
+
+        if($request->hasFile('image')) {
+            $course->image = str_slug($course->code) . '.jpg';
+            $request->file('image')->storeAs('public/courses', $course->image);
+        }
+        
+        $course->save();
+
+        return response()->json(['course' => $course]);
     }
 
     public function destroy($id) {

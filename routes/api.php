@@ -30,10 +30,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('categories', function() { return new CategoryResourceCollection(Category::paginate(5)); });
 Route::get('categories/{id}', function($id) { return new CategoryResource(Category::find($id)); });
 
-Route::get('courses', function() { return new CourseResourceCollection(Course::paginate(5)); });
-Route::get('courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
-Route::post('course', 'CourseController@store');
-//Route::put('course/{id}', 'CourseController@update');
+Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(5)); });
+Route::get('/courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
+Route::post('/courses', 'CourseController@store');
+Route::put('/courses/{id}', 'CourseController@update');
 //Route::delete('course/{id}', 'CourseController@destroy');
 
 //Route::get('page', 'PageController@index');

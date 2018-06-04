@@ -64946,6 +64946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             title: '',
             course: {
+                id: '',
                 code: '',
                 title: '',
                 description: '',
@@ -64955,7 +64956,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        this.id ? this.title = 'Update Course' : this.title = 'Create Course';
+        var _this = this;
+
+        if (!this.id) {
+            this.title = 'Create Course';
+        } else {
+            this.title = 'Update Course';
+
+            axios.get('/api/courses/' + this.id).then(function (response) {
+                console.log(response.data.data);
+                _this.course = response.data.data;
+                console.log(_this.course);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     },
 
     methods: {
@@ -64975,24 +64990,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         createCourse: function createCourse(formData) {
-            var _this = this;
+            var _this2 = this;
 
-            axios.post('/api/course', formData, {
+            axios.post('/api/courses', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-CSRF-TOKEN': Laravel.csrfToken
+                    'Content-Type': 'multipart/form-data'
                 }
             }).then(function (response) {
                 window.location.href = '/courses/' + response.data.course.slug;
             }).catch(function (error) {
                 console.log(error);
                 if (error.response.status == 422) {
-                    _this.errors = error.response.data.errors;
+                    _this2.errors = error.response.data.errors;
                 }
             });
         },
         updateCourse: function updateCourse(formData) {
-            // put request
+            var _this3 = this;
+
+            formData.append('_method', 'PUT');
+
+            axios.post('/api/courses/' + this.id, formData, {
+                _method: 'put',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (response) {
+                window.location.href = '/courses/' + response.data.course.slug;
+            }).catch(function (error) {
+                console.log(error);
+                if (error.response.status == 422) {
+                    _this3.errors = error.response.data.errors;
+                }
+            });
         }
     }
 });
@@ -65034,7 +65064,12 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", id: "code", maxlength: "8" },
+            attrs: {
+              type: "text",
+              id: "code",
+              maxlength: "8",
+              readonly: _vm.id
+            },
             domProps: { value: _vm.course.code },
             on: {
               input: function($event) {

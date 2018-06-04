@@ -6,7 +6,7 @@
             <!-- course code -->
             <div class="form-group invalid">
                 <label for="code">Code</label>
-                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8">
+                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8" :readonly="id">
                 <span class="form-text text-muted" v-if="errors.code">{{ errors.code[0] }}</span>
             </div>
 
@@ -51,7 +51,21 @@ export default {
         }
     },
     created() {
-        this.id ? this.title = 'Update Course' : this.title = 'Create Course';
+        if (!this.id) {
+            this.title = 'Create Course';
+        } else {
+            this.title = 'Update Course';
+
+            axios.get('/api/courses/' + this.id)
+                .then(response => {
+                    console.log(response.data.data);
+                    this.course = response.data.data;
+                    console.log(this.course);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
     },
     methods: {
         onSubmit() {
@@ -70,10 +84,9 @@ export default {
             }
         },
         createCourse(formData) {
-            axios.post('/api/course', formData, {
+            axios.post('/api/courses', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'X-CSRF-TOKEN': Laravel.csrfToken,
                 }
             })
             .then(response => {
@@ -87,7 +100,23 @@ export default {
             });
         },
         updateCourse(formData) {
-            // put request
+            formData.append('_method', 'PUT');
+
+            axios.post('/api/courses/' + this.id, formData, {
+                _method: 'put',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then(response => {
+                window.location.href = '/courses/' + response.data.course.slug;
+            })
+            .catch(error => {
+                console.log(error);
+                if (error.response.status == 422) {
+                    this.errors = error.response.data.errors;
+                }
+            })
         },
     },
 }
