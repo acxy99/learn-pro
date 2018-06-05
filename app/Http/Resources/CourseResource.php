@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 use App\Page;
-use App\Http\Resources\PageResource;
+// use App\Http\Resources\PageResourceCollection;
 
 class CourseResource extends Resource
 {
@@ -16,8 +16,8 @@ class CourseResource extends Resource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-        $pages = $this->pages()->where('parent_id', null)->get();
+        return parent::toArray($request);
+        /*$pages = $this->pages()->where('parent_id', null)->get();
         return [
             'id' => $this->id,
             'code' => $this->code,
@@ -26,7 +26,7 @@ class CourseResource extends Resource
             'image' => $this->image,
             'image_path' => $this->image_path,
             'slug' => $this->slug,
-            'pages' => PageResource::collection($pages),
-        ];
+            'pages' => new PageResourceCollection($pages),
+        ];*/
     }
 }
