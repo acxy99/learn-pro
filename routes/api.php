@@ -11,6 +11,7 @@ use App\Http\Resources\CourseResourceCollection;
 
 use App\Page;
 use App\Http\Resources\PageResource;
+use App\Http\Resources\PageResourceCollection;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,8 @@ Route::post('/courses', 'CourseController@store');
 Route::put('/courses/{slug}', 'CourseController@update');
 //Route::delete('course/{id}', 'CourseController@destroy');
 
+Route::get('/courses/{course_id}/pages', function($course_id) { 
+    return new PageResourceCollection(Page::where(['course_id' => $course_id, 'parent_id' => null])->paginate(8)); 
+});
 Route::get('pages/{id}', function($id) { return new PageResource(Page::find($id)); });
 Route::post('page', 'PageController@store');
