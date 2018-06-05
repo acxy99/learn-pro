@@ -64664,6 +64664,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -64751,19 +64753,21 @@ var render = function() {
               { staticClass: "card-columns" },
               _vm._l(_vm.courses, function(course) {
                 return _c("div", { key: course.id, staticClass: "card" }, [
-                  _c("img", {
-                    staticClass: "card-img-top",
-                    attrs: { src: _vm.getImagePath(course) }
-                  }),
+                  _c("div", { staticClass: "wrapper" }, [
+                    _c("img", {
+                      staticClass: "card-img-top img",
+                      attrs: { src: _vm.getImagePath(course) }
+                    })
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-body" }, [
-                    _c("h5", { staticClass: "card-title" }, [
+                    _c("h5", { staticClass: "card-title text-truncate" }, [
                       _c("a", { attrs: { href: _vm.getCourseUrl(course) } }, [
                         _vm._v(_vm._s(course.title))
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("p", { staticClass: "card-text" }, [
+                    _c("p", { staticClass: "card-text text-truncate" }, [
                       _vm._v(_vm._s(course.description))
                     ])
                   ])

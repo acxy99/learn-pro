@@ -2,39 +2,19 @@
     <div class="container">
         <h2>Courses</h2><hr>
         <b-button class="mb-3" variant="primary" href="/courses/create">Add New Course</b-button>
-
-        <!-- <b-card-group columns>
-            <b-card 
-                v-for="course in courses" 
-                v-bind:key="course.id"
-                v-bind:title="course.title">
-                    <b-card-img :src="getImageUrl(course)" top/>
-                    <p class="card-text">{{ course.description }}</p>
-            </b-card>
-        </b-card-group> -->
         
         <div v-if="courses.length">
             <div class="card-columns">
                 <div class="card" v-for="course in courses" v-bind:key="course.id">
-                    <img class="card-img-top" :src="getImagePath(course)">
+                    <div class="wrapper">
+                        <img class="card-img-top img" :src="getImagePath(course)">
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title"><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
-                        <p class="card-text">{{ course.description }}</p>
+                        <h5 class="card-title text-truncate"><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
+                        <p class="card-text text-truncate">{{ course.description }}</p>
                     </div>
                 </div>
             </div>
-
-            <!-- <div style="padding: 15px">
-                <div class="row mb-2" style="border: 1px solid #ccc;" v-for="(course, i) in courses" v-bind:key="course.id">
-                    <div class="col-md-4" style="padding-left: 0px; padding-right: 0px; overflow: hidden;">
-                        <img class="img-fluid" :src="getImageUrl(i)"/>
-                    </div>
-                    <div class="col-md-8" style="padding: 1.25rem">
-                        <h5><a :href="getCourseUrl(course)">{{ course.title }}</a></h5>
-                        <p>{{ course.description }}</p>
-                    </div>
-                </div>
-            </div> -->
 
             <ul class="pagination">
                 <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="fetchCourses(pagination.prev_page_url)">Previous</a></li>
