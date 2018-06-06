@@ -20,6 +20,8 @@ class Page extends Model
         'slug',
     ];
 
+    protected $appends = ['children'];
+
     public function course() {
         return $this->belongsTo(Course::class);
     }
@@ -53,7 +55,7 @@ class Page extends Model
         ];
     }
 
-    // public function getRouteKeyName() {
-    //     return 'slug';
-    // }
+    public function getChildrenAttribute() {
+        return $this->children()->get();
+    }
 }
