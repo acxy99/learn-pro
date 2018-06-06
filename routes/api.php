@@ -35,7 +35,7 @@ Route::get('/courses', function() { return new CourseResourceCollection(Course::
 Route::get('/courses/{slug}', function($slug) { return new CourseResource(Course::findBySlugOrFail($slug)); });
 Route::post('/courses', 'CourseController@store');
 Route::put('/courses/{slug}', 'CourseController@update');
-//Route::delete('course/{id}', 'CourseController@destroy');
+Route::delete('courses/{slug}', 'CourseController@destroy');
 
 Route::get('/courses/{course_id}/pages', function($course_id) { 
     return new PageResourceCollection(Page::where(['course_id' => $course_id, 'parent_id' => null])->paginate(8)); 

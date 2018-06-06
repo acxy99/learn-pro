@@ -45,4 +45,12 @@ class Course extends Model
     public function getImagePathAttribute() {
         return '/storage/courses/' . $this->image;
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($course) {
+             $course->pages()->delete();
+        });
+    }
 }

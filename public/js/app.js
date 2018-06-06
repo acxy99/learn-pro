@@ -64664,7 +64664,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             url = url || '/api/courses';
-
             axios.get(url).then(function (response) {
                 _this.courses = response.data.data;
                 _this.makePagination(response.data.links, response.data.meta);
@@ -64927,6 +64926,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             title: '',
             course: {
+                id: '',
                 code: '',
                 title: '',
                 description: '',
@@ -64988,6 +64988,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateCourse: function updateCourse(formData) {
             var _this3 = this;
 
+            formData.append('id', this.course.id);
             formData.append('_method', 'PUT');
 
             axios.post('/api/courses/' + this.slug, formData, {
@@ -65256,6 +65257,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['slug'],
@@ -65306,6 +65310,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             this.pagination = pagination;
         },
+        deleteCourse: function deleteCourse() {
+            if (confirm('Are you sure you want to delete this course?')) {
+                axios.delete('/api/courses/' + this.slug).then(function (response) {
+                    window.location.href = '/courses';
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                console.log('delete');
+            }
+        },
         hasPages: function hasPages() {
             return this.pages.length;
         },
@@ -65329,149 +65343,157 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h3", [
-        _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
-      ]),
-      _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.course.description))]),
-      _c("hr"),
-      _vm._v(" "),
+  return _c("div", { staticClass: "container" }, [
+    _c("h3", [
+      _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
+    ]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.course.description))]),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "mb-3" }, [
       _c(
-        "b-button",
+        "a",
         {
-          staticClass: "mb-3",
-          attrs: { variant: "primary", to: _vm.editCourseUrl }
+          staticClass: "btn btn-primary",
+          attrs: { href: _vm.editCourseUrl, role: "button" }
         },
         [_vm._v("Edit Course")]
       ),
       _vm._v(" "),
       _c(
-        "b-button",
+        "button",
         {
-          staticClass: "mb-3",
-          attrs: { variant: "primary", to: _vm.addPageUrl }
+          staticClass: "btn btn-danger",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.deleteCourse()
+            }
+          }
         },
-        [_vm._v("Add New Page")]
+        [_vm._v("Delete Course")]
       ),
       _vm._v(" "),
-      _vm.hasPages()
-        ? _c(
-            "div",
-            [
-              _vm._l(_vm.pages, function(page) {
-                return _c("div", { key: page.id, staticClass: "card mb-2" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c(
-                      "h5",
-                      { staticClass: "mb-0" },
-                      [
-                        _c("b-link", { attrs: { to: _vm.getPageUrl(page) } }, [
-                          _vm._v(_vm._s(page.title))
-                        ])
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm.hasChildren(page)
-                    ? _c("div", [
-                        _c(
-                          "div",
-                          { staticClass: "card-body" },
-                          _vm._l(page.children, function(child) {
-                            return _c("h6", { key: child.id }, [
-                              _c(
-                                "a",
-                                {
-                                  staticStyle: { "text-decoration": "none" },
-                                  attrs: { href: _vm.getChildUrl(child) }
-                                },
-                                [_vm._v(_vm._s(child.title))]
-                              )
-                            ])
-                          })
-                        )
-                      ])
-                    : _vm._e()
-                ])
-              }),
-              _vm._v(" "),
-              _c("ul", { staticClass: "pagination" }, [
-                _c(
-                  "li",
-                  {
-                    staticClass: "page-item",
-                    class: [{ disabled: !_vm.pagination.prev_page_url }]
-                  },
-                  [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { href: _vm.addPageUrl, role: "button" }
+        },
+        [_vm._v("Add Page")]
+      )
+    ]),
+    _vm._v(" "),
+    _vm.hasPages()
+      ? _c(
+          "div",
+          [
+            _vm._l(_vm.pages, function(page) {
+              return _c("div", { key: page.id, staticClass: "card mb-2" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _c("h5", { staticClass: "mb-0" }, [
                     _c(
                       "a",
                       {
-                        staticClass: "page-link",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.getPages(_vm.pagination.prev_page_url)
-                          }
-                        }
+                        staticStyle: { "text-decoration": "none" },
+                        attrs: { href: _vm.getPageUrl(page) }
                       },
-                      [_vm._v("Previous")]
+                      [_vm._v(_vm._s(page.title))]
                     )
-                  ]
-                ),
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("li", { staticClass: "page-item disabled" }, [
+                _vm.hasChildren(page)
+                  ? _c("div", [
+                      _c(
+                        "div",
+                        { staticClass: "card-body" },
+                        _vm._l(page.children, function(child) {
+                          return _c("h6", { key: child.id }, [
+                            _c(
+                              "a",
+                              {
+                                staticStyle: { "text-decoration": "none" },
+                                attrs: { href: _vm.getChildUrl(child) }
+                              },
+                              [_vm._v(_vm._s(child.title))]
+                            )
+                          ])
+                        })
+                      )
+                    ])
+                  : _vm._e()
+              ])
+            }),
+            _vm._v(" "),
+            _c("ul", { staticClass: "pagination" }, [
+              _c(
+                "li",
+                {
+                  staticClass: "page-item",
+                  class: [{ disabled: !_vm.pagination.prev_page_url }]
+                },
+                [
                   _c(
                     "a",
                     {
-                      staticClass: "page-link text-dark",
-                      attrs: { href: "#" }
-                    },
-                    [
-                      _vm._v(
-                        "Page " +
-                          _vm._s(_vm.pagination.current_page) +
-                          " of " +
-                          _vm._s(_vm.pagination.last_page)
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "page-item",
-                    class: [{ disabled: !_vm.pagination.next_page_url }]
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "page-link",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.getPages(_vm.pagination.next_page_url)
-                          }
+                      staticClass: "page-link",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.getPages(_vm.pagination.prev_page_url)
                         }
-                      },
-                      [_vm._v("Next")]
+                      }
+                    },
+                    [_vm._v("Previous")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item disabled" }, [
+                _c(
+                  "a",
+                  { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                  [
+                    _vm._v(
+                      "Page " +
+                        _vm._s(_vm.pagination.current_page) +
+                        " of " +
+                        _vm._s(_vm.pagination.last_page)
                     )
                   ]
                 )
-              ])
-            ],
-            2
-          )
-        : _c("div", [_vm._v("No pages to display")])
-    ],
-    1
-  )
+              ]),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "page-item",
+                  class: [{ disabled: !_vm.pagination.next_page_url }]
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.getPages(_vm.pagination.next_page_url)
+                        }
+                      }
+                    },
+                    [_vm._v("Next")]
+                  )
+                ]
+              )
+            ])
+          ],
+          2
+        )
+      : _c("div", [_vm._v("No pages to display")])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

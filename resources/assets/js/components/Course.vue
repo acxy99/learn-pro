@@ -3,14 +3,17 @@
         <h3>{{ course.code }} {{ course.title }}</h3>
         <p>{{ course.description }}</p><hr>
 
-        <b-button class="mb-3" variant="primary" :to="editCourseUrl">Edit Course</b-button>
-        <b-button class="mb-3" variant="primary" :to="addPageUrl">Add New Page</b-button>
+        <div class="mb-3">
+            <a class="btn btn-primary" :href="editCourseUrl" role="button">Edit Course</a>
+            <button type="button" @click="deleteCourse()" class="btn btn-danger">Delete Course</button>
+            <a class="btn btn-primary" :href="addPageUrl" role="button">Add Page</a>
+        </div>
         
         <div v-if="hasPages()">
             <div class="card mb-2" v-for="page in pages" v-bind:key="page.id">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        <b-link :to="getPageUrl(page)">{{ page.title }}</b-link>
+                        <a :href="getPageUrl(page)" style="text-decoration: none">{{ page.title }}</a>
                     </h5>
                 </div>
                 <div v-if="hasChildren(page)">
@@ -83,6 +86,18 @@ export default {
                 next_page_url: links.next,
             };
             this.pagination = pagination;
+        },
+        deleteCourse() {
+            if(confirm('Are you sure you want to delete this course?')) {
+                axios.delete('/api/courses/' + this.slug)
+                    .then(response => {
+                        window.location.href = '/courses';
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                console.log('delete');
+            }
         },
         hasPages() {
             return this.pages.length;

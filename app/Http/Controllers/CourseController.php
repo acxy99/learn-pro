@@ -69,7 +69,11 @@ class CourseController extends Controller {
         return response()->json(['course' => $course]);
     }
 
-    public function destroy($id) {
-        //
+    public function destroy($slug) {
+        $course = Course::findBySLugOrFail($slug);
+
+        $course->delete();
+
+        return response()->json(['course' => $course]);
     }
 }
