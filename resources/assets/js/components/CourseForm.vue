@@ -42,6 +42,7 @@ export default {
         return {
             title: '',
             course: {
+                id: '',
                 code: '',
                 title: '',
                 description: '',
@@ -100,6 +101,7 @@ export default {
             });
         },
         updateCourse(formData) {
+            formData.append('id', this.course.id);
             formData.append('_method', 'PUT');
 
             axios.post('/api/courses/' + this.slug, formData, {
