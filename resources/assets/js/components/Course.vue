@@ -3,8 +3,8 @@
         <h3>{{ course.code }} {{ course.title }}</h3>
         <p>{{ course.description }}</p><hr>
 
-        <b-button class="mb-3" variant="primary" :to="getEditCourseUrl()">Edit Course</b-button>
-        <b-button class="mb-3" variant="primary" :to="getCreatePageUrl()">Add New Page</b-button>
+        <b-button class="mb-3" variant="primary" :to="editCourseUrl">Edit Course</b-button>
+        <b-button class="mb-3" variant="primary" :to="addPageUrl">Add New Page</b-button>
         
         <div v-if="hasPages()">
             <div class="card mb-2" v-for="page in pages" v-bind:key="page.id">
@@ -40,6 +40,8 @@ export default {
             course: {},
             pages: [],
             pagination: {},
+            editCourseUrl: '/courses/' + this.slug + '/edit',
+            addPageUrl: '/courses/' + this.slug + '/pages/create',
         }
     },
     created() {
@@ -73,11 +75,14 @@ export default {
                     console.log(error);
                 });
         },
-        getEditCourseUrl() {
-            return '/courses/' + this.course.slug + '/edit';
-        },
-        getCreatePageUrl() {
-            return '/courses/' + this.course.slug + '/pages/create';
+        makePagination(links, meta) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next,
+            };
+            this.pagination = pagination;
         },
         hasPages() {
             return this.pages.length;
@@ -90,15 +95,6 @@ export default {
         },
         getChildUrl(child) {
             return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        makePagination(links, meta) {
-            let pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next,
-            };
-            this.pagination = pagination;
         },
     }
 }
