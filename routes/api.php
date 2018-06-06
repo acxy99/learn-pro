@@ -37,8 +37,23 @@ Route::post('/courses', 'CourseController@store');
 Route::put('/courses/{slug}', 'CourseController@update');
 Route::delete('courses/{slug}', 'CourseController@destroy');
 
-Route::get('/courses/{course_id}/pages', function($course_id) { 
-    return new PageResourceCollection(Page::where(['course_id' => $course_id, 'parent_id' => null])->paginate(8)); 
+Route::get('/courses/{course_slug}/pages', function($course_slug) {
+    $course = Course::findBySlugOrFail($course_slug);
+    return new PageResourceCollection(
+        Page::where([
+            'course_id' => $course->id,
+            'parent_id' => null,
+        ])->paginate(10)
+    ); 
 });
-Route::get('pages/{id}', function($id) { return new PageResource(Page::find($id)); });
-Route::post('page', 'PageController@store');
+Route::get('/courses/{course_slug}/pages/{page_slug}', function($course_slug, $page_slug) {
+    $course = Course::findBySlugOrFail($course_slug);
+    return new PageResource(
+        Page::where([
+            'course_id' => $course->id,
+            'slug' => $page_slug,
+        ])->firstOrFail()
+    );
+});
+Route::get('/pages/{slug}', function($slug) { return new PageResource(Page::findBySlugOrFail($slug)); });
+Route::post('/pages', 'PageController@store');
