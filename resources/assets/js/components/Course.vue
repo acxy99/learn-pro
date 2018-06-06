@@ -53,22 +53,20 @@ export default {
     methods: {
         getCourse() {
             let vm = this;
-            let course_id = '';
 
             axios.get('/api/courses/' + vm.slug)
                 .then(response => {
                     vm.course = response.data.data;
-                    course_id = response.data.data.id;
                 })
                 .then(function() {
-                    vm.getPages(null, course_id);
+                    vm.getPages(null);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
-        getPages(url, course_id) {
-            url = url || '/api/courses/' + course_id + '/pages';
+        getPages(url) {
+            url = url || '/api/courses/' + this.course.slug + '/pages';
             axios.get(url)
                 .then(response => {
                     this.pages = response.data.data;
