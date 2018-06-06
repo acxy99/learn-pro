@@ -64647,68 +64647,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             courses: [],
-            course: {
-                id: '',
-                code: '',
-                title: '',
-                description: '',
-                image_path: ''
-            },
-            course_id: '',
-            pagination: {},
-            edit: false
+            pagination: {}
         };
     },
     created: function created() {
-        this.fetchCourses();
+        this.getCourses();
     },
 
-
     methods: {
-        fetchCourses: function fetchCourses(page_url) {
+        getCourses: function getCourses(url) {
             var _this = this;
 
-            var vm = this;
-            page_url = page_url || '/api/courses';
-            fetch(page_url).then(function (res) {
-                return res.json();
-            }) // map response to json
-            .then(function (res) {
-                _this.courses = res.data;
-                vm.makePagination(res.links, res.meta);
-            }).catch(function (err) {
-                return console.log(err);
+            url = url || '/api/courses';
+
+            axios.get(url).then(function (response) {
+                _this.courses = response.data.data;
+                _this.makePagination(response.data.links, response.data.meta);
+            }).catch(function (error) {
+                console.log(error);
             });
-        },
-        getImagePath: function getImagePath(course) {
-            return course.image_path;
-        },
-        getCourseUrl: function getCourseUrl(course) {
-            return '/courses/' + course.slug;
         },
         makePagination: function makePagination(links, meta) {
             var pagination = {
@@ -64718,6 +64680,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 next_page_url: links.next
             };
             this.pagination = pagination;
+        },
+        getImagePath: function getImagePath(course) {
+            return course.image_path;
+        },
+        getCourseUrl: function getCourseUrl(course) {
+            return '/courses/' + course.slug;
         }
     }
 });
@@ -64761,11 +64729,20 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-body" }, [
-                    _c("h5", { staticClass: "card-title text-truncate" }, [
-                      _c("a", { attrs: { href: _vm.getCourseUrl(course) } }, [
-                        _vm._v(_vm._s(course.title))
-                      ])
-                    ]),
+                    _c(
+                      "a",
+                      {
+                        staticStyle: { "text-decoration": "none" },
+                        attrs: { href: _vm.getCourseUrl(course) }
+                      },
+                      [
+                        _c("small", [_vm._v(_vm._s(course.code))]),
+                        _vm._v(" "),
+                        _c("h5", { staticClass: "card-title text-truncate" }, [
+                          _vm._v(_vm._s(course.title))
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("p", { staticClass: "card-text text-truncate" }, [
                       _vm._v(_vm._s(course.description))
@@ -64790,7 +64767,7 @@ var render = function() {
                       attrs: { href: "#" },
                       on: {
                         click: function($event) {
-                          _vm.fetchCourses(_vm.pagination.prev_page_url)
+                          _vm.getCourses(_vm.pagination.prev_page_url)
                         }
                       }
                     },
@@ -64828,7 +64805,7 @@ var render = function() {
                       attrs: { href: "#" },
                       on: {
                         click: function($event) {
-                          _vm.fetchCourses(_vm.pagination.next_page_url)
+                          _vm.getCourses(_vm.pagination.next_page_url)
                         }
                       }
                     },
@@ -65286,7 +65263,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             course: {},
             pages: [],
-            pagination: {}
+            pagination: {},
+            editCourseUrl: '/courses/' + this.slug + '/edit',
+            addPageUrl: '/courses/' + this.slug + '/pages/create'
         };
     },
     created: function created() {
@@ -65318,11 +65297,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        getEditCourseUrl: function getEditCourseUrl() {
-            return '/courses/' + this.course.slug + '/edit';
-        },
-        getCreatePageUrl: function getCreatePageUrl() {
-            return '/courses/' + this.course.slug + '/pages/create';
+        makePagination: function makePagination(links, meta) {
+            var pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next
+            };
+            this.pagination = pagination;
         },
         hasPages: function hasPages() {
             return this.pages.length;
@@ -65335,15 +65317,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getChildUrl: function getChildUrl(child) {
             return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        makePagination: function makePagination(links, meta) {
-            var pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next
-            };
-            this.pagination = pagination;
         }
     }
 });
@@ -65371,7 +65344,7 @@ var render = function() {
         "b-button",
         {
           staticClass: "mb-3",
-          attrs: { variant: "primary", to: _vm.getEditCourseUrl() }
+          attrs: { variant: "primary", to: _vm.editCourseUrl }
         },
         [_vm._v("Edit Course")]
       ),
@@ -65380,7 +65353,7 @@ var render = function() {
         "b-button",
         {
           staticClass: "mb-3",
-          attrs: { variant: "primary", to: _vm.getCreatePageUrl() }
+          attrs: { variant: "primary", to: _vm.addPageUrl }
         },
         [_vm._v("Add New Page")]
       ),

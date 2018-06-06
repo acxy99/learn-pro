@@ -16,7 +16,7 @@ use App\Course;
     .wrapper:after {
         content: '';
         display: block;
-        padding-top: 80%;
+        padding-top: 75%;
     }
 
     .wrapper img {
