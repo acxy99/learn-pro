@@ -15,9 +15,7 @@ class CourseController extends Controller {
     }
 
     public function create() {
-        $course = new Course();
-
-        return view('courses.create', ['course' => $course]);
+        return view('courses.create');
     }
 
     public function store(StoreCourse $request) {
