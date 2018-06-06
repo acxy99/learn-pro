@@ -3,9 +3,9 @@
         <small>
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h3>Create Page</h3><hr>
+        <h3>{{ title }}</h3><hr>
 
-        <form @submit.prevent="createPage">
+        <form @submit.prevent="onSubmit">
             <div class="form-group" hidden>
                 <label for="course_id">Course</label>
                 <input type="text" class="form-control" id="course_id" :value="course.id" readonly>
@@ -45,44 +45,55 @@ tinymce.init({
 });
 
 export default {
-    props: ['course','parents'],
+    props: ['course', 'parents'],
     data() {
         return {
+            title: '',
             page: {
+                id: '',
                 title: '',
                 body: '',
                 course_id: '',
                 parent_id: '',
             },
+            errors: [],
+        }
+    },
+    created() {
+        if (!this.page.id) {
+            this.title = 'Create Page';
+        } else {
+            this.title = 'Update Page';
         }
     },
     methods: {
         getCourseUrl() {
             return '/courses/' + this.course.slug;
         },
-        createPage() {
-            this.page.course_id = this.course.id;
-            this.page.body = tinymce.get('body').getContent();
+        onSubmit() {
+            var formData = new FormData();
+            formData.append('title', this.page.title);
+            formData.append('body', tinymce.get('body').getContent());
+            formData.append('course_id', this.course.id);
+            formData.append('parent_id', this.page.parent_id);
 
-            fetch('/api/page', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': Laravel.csrfToken,
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify(this.page),
-            }).then(
-                response => {
-                    if(response.ok) { /* redirect */
-                        window.location.href = this.getCourseUrl(this.course.slug);
-                    } else {
-                        throw Error([response.status, response.statusText].join(' '));
-                    }
-                }
-            )
-            .catch((err)=>console.log(err));
+            if (!this.page.id) {
+                this.createPage(formData);
+            } else {
+                this.updatePage(formData);
+            }
+        },
+        createPage(formData) {
+            axios.post('/api/pages', formData)
+                .then(response => {
+                    window.location.href = '/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        updatePage(formData) {
+            
         },
     },
 }

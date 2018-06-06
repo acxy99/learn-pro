@@ -28,7 +28,7 @@ Vue.component('courses', require('./components/Courses.vue'));
 Vue.component('courseform', require('./components/CourseForm.vue'));
 Vue.component('course', require('./components/Course.vue'));
 Vue.component('page', require('./components/Page.vue'));
-Vue.component('createpage', require('./components/CreatePage.vue'));
+Vue.component('pageform', require('./components/PageForm.vue'));
 
 const app = new Vue({
     el: '#app'

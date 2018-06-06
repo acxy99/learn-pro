@@ -20319,7 +20319,7 @@ Vue.component('courses', __webpack_require__(223));
 Vue.component('courseform', __webpack_require__(226));
 Vue.component('course', __webpack_require__(229));
 Vue.component('page', __webpack_require__(232));
-Vue.component('createpage', __webpack_require__(239));
+Vue.component('pageform', __webpack_require__(239));
 
 var app = new Vue({
   el: '#app'
@@ -65279,21 +65279,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getCourse: function getCourse() {
             var vm = this;
-            var course_id = '';
 
             axios.get('/api/courses/' + vm.slug).then(function (response) {
                 vm.course = response.data.data;
-                course_id = response.data.data.id;
             }).then(function () {
-                vm.getPages(null, course_id);
+                vm.getPages(null);
             }).catch(function (error) {
                 console.log(error);
             });
         },
-        getPages: function getPages(url, course_id) {
+        getPages: function getPages(url) {
             var _this = this;
 
-            url = url || '/api/courses/' + course_id + '/pages';
+            url = url || '/api/courses/' + this.course.slug + '/pages';
             axios.get(url).then(function (response) {
                 _this.pages = response.data.data;
                 _this.makePagination(response.data.links, response.data.meta);
@@ -65576,82 +65574,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
 // Prism - syntax highlighting
-// window.Prism = require('prismjs');
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        id: { type: String, required: true }
-    },
-
-    data: function data() {
-        return {
-            page: {
-                id: '',
-                title: '',
-                body: '',
-                course_id: '',
-                course: {},
-                children: []
-            }
-        };
-    },
-
-
-    // components: {
-    //     Prism
-    // },
-
-    created: function created() {
-        this.fetchPage();
-        // this.highlightCode();
-    },
-
-
+    props: ['course', 'page'],
     methods: {
-        fetchPage: function fetchPage() {
-            var _this = this;
-
-            fetch('/api/pages/' + this.id).then(function (res) {
-                return res.json();
-            }).then(function (res) {
-                _this.page = res.data;
-            }).catch(function (err) {
-                return console.log(err);
-            });
-        },
         getCourseUrl: function getCourseUrl() {
-            return '/courses/' + this.page.course.slug;
+            return '/courses/' + this.course.slug;
         },
         getChildUrl: function getChildUrl(child) {
-            return '/courses/' + this.page.course.slug + '/pages/' + child.slug;
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
         }
     },
-
     watch: {
-        // Note : page.body is declared as string and assume page is defined in Vue data
         'page.body': function pageBody(value) {
-            // let content = document.querySelector('#content');
-            // content.innerHTML = value;
             this.$nextTick(function () {
                 return Prism.highlightAll();
             });
-            // console.log('watched');
         }
-        // mounted() {
-        //     Prism.highlightAll();
-        //     this.$nextTick(function () {
-        //         Prism.highlightElement();
-        //     })
-        // },
-
-        // ready () {
-        //     Prism.highlightAll()
-        // }
-    } });
+    }
+});
 
 /***/ }),
 /* 234 */
@@ -68333,11 +68277,7 @@ var render = function() {
             staticStyle: { "text-decoration": "none" },
             attrs: { href: _vm.getCourseUrl() }
           },
-          [
-            _vm._v(
-              _vm._s(_vm.page.course.code) + " " + _vm._s(_vm.page.course.title)
-            )
-          ]
+          [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
         )
       ]),
       _vm._v(" "),
@@ -68394,7 +68334,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/CreatePage.vue"
+Component.options.__file = "resources/assets/js/components/PageForm.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -68403,9 +68343,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-456519a2", Component.options)
+    hotAPI.createRecord("data-v-caf168ac", Component.options)
   } else {
-    hotAPI.reload("data-v-456519a2", Component.options)
+    hotAPI.reload("data-v-caf168ac", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -68475,45 +68415,52 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
     props: ['course', 'parents'],
     data: function data() {
         return {
+            title: '',
             page: {
+                id: '',
                 title: '',
                 body: '',
                 course_id: '',
                 parent_id: ''
-            }
+            },
+            errors: []
         };
+    },
+    created: function created() {
+        if (!this.page.id) {
+            this.title = 'Create Page';
+        } else {
+            this.title = 'Update Page';
+        }
     },
 
     methods: {
         getCourseUrl: function getCourseUrl() {
             return '/courses/' + this.course.slug;
         },
-        createPage: function createPage() {
+        onSubmit: function onSubmit() {
+            var formData = new FormData();
+            formData.append('title', this.page.title);
+            formData.append('body', __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.get('body').getContent());
+            formData.append('course_id', this.course.id);
+            formData.append('parent_id', this.page.parent_id);
+
+            if (!this.page.id) {
+                this.createPage(formData);
+            } else {
+                this.updatePage(formData);
+            }
+        },
+        createPage: function createPage(formData) {
             var _this = this;
 
-            this.page.course_id = this.course.id;
-            this.page.body = __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.get('body').getContent();
-
-            fetch('/api/page', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': Laravel.csrfToken
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify(this.page)
-            }).then(function (response) {
-                if (response.ok) {
-                    /* redirect */
-                    window.location.href = _this.getCourseUrl(_this.course.slug);
-                } else {
-                    throw Error([response.status, response.statusText].join(' '));
-                }
-            }).catch(function (err) {
-                return console.log(err);
+            axios.post('/api/pages', formData).then(function (response) {
+                window.location.href = '/courses/' + _this.course.slug + '/pages/' + response.data.page.slug;
+            }).catch(function (error) {
+                console.log(error);
             });
-        }
+        },
+        updatePage: function updatePage(formData) {}
     }
 });
 
@@ -105819,7 +105766,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("h3", [_vm._v("Create Page")]),
+    _c("h3", [_vm._v(_vm._s(_vm.title))]),
     _c("hr"),
     _vm._v(" "),
     _c(
@@ -105828,7 +105775,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.createPage($event)
+            return _vm.onSubmit($event)
           }
         }
       },
@@ -105947,7 +105894,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-456519a2", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-caf168ac", module.exports)
   }
 }
 
