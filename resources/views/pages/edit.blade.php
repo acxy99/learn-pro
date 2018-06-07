@@ -1,8 +1,3 @@
-<?php
-use App\Course;
-use App\Page;
-?>
-
 @extends('layouts.app')
 
 @section('title', '| Create Page')

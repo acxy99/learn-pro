@@ -4,6 +4,11 @@
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
         <h3>{{ page.title }}</h3><hr>
+
+        <div class="mb-3">
+            <a class="btn btn-primary" :href="editPageUrl" role="button">Edit Page</a>
+        </div>
+
         <p v-html="page.body"></p><hr>
         <h5 v-for="child in page.children" v-bind:key="child.id">
             <a :href="getChildUrl(child)">{{ child.title }}</a>
@@ -18,6 +23,11 @@
 
     export default {
         props: ['course', 'page'],
+        data() {
+            return {
+                editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
+            }
+        },
         methods: {
             getCourseUrl() {
                 return '/courses/' + this.course.slug;

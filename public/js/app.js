@@ -65573,6 +65573,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 // Prism - syntax highlighting
 
@@ -65580,6 +65585,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['course', 'page'],
+    data: function data() {
+        return {
+            editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit'
+        };
+    },
+
     methods: {
         getCourseUrl: function getCourseUrl() {
             return '/courses/' + this.course.slug;
@@ -68284,6 +68295,17 @@ var render = function() {
       _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
       _c("hr"),
       _vm._v(" "),
+      _c("div", { staticClass: "mb-3" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { href: _vm.editPageUrl, role: "button" }
+          },
+          [_vm._v("Edit Page")]
+        )
+      ]),
+      _vm._v(" "),
       _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } }),
       _c("hr"),
       _vm._v(" "),
@@ -68405,36 +68427,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
-    selector: '#body',
-    plugins: 'link, codesample',
-    height: '400'
-});
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course', 'parents'],
+    props: ['course', 'parents', 'page'],
     data: function data() {
         return {
             title: '',
-            page: {
-                id: '',
-                title: '',
-                body: '',
-                course_id: '',
-                parent_id: ''
-            },
             errors: []
         };
     },
     created: function created() {
-        if (!this.page.id) {
-            this.title = 'Create Page';
-        } else {
-            this.title = 'Update Page';
-        }
+        this.setTitle();
+        this.initEditor();
     },
 
     methods: {
+        setTitle: function setTitle() {
+            this.page.id ? this.title = 'Update Page' : this.title = 'Create Page';
+        },
+        initEditor: function initEditor() {
+            var vm = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
+                selector: '#body',
+                plugins: 'link, codesample',
+                height: '400',
+                init_instance_callback: function init_instance_callback(editor) {
+                    if (vm.page.id) {
+                        editor.setContent(vm.page.body);
+                    }
+                }
+            });
+        },
         getCourseUrl: function getCourseUrl() {
             return '/courses/' + this.course.slug;
         },
@@ -68445,10 +68468,10 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
             formData.append('course_id', this.course.id);
             formData.append('parent_id', this.page.parent_id);
 
-            if (!this.page.id) {
-                this.createPage(formData);
-            } else {
+            if (this.page.id) {
                 this.updatePage(formData);
+            } else {
+                this.createPage(formData);
             }
         },
         createPage: function createPage(formData) {
@@ -68460,7 +68483,23 @@ __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
                 console.log(error);
             });
         },
-        updatePage: function updatePage(formData) {}
+        updatePage: function updatePage(formData) {
+            var _this2 = this;
+
+            formData.append('id', this.page.id);
+            formData.append('_method', 'PUT');
+
+            axios.post('/api/pages/' + this.page.id, formData, {
+                _method: 'put'
+            }).then(function (response) {
+                window.location.href = '/courses/' + _this2.course.slug + '/pages/' + response.data.page.slug;
+            }).catch(function (error) {
+                console.log(error);
+                if (error.response.status == 422) {
+                    _this2.errors = error.response.data.errors;
+                }
+            });
+        }
     }
 });
 

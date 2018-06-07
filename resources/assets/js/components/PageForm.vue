@@ -38,35 +38,36 @@
 import tinymce from 'tinymce/tinymce.js';
 import 'tinymce/themes/modern/theme';
 
-tinymce.init({
-    selector: '#body',
-    plugins: 'link, codesample',
-    height: '400',
-});
-
 export default {
-    props: ['course', 'parents'],
+    props: ['course', 'parents', 'page'],
     data() {
         return {
             title: '',
-            page: {
-                id: '',
-                title: '',
-                body: '',
-                course_id: '',
-                parent_id: '',
-            },
             errors: [],
         }
     },
     created() {
-        if (!this.page.id) {
-            this.title = 'Create Page';
-        } else {
-            this.title = 'Update Page';
-        }
+        this.setTitle();
+        this.initEditor();
     },
     methods: {
+        setTitle() {
+            this.page.id ? this.title = 'Update Page' : this.title = 'Create Page';
+        },
+        initEditor() {
+            let vm = this;
+
+            tinymce.init({
+                selector: '#body',
+                plugins: 'link, codesample',
+                height: '400',
+                init_instance_callback : function(editor) {
+                    if (vm.page.id) {
+                        editor.setContent(vm.page.body);
+                    }
+                }
+            });
+        },
         getCourseUrl() {
             return '/courses/' + this.course.slug;
         },
@@ -77,10 +78,10 @@ export default {
             formData.append('course_id', this.course.id);
             formData.append('parent_id', this.page.parent_id);
 
-            if (!this.page.id) {
-                this.createPage(formData);
-            } else {
+            if (this.page.id) {
                 this.updatePage(formData);
+            } else {
+                this.createPage(formData);
             }
         },
         createPage(formData) {
@@ -93,7 +94,21 @@ export default {
                 });
         },
         updatePage(formData) {
-            
+            formData.append('id', this.page.id);
+            formData.append('_method', 'PUT');
+
+            axios.post('/api/pages/' + this.page.id, formData, {
+                _method: 'put',
+            })
+            .then(response => {
+                window.location.href = '/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
+            })
+            .catch(error => {
+                console.log(error);
+                if (error.response.status == 422) {
+                    this.errors = error.response.data.errors;
+                }
+            })
         },
     },
 }

@@ -55,5 +55,5 @@ Route::get('/courses/{course_slug}/pages/{page_slug}', function($course_slug, $p
         ])->firstOrFail()
     );
 });
-Route::get('/pages/{slug}', function($slug) { return new PageResource(Page::findBySlugOrFail($slug)); });
 Route::post('/pages', 'PageController@store');
+Route::put('/pages/{id}', 'PageController@update');
