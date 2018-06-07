@@ -68423,6 +68423,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -68442,7 +68444,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         setTitle: function setTitle() {
-            this.page.id ? this.title = 'Update Page' : this.title = 'Create Page';
+            if (this.page.id) {
+                this.title = 'Update Page';
+            } else {
+                this.title = 'Create Page';
+                this.page.title = '';
+            }
         },
         initEditor: function initEditor() {
             var vm = this;
@@ -68466,7 +68473,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             formData.append('title', this.page.title);
             formData.append('body', __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.get('body').getContent());
             formData.append('course_id', this.course.id);
-            formData.append('parent_id', this.page.parent_id);
+            if (this.page.parent_id) formData.append('parent_id', this.page.parent_id);
 
             if (this.page.id) {
                 this.updatePage(formData);
@@ -68481,6 +68488,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 window.location.href = '/courses/' + _this.course.slug + '/pages/' + response.data.page.slug;
             }).catch(function (error) {
                 console.log(error);
+                if (error.response.status == 422) {
+                    _this.errors = error.response.data.errors;
+                }
             });
         },
         updatePage: function updatePage(formData) {
@@ -105902,10 +105912,29 @@ var render = function() {
                 _vm.$set(_vm.page, "title", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors.title
+            ? _c("span", { staticClass: "form-text text-muted" }, [
+                _vm._v(_vm._s(_vm.errors.title[0]))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "body" } }, [_vm._v("Body")]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticClass: "form-control",
+            attrs: { id: "body" }
+          }),
+          _vm._v(" "),
+          _vm.errors.body
+            ? _c("span", { staticClass: "form-text text-muted" }, [
+                _vm._v(_vm._s(_vm.errors.body[0]))
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -105916,18 +105945,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "body" } }, [_vm._v("Body")]),
-      _vm._v(" "),
-      _c("textarea", { staticClass: "form-control", attrs: { id: "body" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

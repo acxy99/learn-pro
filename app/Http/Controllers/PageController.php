@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Page;
 use App\Http\Resources\PageResource;
 use App\Course;
+use App\Http\Requests\StorePage;
+use App\Http\Requests\UpdatePage;
 
 class PageController extends Controller {
 
@@ -23,7 +25,7 @@ class PageController extends Controller {
         return view('pages.create', ['course' => $course, 'parents' => $parents, 'page' => $page]);
     }
 
-    public function store(Request $request) {
+    public function store(StorePage $request) {
         $page = new Page;
         $page->fill($request->all());
         $page->save();
@@ -57,7 +59,7 @@ class PageController extends Controller {
         return view('pages.edit', ['course' => $course, 'parents' => $parents, 'page' => $page]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(UpdatePage $request, $id) {
         $page = Page::find($id);
         $page->slug = null;
         $page->fill($request->all());

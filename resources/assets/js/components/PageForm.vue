@@ -22,11 +22,13 @@
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" v-model="page.title">
+                <span class="form-text text-muted" v-if="errors.title">{{ errors.title[0] }}</span>
             </div>
 
             <div class="form-group">
                 <label for="body">Body</label>
                 <textarea class="form-control" id="body"></textarea>
+                <span class="form-text text-muted" v-if="errors.body">{{ errors.body[0] }}</span>
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
@@ -52,7 +54,12 @@ export default {
     },
     methods: {
         setTitle() {
-            this.page.id ? this.title = 'Update Page' : this.title = 'Create Page';
+            if (this.page.id) { 
+                this.title = 'Update Page';
+            } else {
+                this.title = 'Create Page';
+                this.page.title = '';
+            }
         },
         initEditor() {
             let vm = this;
@@ -76,7 +83,7 @@ export default {
             formData.append('title', this.page.title);
             formData.append('body', tinymce.get('body').getContent());
             formData.append('course_id', this.course.id);
-            formData.append('parent_id', this.page.parent_id);
+            if(this.page.parent_id) formData.append('parent_id', this.page.parent_id);
 
             if (this.page.id) {
                 this.updatePage(formData);
@@ -91,6 +98,9 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
+                    if (error.response.status == 422) {
+                        this.errors = error.response.data.errors;
+                    }
                 });
         },
         updatePage(formData) {
