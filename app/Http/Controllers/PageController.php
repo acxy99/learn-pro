@@ -59,6 +59,7 @@ class PageController extends Controller {
 
     public function update(Request $request, $id) {
         $page = Page::find($id);
+        $page->slug = null;
         $page->fill($request->all());
         $page->save();
 
