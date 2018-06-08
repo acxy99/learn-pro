@@ -41,6 +41,14 @@ class Page extends Model
         return $this;
     }
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($page) {
+             $page->children()->delete();
+        });
+    }
+
     public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug) {
         $course = $model->course;
 
