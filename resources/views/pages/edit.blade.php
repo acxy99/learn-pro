@@ -3,5 +3,5 @@
 @section('title', '| Create Page')
 
 @section('content')
-    <pageform :course="{{ $course }}" :parents="{{ $parents }}" :page="{{ $page }}"></pageform>
+    <page-form :course="{{ $course }}" :parents="{{ $parents }}" :page="{{ $page }}"></page-form>
 @endsection

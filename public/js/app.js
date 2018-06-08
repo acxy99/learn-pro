@@ -20316,10 +20316,10 @@ Vue.component('layoutheader', __webpack_require__(220));
 // Vue.component('categories', require('./components/Categories.vue'));
 // Vue.component('category', require('./components/Category.vue'));
 Vue.component('courses', __webpack_require__(223));
-Vue.component('courseform', __webpack_require__(226));
+Vue.component('course-form', __webpack_require__(226));
 Vue.component('course', __webpack_require__(229));
 Vue.component('page', __webpack_require__(232));
-Vue.component('pageform', __webpack_require__(239));
+Vue.component('page-form', __webpack_require__(239));
 
 var app = new Vue({
   el: '#app'
@@ -65583,7 +65583,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(function (error) {
                     console.log(error);
                 });
-                console.log('delete');
             }
         }
     },
