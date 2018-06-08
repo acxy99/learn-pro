@@ -69,6 +69,9 @@ class PageController extends Controller {
     }
 
     public function destroy($id) {
-        //
+        $page = Page::find($id);
+        $page->delete();
+
+        return response()->json(['page' => $page]);
     }
 }

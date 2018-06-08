@@ -65578,6 +65578,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // Prism - syntax highlighting
 
@@ -65597,6 +65598,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getChildUrl: function getChildUrl(child) {
             return '/courses/' + this.course.slug + '/pages/' + child.slug;
+        },
+        deletePage: function deletePage() {
+            var _this = this;
+
+            if (confirm('Are you sure you want to delete this page?')) {
+                axios.delete('/api/pages/' + this.page.id).then(function (response) {
+                    window.location.href = _this.getCourseUrl();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                console.log('delete');
+            }
         }
     },
     watch: {
@@ -68303,6 +68316,20 @@ var render = function() {
             attrs: { href: _vm.editPageUrl, role: "button" }
           },
           [_vm._v("Edit Page")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                _vm.deletePage()
+              }
+            }
+          },
+          [_vm._v("Delete Page")]
         )
       ]),
       _vm._v(" "),

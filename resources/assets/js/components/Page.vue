@@ -7,6 +7,7 @@
 
         <div class="mb-3">
             <a class="btn btn-primary" :href="editPageUrl" role="button">Edit Page</a>
+            <button type="button" @click="deletePage()" class="btn btn-danger">Delete Page</button>
         </div>
 
         <p v-html="page.body"></p><hr>
@@ -34,6 +35,18 @@
             },
             getChildUrl(child) {
                 return '/courses/' + this.course.slug + '/pages/' + child.slug;
+            },
+            deletePage() {
+                if(confirm('Are you sure you want to delete this page?')) {
+                    axios.delete('/api/pages/' + this.page.id)
+                        .then(response => {
+                            window.location.href = this.getCourseUrl();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    console.log('delete');
+                }
             },
         },
         watch: {

@@ -57,3 +57,4 @@ Route::get('/courses/{course_slug}/pages/{page_slug}', function($course_slug, $p
 });
 Route::post('/pages', 'PageController@store');
 Route::put('/pages/{id}', 'PageController@update');
+Route::delete('/pages/{id}', 'PageController@destroy');
