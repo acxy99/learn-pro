@@ -40,7 +40,7 @@ class CourseController extends Controller {
     public function show($slug) {
         $course = Course::findBySlugOrFail($slug);
 
-        return view('courses.show', ['slug' => $course->slug]);
+        return view('courses.show', ['course' => $course]);
     }
 
     public function edit($slug) {

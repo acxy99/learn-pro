@@ -37,23 +37,14 @@ Route::post('/courses', 'CourseController@store');
 Route::put('/courses/{slug}', 'CourseController@update');
 Route::delete('courses/{slug}', 'CourseController@destroy');
 
-Route::get('/courses/{course_slug}/pages', function($course_slug) {
-    $course = Course::findBySlugOrFail($course_slug);
+Route::get('/courses/{course_id}/pages', function($course_id) {
+    $course = Course::find($course_id);
     return new PageResourceCollection(
         Page::where([
             'course_id' => $course->id,
             'parent_id' => null,
         ])->paginate(10)
     ); 
-});
-Route::get('/courses/{course_slug}/pages/{page_slug}', function($course_slug, $page_slug) {
-    $course = Course::findBySlugOrFail($course_slug);
-    return new PageResource(
-        Page::where([
-            'course_id' => $course->id,
-            'slug' => $page_slug,
-        ])->firstOrFail()
-    );
 });
 Route::post('/pages', 'PageController@store');
 Route::put('/pages/{id}', 'PageController@update');

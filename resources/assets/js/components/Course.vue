@@ -37,10 +37,9 @@
 
 <script>
 export default {
-    props: ['slug'],
+    props: ['course'],
     data() {
         return {
-            course: {},
             pages: [],
             pagination: {},
             editCourseUrl: '/courses/' + this.slug + '/edit',
@@ -48,25 +47,11 @@ export default {
         }
     },
     created() {
-        this.getCourse();
+        this.getPages(null);
     },
     methods: {
-        getCourse() {
-            let vm = this;
-
-            axios.get('/api/courses/' + vm.slug)
-                .then(response => {
-                    vm.course = response.data.data;
-                })
-                .then(function() {
-                    vm.getPages(null);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
         getPages(url) {
-            url = url || '/api/courses/' + this.course.slug + '/pages';
+            url = url || '/api/courses/' + this.course.id + '/pages';
             axios.get(url)
                 .then(response => {
                     this.pages = response.data.data;

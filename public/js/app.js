@@ -65262,10 +65262,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['slug'],
+    props: ['course'],
     data: function data() {
         return {
-            course: {},
             pages: [],
             pagination: {},
             editCourseUrl: '/courses/' + this.slug + '/edit',
@@ -65273,25 +65272,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        this.getCourse();
+        this.getPages(null);
     },
 
     methods: {
-        getCourse: function getCourse() {
-            var vm = this;
-
-            axios.get('/api/courses/' + vm.slug).then(function (response) {
-                vm.course = response.data.data;
-            }).then(function () {
-                vm.getPages(null);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
         getPages: function getPages(url) {
             var _this = this;
 
-            url = url || '/api/courses/' + this.course.slug + '/pages';
+            url = url || '/api/courses/' + this.course.id + '/pages';
             axios.get(url).then(function (response) {
                 _this.pages = response.data.data;
                 _this.makePagination(response.data.links, response.data.meta);
