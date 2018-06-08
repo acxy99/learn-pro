@@ -821,6 +821,14 @@ var codesample = (function () {
     getLanguages: getLanguages$1,
     getCurrentLanguage: getCurrentLanguage
   };
+  var getCurrentLineNumbersStatus = function (editor) {
+    var matches;
+    var node = getSelectedCodeSample(editor);
+    if (node) {
+      matches = node.className.match(/line-numbers/);
+      return matches ? true : false;
+    }
+  };
 
   var $_2xh9sm9wjh8lyzx1 = {
     open: function (editor) {
@@ -849,7 +857,7 @@ var codesample = (function () {
             type: 'checkbox',
             name: 'linenumbers',
             label: 'Include line numbers',
-            checked: 'true'
+            checked: getCurrentLineNumbersStatus(editor),
           },
           {
             type   : 'container',
