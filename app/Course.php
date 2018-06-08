@@ -26,6 +26,10 @@ class Course extends Model
         return $this->hasMany(Page::class);
     }
 
+    public function files() {
+        return $this->hasMany(File::class);
+    }
+
     public function categories() {
         return $this->belongsToMany(Category::class);
     }
@@ -36,10 +40,6 @@ class Course extends Model
                 'source' => 'code'
             ]
         ];
-    }
-
-    public function getRouteKeyName() {
-        return 'slug';
     }
 
     public function getImagePathAttribute() {

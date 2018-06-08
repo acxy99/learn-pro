@@ -15,13 +15,13 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->index();
+            $table->string('name')->index();
+            $table->unsignedInteger('course_id');
             $table->string('path');
-            $table->unsignedInteger('course_id')->index();
             $table->string('slug')->unique();
             $table->timestamps();
 
-            $table->unique(['title', 'course_id']);
+            $table->unique(['name', 'course_id']);
 
             $table->foreign('course_id')->references('id')->on('courses');
         });
