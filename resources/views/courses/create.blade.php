@@ -60,5 +60,5 @@
 @endsection --}}
 
 @section('content')
-    <courseform></courseform>
+    <courseform :course="{{ $course }}"></courseform>
 @endsection

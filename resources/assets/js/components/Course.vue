@@ -42,8 +42,8 @@ export default {
         return {
             pages: [],
             pagination: {},
-            editCourseUrl: '/courses/' + this.slug + '/edit',
-            addPageUrl: '/courses/' + this.slug + '/pages/create',
+            editCourseUrl: '/courses/' + this.course.slug + '/edit',
+            addPageUrl: '/courses/' + this.course.slug + '/pages/create',
         }
     },
     created() {
@@ -72,7 +72,7 @@ export default {
         },
         deleteCourse() {
             if(confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/courses/' + this.slug)
+                axios.delete('/api/courses/' + this.course.id)
                     .then(response => {
                         window.location.href = '/courses';
                     })

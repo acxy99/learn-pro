@@ -6,7 +6,7 @@
             <!-- course code -->
             <div class="form-group invalid">
                 <label for="code">Code</label>
-                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8" :readonly="slug">
+                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8" :readonly="course.id">
                 <span class="form-text text-muted" v-if="errors.code">{{ errors.code[0] }}</span>
             </div>
 
@@ -37,35 +37,22 @@
 
 <script>
 export default {
-    props: ['slug'],
+    props: ['course'],
     data() {
         return {
             title: '',
-            course: {
-                id: '',
-                code: '',
-                title: '',
-                description: '',
-                image: '',
-            },
             errors: [],
         }
     },
     created() {
-        if (!this.slug) {
-            this.title = 'Create Course';
-        } else {
+        if (this.course.id) {
             this.title = 'Update Course';
-
-            axios.get('/api/courses/' + this.slug)
-                .then(response => {
-                    console.log(response.data.data);
-                    this.course = response.data.data;
-                    console.log(this.course);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+        } else {
+            this.title = 'Create Course';
+            this.course.code = '';
+            this.course.title = '';
+            this.course.description = '';
+            this.course.image = '';
         }
     },
     methods: {
@@ -78,7 +65,7 @@ export default {
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
 
-            if (!this.slug) {
+            if (!this.course.id) {
                 this.createCourse(formData);
             } else {
                 this.updateCourse(formData);
@@ -104,7 +91,7 @@ export default {
             formData.append('id', this.course.id);
             formData.append('_method', 'PUT');
 
-            axios.post('/api/courses/' + this.slug, formData, {
+            axios.post('/api/courses/' + this.course.id, formData, {
                 _method: 'put',
                 headers: {
                     'Content-Type': 'multipart/form-data',

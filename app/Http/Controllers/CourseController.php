@@ -17,7 +17,9 @@ class CourseController extends Controller {
     }
 
     public function create() {
-        return view('courses.create');
+        $course = new Course;
+
+        return view('courses.create', ['course' => $course]);
     }
 
     public function store(StoreCourse $request) {
@@ -46,11 +48,11 @@ class CourseController extends Controller {
     public function edit($slug) {
         $course = Course::findBySlugOrFail($slug);
 
-        return view('courses.edit', ['slug' => $course->slug]);
+        return view('courses.edit', ['course' => $course]);
     }
 
-    public function update(UpdateCourse $request, $slug) {
-        $course = Course::findBySlugOrFail($slug);
+    public function update(UpdateCourse $request, $id) {
+        $course = Course::find($id);
         $course->fill($request->except('image'));
 
         if($request->hasFile('image')) {
@@ -63,8 +65,8 @@ class CourseController extends Controller {
         return response()->json(['course' => $course]);
     }
 
-    public function destroy($slug) {
-        $course = Course::findBySLugOrFail($slug);
+    public function destroy($id) {
+        $course = Course::find($id);
 
         $course->delete();
 

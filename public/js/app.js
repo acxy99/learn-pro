@@ -64921,35 +64921,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['slug'],
+    props: ['course'],
     data: function data() {
         return {
             title: '',
-            course: {
-                id: '',
-                code: '',
-                title: '',
-                description: '',
-                image: ''
-            },
             errors: []
         };
     },
     created: function created() {
-        var _this = this;
-
-        if (!this.slug) {
-            this.title = 'Create Course';
-        } else {
+        if (this.course.id) {
             this.title = 'Update Course';
-
-            axios.get('/api/courses/' + this.slug).then(function (response) {
-                console.log(response.data.data);
-                _this.course = response.data.data;
-                console.log(_this.course);
-            }).catch(function (error) {
-                console.log(error);
-            });
+        } else {
+            this.title = 'Create Course';
+            this.course.code = '';
+            this.course.title = '';
+            this.course.description = '';
+            this.course.image = '';
         }
     },
 
@@ -64963,14 +64950,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
 
-            if (!this.slug) {
+            if (!this.course.id) {
                 this.createCourse(formData);
             } else {
                 this.updateCourse(formData);
             }
         },
         createCourse: function createCourse(formData) {
-            var _this2 = this;
+            var _this = this;
 
             axios.post('/api/courses', formData, {
                 headers: {
@@ -64981,17 +64968,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
                 if (error.response.status == 422) {
-                    _this2.errors = error.response.data.errors;
+                    _this.errors = error.response.data.errors;
                 }
             });
         },
         updateCourse: function updateCourse(formData) {
-            var _this3 = this;
+            var _this2 = this;
 
             formData.append('id', this.course.id);
             formData.append('_method', 'PUT');
 
-            axios.post('/api/courses/' + this.slug, formData, {
+            axios.post('/api/courses/' + this.course.id, formData, {
                 _method: 'put',
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -65001,7 +64988,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
                 if (error.response.status == 422) {
-                    _this3.errors = error.response.data.errors;
+                    _this2.errors = error.response.data.errors;
                 }
             });
         }
@@ -65049,7 +65036,7 @@ var render = function() {
               type: "text",
               id: "code",
               maxlength: "8",
-              readonly: _vm.slug
+              readonly: _vm.course.id
             },
             domProps: { value: _vm.course.code },
             on: {
@@ -65267,8 +65254,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             pages: [],
             pagination: {},
-            editCourseUrl: '/courses/' + this.slug + '/edit',
-            addPageUrl: '/courses/' + this.slug + '/pages/create'
+            editCourseUrl: '/courses/' + this.course.slug + '/edit',
+            addPageUrl: '/courses/' + this.course.slug + '/pages/create'
         };
     },
     created: function created() {
@@ -65298,7 +65285,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         deleteCourse: function deleteCourse() {
             if (confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/courses/' + this.slug).then(function (response) {
+                axios.delete('/api/courses/' + this.course.id).then(function (response) {
                     window.location.href = '/courses';
                 }).catch(function (error) {
                     console.log(error);
