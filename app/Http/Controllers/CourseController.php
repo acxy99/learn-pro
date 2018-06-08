@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Course;
-use App\Http\Requests\StoreCourse;
-use App\Http\Resources\CourseResource;
+
 use App\Page;
+use App\Course;
+use App\Http\Resources\CourseResource;
+use App\Http\Requests\StoreCourse;
+use App\Http\Requests\UpdateCourse;
 
 class CourseController extends Controller {
 
@@ -47,13 +49,7 @@ class CourseController extends Controller {
         return view('courses.edit', ['slug' => $course->slug]);
     }
 
-    public function update(Request $request, $slug) {
-        $request->validate([
-            'code' => 'required|unique:courses,code,' . $request->id,
-            'title' => 'required',
-            'description'  => 'required',
-        ]);
-
+    public function update(UpdateCourse $request, $slug) {
         $course = Course::findBySlugOrFail($slug);
         $course->fill($request->except('image'));
 
