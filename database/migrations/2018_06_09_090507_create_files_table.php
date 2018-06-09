@@ -17,8 +17,6 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->string('name')->index();
             $table->unsignedInteger('course_id');
-            $table->string('path');
-            $table->string('slug')->unique();
             $table->timestamps();
 
             $table->unique(['name', 'course_id']);
