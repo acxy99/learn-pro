@@ -48,3 +48,5 @@ Route::get('/courses/{course_id}/pages', function($course_id) {
 Route::post('/pages', 'PageController@store');
 Route::put('/pages/{id}', 'PageController@update');
 Route::delete('/pages/{id}', 'PageController@destroy');
+
+Route::post('/files', 'FileController@store');
