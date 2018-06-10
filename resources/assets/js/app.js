@@ -29,6 +29,7 @@ Vue.component('course-form', require('./components/CourseForm.vue'));
 Vue.component('course', require('./components/Course.vue'));
 Vue.component('page', require('./components/Page.vue'));
 Vue.component('page-form', require('./components/PageForm.vue'));
+Vue.component('files-upload-form', require('./components/FilesUploadForm.vue'));
 
 const app = new Vue({
     el: '#app'
