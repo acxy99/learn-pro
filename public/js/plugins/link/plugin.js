@@ -156,7 +156,12 @@ var link = (function () {
           target: data.target ? data.target : null,
           rel: data.rel ? data.rel : null,
           class: data.class ? data.class : null,
+          style: 'text-decoration: none',
           title: data.title ? data.title : null
+        };
+        var iconAttrs = {
+          class: 'icon ion-ios-link',
+          style: 'padding: 5px;',
         };
         if (!$_4854y3fajh8lz0pg.hasRelList(editor.settings) && $_4854y3fajh8lz0pg.allowUnsafeLinkTarget(editor.settings) === false) {
           linkAttrs.rel = toggleTargetRules(linkAttrs.rel, linkAttrs.target === '_blank');
@@ -181,7 +186,8 @@ var link = (function () {
           if (isImageFigure(selectedElm)) {
             linkImageFigure(editor, selectedElm, linkAttrs);
           } else if (data.hasOwnProperty('text')) {
-            editor.insertContent(editor.dom.createHTML('a', linkAttrs, editor.dom.encode(data.text)));
+            var icon = editor.dom.createHTML('span', iconAttrs, '&nbsp;');
+            editor.insertContent(editor.dom.createHTML('a', linkAttrs, icon + editor.dom.encode(data.text)));
           } else {
             editor.execCommand('mceInsertLink', false, linkAttrs);
           }
