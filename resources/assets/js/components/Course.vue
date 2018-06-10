@@ -9,30 +9,51 @@
             <a class="btn btn-primary" :href="addPageUrl" role="button">Add Page</a>
             <a class="btn btn-primary" :href="uploadFilesUrl" role="button">Upload Files</a>
         </div>
-        
-        <div v-if="hasPages()">
-            <div class="card mb-2" v-for="page in pages" v-bind:key="page.id">
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        <a :href="getPageUrl(page)" style="text-decoration: none">{{ page.title }}</a>
-                    </h5>
+
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pages-tab" data-toggle="tab" href="#pages" role="tab">Pages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab">Files</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane show active" id="pages" role="tabpanel">
+                <div v-if="hasPages()">
+                    <ul class="list-unstyled p-3 m-0">
+                        <li class="mb-3 p-3 bg-light" v-for="page in pages" v-bind:key="page.id">
+                            <h5><a :href="getPageUrl(page)" style="text-decoration: none">{{ page.title }}</a></h5>
+
+                            <ul v-if="hasChildren(page)">
+                                <li v-for="child in page.children" v-bind:key="child.id">
+                                    <a :href="getChildUrl(child)" style="text-decoration: none">{{ child.title }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="pagination" style="display: flex; justify-content: center;">
+                        <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.prev_page_url)">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+                        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.next_page_url)">Next</a></li>
+                    </ul>
                 </div>
-                <div v-if="hasChildren(page)">
-                    <div class="card-body">
-                        <h6 v-for="child in page.children" v-bind:key="child.id">
-                            <a :href="getChildUrl(child)" style="text-decoration: none">{{ child.title }}</a>
-                        </h6>
+                <div v-else>No pages to display</div>
+            </div>
+            <div class="tab-pane" id="files" role="tabpanel">
+                <div v-if="hasFiles()">
+                    <div v-for="file in files" :key="file.id" class="m-2">
+                        <a :href="getFileUrl(file)" style="text-decoration: none;">
+                            <span class="icon ion-ios-document pr-3"></span>{{ file.name }}<br>
+                        </a>
                     </div>
                 </div>
+                <div v-else>No files uploaded</div>
             </div>
-
-            <ul class="pagination">
-                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.prev_page_url)">Previous</a></li>
-                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.next_page_url)">Next</a></li>
-            </ul>
         </div>
-        <div v-else>No pages to display</div>
+        
     </div>
 </template>
 
@@ -42,6 +63,7 @@ export default {
     data() {
         return {
             pages: [],
+            files: [],
             pagination: {},
             editCourseUrl: '/courses/' + this.course.slug + '/edit',
             addPageUrl: '/courses/' + this.course.slug + '/pages/create',
@@ -50,6 +72,7 @@ export default {
     },
     created() {
         this.getPages(null);
+        this.getFiles();
     },
     methods: {
         getPages(url) {
@@ -58,6 +81,16 @@ export default {
                 .then(response => {
                     this.pages = response.data.data;
                     this.makePagination(response.data.links, response.data.meta);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        getFiles() {
+            axios.get('/api/courses/' + this.course.id + '/files')
+                .then(response => {
+                    this.files = response.data.data;
+                    console.log(this.files);
                 })
                 .catch(error => {
                     console.log(error);
@@ -96,6 +129,12 @@ export default {
         getChildUrl(child) {
             return '/courses/' + this.course.slug + '/pages/' + child.slug;
         },
+        hasFiles() {
+            return this.files.length;
+        },
+        getFileUrl(file) {
+            return file.file_path;
+        }
     }
 }
 </script>

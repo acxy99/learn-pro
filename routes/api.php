@@ -13,6 +13,9 @@ use App\Page;
 use App\Http\Resources\PageResource;
 use App\Http\Resources\PageResourceCollection;
 
+use App\File;
+use App\Http\Resources\FileResourceCollection;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,4 +52,12 @@ Route::post('/pages', 'PageController@store');
 Route::put('/pages/{id}', 'PageController@update');
 Route::delete('/pages/{id}', 'PageController@destroy');
 
+Route::get('/courses/{course_id}/files', function($course_id) {
+    $course = Course::find($course_id);
+    return new FileResourceCollection(
+        File::where([
+            'course_id' => $course->id,
+        ])->paginate(10)
+    ); 
+});
 Route::post('/files', 'FileController@store');
