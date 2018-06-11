@@ -1,23 +1,33 @@
 <template>
     <div class="container">
-        <small>
-            <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
-        </small>
-        <h3>{{ page.title }}</h3>
-        
-        <div class="mb-3 mt-3">
-            <a class="btn btn-primary" :href="editPageUrl" role="button">Edit Page</a>
-            <button type="button" @click="deletePage()" class="btn btn-danger">Delete Page</button>
-        </div>
-        <hr>
+        <div class="row m-0">
+            <!-- Sidebar -->
+            <div class="col-md-3 p-3 bg-light">
+                <sidebar :course="course" :currentPage="page.title"></sidebar>
+            </div>
 
-        <p v-html="page.body"></p><hr>
+            <!-- Page Content -->
+            <div class="col-md-9">
+                <small>
+                    <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
+                </small>
+                <h3>{{ page.title }}</h3>
+                
+                <div class="mb-3 mt-3">
+                    <a class="btn btn-primary" :href="editPageUrl" role="button">Edit Page</a>
+                    <button type="button" @click="deletePage()" class="btn btn-danger">Delete Page</button>
+                </div>
+                <hr>
+      
+                <p v-html="page.body"></p><hr>
 
-        <small v-if="page.children.length"><em>Related sections</em></small>
-        <div class="m-2">
-            <li v-for="child in page.children" v-bind:key="child.id">
-                <a :href="getChildUrl(child)">{{ child.title }}</a>
-            </li>
+                <small v-if="page.children.length"><em>Related sections</em></small>
+                <div class="m-2">
+                    <li v-for="child in page.children" v-bind:key="child.id">
+                        <a :href="getChildUrl(child)">{{ child.title }}</a>
+                    </li>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -27,12 +37,17 @@
     import 'prismjs/prism';
     import 'prismjs/themes/prism.css';
 
+    import Sidebar from '../components/Sidebar'
+
     export default {
         props: ['course', 'page'],
         data() {
             return {
                 editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
             }
+        },
+        components: {
+            'sidebar': Sidebar
         },
         methods: {
             getCourseUrl() {
