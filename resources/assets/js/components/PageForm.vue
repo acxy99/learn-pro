@@ -42,16 +42,18 @@ import tinymce from 'tinymce/tinymce.js';
 import 'tinymce/themes/modern/theme';
 
 export default {
-    props: ['course', 'parents', 'page'],
+    props: ['course', 'parents', 'files', 'page'],
     data() {
         return {
             title: '',
+            fileList: [],
             errors: [],
             cancelUrl: '',
         }
     },
     created() {
         this.setTitle();
+        this.setFileList();
         this.initEditor();
     },
     methods: {
@@ -65,6 +67,13 @@ export default {
                 this.cancelUrl = this.getCourseUrl();
             }
         },
+        setFileList() {
+            for (var i = 0; i < this.files.length; i++) {
+                var obj = { title: this.files[i].name, value: this.files[i].file_path }
+                this.fileList[i] = obj;
+            }
+            console.log(this.fileList);
+        },
         initEditor() {
             let vm = this;
 
@@ -72,6 +81,7 @@ export default {
                 selector: '#body',
                 plugins: 'link, codesample',
                 height: '400',
+                link_list: this.fileList,
                 init_instance_callback : function(editor) {
                     if (vm.page.id) {
                         editor.setContent(vm.page.body);

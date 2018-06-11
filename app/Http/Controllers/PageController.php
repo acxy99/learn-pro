@@ -8,6 +8,7 @@ use App\Http\Resources\PageResource;
 use App\Course;
 use App\Http\Requests\StorePage;
 use App\Http\Requests\UpdatePage;
+use App\File;
 
 class PageController extends Controller {
 
@@ -20,9 +21,10 @@ class PageController extends Controller {
     public function create($course_slug) {
         $course = Course::findBySlugOrFail($course_slug);
         $parents = Page::where('course_id', $course->id)->where('parent_id', null)->select('title', 'id')->get();
+        $files = File::where('course_id', $course->id)->get();
         $page = new Page;
 
-        return view('pages.create', ['course' => $course, 'parents' => $parents, 'page' => $page]);
+        return view('pages.create', ['course' => $course, 'parents' => $parents, 'files' => $files, 'page' => $page]);
     }
 
     public function store(StorePage $request) {
@@ -50,13 +52,15 @@ class PageController extends Controller {
             'course_id' => $course->id,
             'parent_id' => null,
         ])->get();
+
+        $files = File::where('course_id', $course->id)->get();
         
         $page = Page::where([
             'course_id' => $course->id,
             'slug' => $page_slug,
         ])->firstOrFail();
 
-        return view('pages.edit', ['course' => $course, 'parents' => $parents, 'page' => $page]);
+        return view('pages.edit', ['course' => $course, 'parents' => $parents, 'files' => $files, 'page' => $page]);
     }
 
     public function update(UpdatePage $request, $id) {

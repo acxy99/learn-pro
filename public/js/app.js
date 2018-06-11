@@ -68613,16 +68613,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course', 'parents', 'page'],
+    props: ['course', 'parents', 'files', 'page'],
     data: function data() {
         return {
             title: '',
+            fileList: [],
             errors: [],
             cancelUrl: ''
         };
     },
     created: function created() {
         this.setTitle();
+        this.setFileList();
         this.initEditor();
     },
 
@@ -68637,13 +68639,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.cancelUrl = this.getCourseUrl();
             }
         },
+        setFileList: function setFileList() {
+            for (var i = 0; i < this.files.length; i++) {
+                var obj = { title: this.files[i].name, value: this.files[i].file_path };
+                this.fileList[i] = obj;
+            }
+            console.log(this.fileList);
+        },
         initEditor: function initEditor() {
             var vm = this;
 
             __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.init({
                 selector: '#body',
-                plugins: 'link, codesample',
+                plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help',
+                toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | codesample link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
                 height: '400',
+                link_list: this.fileList,
                 init_instance_callback: function init_instance_callback(editor) {
                     if (vm.page.id) {
                         editor.setContent(vm.page.body);
