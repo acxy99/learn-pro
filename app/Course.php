@@ -51,6 +51,7 @@ class Course extends Model
 
         static::deleting(function($course) {
              $course->pages()->delete();
+             $course->files()->delete();
         });
     }
 }
