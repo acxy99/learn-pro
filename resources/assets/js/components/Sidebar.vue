@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pt-3">
         <h5>Contents</h5><hr>
         <ul class="list-unstyled">
             <li v-for="page in pages" :key="page.id" class="mb-3">

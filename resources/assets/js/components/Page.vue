@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row m-0">
             <!-- Sidebar -->
-            <div class="col-md-3 p-3 bg-light">
+            <div class="col-md-3 bg-light mb-3">
                 <sidebar :course="course" :currentPage="page.title"></sidebar>
             </div>
 
