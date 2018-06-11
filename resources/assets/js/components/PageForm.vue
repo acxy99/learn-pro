@@ -32,6 +32,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
         </form>
     </div>
 </template>
@@ -46,6 +47,7 @@ export default {
         return {
             title: '',
             errors: [],
+            cancelUrl: '',
         }
     },
     created() {
@@ -56,9 +58,11 @@ export default {
         setTitle() {
             if (this.page.id) { 
                 this.title = 'Update Page';
+                this.cancelUrl = this.getCourseUrl() + '/pages/' + this.page.slug;
             } else {
                 this.title = 'Create Page';
                 this.page.title = '';
+                this.cancelUrl = this.getCourseUrl();
             }
         },
         initEditor() {

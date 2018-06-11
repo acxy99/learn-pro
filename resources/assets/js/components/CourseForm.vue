@@ -31,6 +31,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
         </form>
     </div>
 </template>
@@ -42,17 +43,20 @@ export default {
         return {
             title: '',
             errors: [],
+            cancelUrl: '',
         }
     },
     created() {
         if (this.course.id) {
             this.title = 'Update Course';
+            this.cancelUrl = '/courses/' + this.course.slug;
         } else {
             this.title = 'Create Course';
             this.course.code = '';
             this.course.title = '';
             this.course.description = '';
             this.course.image = '';
+            this.cancelUrl = '/courses';
         }
     },
     methods: {

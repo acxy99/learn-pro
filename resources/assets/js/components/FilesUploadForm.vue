@@ -32,6 +32,7 @@
             </table>
 
             <button type="submit" class="btn btn-primary">Upload</button>
+            <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
         </form>
     </div>
 </template>
@@ -45,6 +46,7 @@ export default {
             fileNames: [],
             files: [],
             errors: {},
+            cancelUrl: '/courses/' + this.course.slug,
         }
     },
     methods: {

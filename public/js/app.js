@@ -64920,24 +64920,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['course'],
     data: function data() {
         return {
             title: '',
-            errors: []
+            errors: [],
+            cancelUrl: ''
         };
     },
     created: function created() {
         if (this.course.id) {
             this.title = 'Update Course';
+            this.cancelUrl = '/courses/' + this.course.slug;
         } else {
             this.title = 'Create Course';
             this.course.code = '';
             this.course.title = '';
             this.course.description = '';
             this.course.image = '';
+            this.cancelUrl = '/courses';
         }
     },
 
@@ -65132,6 +65136,15 @@ var render = function() {
           "button",
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
           [_vm._v("Save")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-light",
+            attrs: { href: _vm.cancelUrl, role: "button" }
+          },
+          [_vm._v("Cancel")]
         )
       ]
     )
@@ -68594,6 +68607,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -68603,7 +68617,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: '',
-            errors: []
+            errors: [],
+            cancelUrl: ''
         };
     },
     created: function created() {
@@ -68615,9 +68630,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setTitle: function setTitle() {
             if (this.page.id) {
                 this.title = 'Update Page';
+                this.cancelUrl = this.getCourseUrl() + '/pages/' + this.page.slug;
             } else {
                 this.title = 'Create Page';
                 this.page.title = '';
+                this.cancelUrl = this.getCourseUrl();
             }
         },
         initEditor: function initEditor() {
@@ -106113,6 +106130,15 @@ var render = function() {
           "button",
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
           [_vm._v("Save")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-light",
+            attrs: { href: _vm.cancelUrl, role: "button" }
+          },
+          [_vm._v("Cancel")]
         )
       ]
     )
@@ -106219,6 +106245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['course'],
@@ -106227,7 +106254,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             fileList: [],
             fileNames: [],
             files: [],
-            errors: {}
+            errors: {},
+            cancelUrl: '/courses/' + this.course.slug
         };
     },
 
@@ -106400,6 +106428,15 @@ var render = function() {
           "button",
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
           [_vm._v("Upload")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-light",
+            attrs: { href: _vm.cancelUrl, role: "button" }
+          },
+          [_vm._v("Cancel")]
         )
       ]
     )
