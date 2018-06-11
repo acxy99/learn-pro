@@ -21,14 +21,14 @@
 
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" v-model="page.title">
-                <span class="form-text text-muted" v-if="errors.title">{{ errors.title[0] }}</span>
+                <input type="text" class="form-control" id="title" v-model="page.title" :class="{'is-invalid': errors['title']}">
+                <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
             </div>
 
             <div class="form-group">
                 <label for="body">Body</label>
-                <textarea class="form-control" id="body"></textarea>
-                <span class="form-text text-muted" v-if="errors.body">{{ errors.body[0] }}</span>
+                <textarea class="form-control" id="body" :class="{'is-invalid': errors['body']}"></textarea>
+                <div class="invalid-feedback" v-if="errors['body']">{{ errors['body'][0] }}</div>
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
@@ -79,6 +79,8 @@ export default {
             return '/courses/' + this.course.slug;
         },
         onSubmit() {
+            this.errors = [];
+
             var formData = new FormData();
             formData.append('title', this.page.title);
             formData.append('body', tinymce.get('body').getContent());

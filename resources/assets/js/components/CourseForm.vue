@@ -6,22 +6,22 @@
             <!-- course code -->
             <div class="form-group invalid">
                 <label for="code">Code</label>
-                <input type="text" id="code" v-model="course.code" class="form-control" maxlength="8" :readonly="course.id">
-                <span class="form-text text-muted" v-if="errors.code">{{ errors.code[0] }}</span>
+                <input type="text" id="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
+                <div class="invalid-feedback" v-if="errors['code']">{{ errors['code'][0] }}</div>
             </div>
 
             <!-- course title -->
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" id="title" v-model="course.title" class="form-control" maxlength="50">
-                <span class="form-text text-muted" v-if="errors.title">{{ errors.title[0] }}</span>
+                <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="50">
+                <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
             </div>
 
             <!-- course description -->
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" v-model="course.description" class="form-control"></textarea>
-                <span class="form-text text-muted" v-if="errors.description">{{ errors.description[0] }}</span>
+                <textarea id="description" v-model="course.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
+                <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
             </div>
 
             <!-- course image -->

@@ -25,7 +25,6 @@
                         <td class="col-5">{{ file.name }}</td>
                         <td class="col-6">
                             <input type="text" id="name" v-model="fileNames[index]" class="form-control" :class="{'is-invalid': errors['file_names.' + index]}">
-                            <div class="invalid-feedback" v-if="file.name == ''">Please provide a file name</div>
                             <div class="invalid-feedback" v-if="errors['file_names.' + index]">{{ errors['file_names.' + index][0] }}</div>
                         </td>
                     </tr>
