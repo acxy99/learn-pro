@@ -65033,6 +65033,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.errors["code"] },
             attrs: {
               type: "text",
               id: "code",
@@ -65050,9 +65051,9 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm.errors.code
-            ? _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v(_vm._s(_vm.errors.code[0]))
+          _vm.errors["code"]
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errors["code"][0]))
               ])
             : _vm._e()
         ]),
@@ -65070,6 +65071,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.errors["title"] },
             attrs: { type: "text", id: "title", maxlength: "50" },
             domProps: { value: _vm.course.title },
             on: {
@@ -65082,9 +65084,9 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm.errors.title
-            ? _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v(_vm._s(_vm.errors.title[0]))
+          _vm.errors["title"]
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errors["title"][0]))
               ])
             : _vm._e()
         ]),
@@ -65104,6 +65106,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.errors["description"] },
             attrs: { id: "description" },
             domProps: { value: _vm.course.description },
             on: {
@@ -65116,9 +65119,9 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm.errors.description
-            ? _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v(_vm._s(_vm.errors.description[0]))
+          _vm.errors["description"]
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errors["description"][0]))
               ])
             : _vm._e()
         ]),
@@ -65211,6 +65214,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -65364,7 +65368,6 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("p", [_vm._v(_vm._s(_vm.course.description))]),
-    _c("hr"),
     _vm._v(" "),
     _c("div", { staticClass: "mb-3" }, [
       _c(
@@ -65408,6 +65411,8 @@ var render = function() {
         [_vm._v("Upload Files")]
       )
     ]),
+    _vm._v(" "),
+    _c("hr"),
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
@@ -65689,6 +65694,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs_prism__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -68418,62 +68428,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("small", [
-        _c(
-          "a",
-          {
-            staticStyle: { "text-decoration": "none" },
-            attrs: { href: _vm.getCourseUrl() }
-          },
-          [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
-        )
-      ]),
+  return _c("div", { staticClass: "container" }, [
+    _c("small", [
+      _c(
+        "a",
+        {
+          staticStyle: { "text-decoration": "none" },
+          attrs: { href: _vm.getCourseUrl() }
+        },
+        [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
+      )
+    ]),
+    _vm._v(" "),
+    _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
+    _vm._v(" "),
+    _c("div", { staticClass: "mb-3 mt-3" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { href: _vm.editPageUrl, role: "button" }
+        },
+        [_vm._v("Edit Page")]
+      ),
       _vm._v(" "),
-      _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
-      _c("hr"),
-      _vm._v(" "),
-      _c("div", { staticClass: "mb-3" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-primary",
-            attrs: { href: _vm.editPageUrl, role: "button" }
-          },
-          [_vm._v("Edit Page")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                _vm.deletePage()
-              }
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.deletePage()
             }
-          },
-          [_vm._v("Delete Page")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } }),
-      _c("hr"),
-      _vm._v(" "),
+          }
+        },
+        [_vm._v("Delete Page")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } }),
+    _c("hr"),
+    _vm._v(" "),
+    _vm.page.children.length
+      ? _c("small", [_c("em", [_vm._v("Related sections")])])
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "m-2" },
       _vm._l(_vm.page.children, function(child) {
-        return _c("h5", { key: child.id }, [
+        return _c("li", { key: child.id }, [
           _c("a", { attrs: { href: _vm.getChildUrl(child) } }, [
             _vm._v(_vm._s(child.title))
           ])
         ])
       })
-    ],
-    2
-  )
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68613,7 +68627,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 selector: '#body',
                 plugins: 'link, codesample',
                 height: '400',
-                link_class_list: [{ title: 'None', value: '' }, { title: 'Dog', value: 'dog' }, { title: 'Document', value: 'icon ion-ios-document' }],
                 init_instance_callback: function init_instance_callback(editor) {
                     if (vm.page.id) {
                         editor.setContent(vm.page.body);
@@ -68625,6 +68638,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return '/courses/' + this.course.slug;
         },
         onSubmit: function onSubmit() {
+            this.errors = [];
+
             var formData = new FormData();
             formData.append('title', this.page.title);
             formData.append('body', __WEBPACK_IMPORTED_MODULE_0_tinymce_tinymce_js___default.a.get('body').getContent());
@@ -106058,6 +106073,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.errors["title"] },
             attrs: { type: "text", id: "title" },
             domProps: { value: _vm.page.title },
             on: {
@@ -106070,9 +106086,9 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm.errors.title
-            ? _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v(_vm._s(_vm.errors.title[0]))
+          _vm.errors["title"]
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errors["title"][0]))
               ])
             : _vm._e()
         ]),
@@ -106082,12 +106098,13 @@ var render = function() {
           _vm._v(" "),
           _c("textarea", {
             staticClass: "form-control",
+            class: { "is-invalid": _vm.errors["body"] },
             attrs: { id: "body" }
           }),
           _vm._v(" "),
-          _vm.errors.body
-            ? _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v(_vm._s(_vm.errors.body[0]))
+          _vm.errors["body"]
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errors["body"][0]))
               ])
             : _vm._e()
         ]),
@@ -106164,7 +106181,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -106367,12 +106383,6 @@ var render = function() {
                           }
                         }
                       }),
-                      _vm._v(" "),
-                      file.name == ""
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v("Please provide a file name")
-                          ])
-                        : _vm._e(),
                       _vm._v(" "),
                       _vm.errors["file_names." + index]
                         ? _c("div", { staticClass: "invalid-feedback" }, [

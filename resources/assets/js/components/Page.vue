@@ -3,17 +3,22 @@
         <small>
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h3>{{ page.title }}</h3><hr>
-
-        <div class="mb-3">
+        <h3>{{ page.title }}</h3>
+        
+        <div class="mb-3 mt-3">
             <a class="btn btn-primary" :href="editPageUrl" role="button">Edit Page</a>
             <button type="button" @click="deletePage()" class="btn btn-danger">Delete Page</button>
         </div>
+        <hr>
 
         <p v-html="page.body"></p><hr>
-        <h5 v-for="child in page.children" v-bind:key="child.id">
-            <a :href="getChildUrl(child)">{{ child.title }}</a>
-        </h5>
+
+        <small v-if="page.children.length"><em>Related sections</em></small>
+        <div class="m-2">
+            <li v-for="child in page.children" v-bind:key="child.id">
+                <a :href="getChildUrl(child)">{{ child.title }}</a>
+            </li>
+        </div>
     </div>
 </template>
 
