@@ -96,8 +96,8 @@ export default {
                 }
             })
             .then(response => {
-                console.log(response);
-                // window.location.href = '/courses/' + this.course.slug + '/files/' + response.data.file.slug;
+                // console.log(response);
+                window.location.href = '/courses/' + this.course.slug;
             })
             .catch(error => {
                 console.log(error);

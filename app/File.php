@@ -20,6 +20,9 @@ class File extends Model
     }
 
     public function getFilePathAttribute() {
-        return '/storage/courses/' . $this->course->slug . '/' . $this->name;
+        $course = $this->course;
+        if ($course) {
+            return '/storage/courses/' . $course->slug . '/' . $this->name;
+        }
     }
 }
