@@ -20,7 +20,12 @@ class PageController extends Controller {
 
     public function create($course_slug) {
         $course = Course::findBySlugOrFail($course_slug);
-        $parents = Page::where('course_id', $course->id)->where('parent_id', null)->select('title', 'id')->get();
+
+        $parents = Page::where([
+            'course_id' => $course->id,
+            // 'parent_id'=> null,
+        ])->select('title', 'id')->get();
+
         $files = File::where('course_id', $course->id)->get();
         $page = new Page;
 
@@ -48,18 +53,19 @@ class PageController extends Controller {
     public function edit($course_slug, $page_slug) {
         $course = Course::findBySlugOrFail($course_slug);
         
-        $parents = Page::where([
-            'course_id' => $course->id,
-            'parent_id' => null,
-        ])->get();
-
-        $files = File::where('course_id', $course->id)->get();
-        
         $page = Page::where([
             'course_id' => $course->id,
             'slug' => $page_slug,
         ])->firstOrFail();
 
+        $parents = Page::where([
+            'course_id' => $course->id,
+            // 'parent_id' => null,
+            ['id', '!=', $page->id],
+        ])->select('title', 'id')->get();
+
+        $files = File::where('course_id', $course->id)->get();
+        
         return view('pages.edit', ['course' => $course, 'parents' => $parents, 'files' => $files, 'page' => $page]);
     }
 
