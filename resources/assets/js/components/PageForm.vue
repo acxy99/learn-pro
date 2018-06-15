@@ -79,7 +79,7 @@ export default {
 
             tinymce.init({
                 selector: '#body',
-                plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern editattributes help',
+                plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools colorpicker textpattern editattributes help',
                 toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | codesample link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | editattributes | removeformat',
                 height: '400',
                 link_list: this.fileList,
@@ -100,7 +100,7 @@ export default {
             formData.append('title', this.page.title);
             formData.append('body', tinymce.get('body').getContent());
             formData.append('course_id', this.course.id);
-            if(this.page.parent_id) formData.append('parent_id', this.page.parent_id);
+            this.page.parent_id ? formData.append('parent_id', this.page.parent_id) : formData.append('parent_id', '');
 
             if (this.page.id) {
                 this.updatePage(formData);
