@@ -1,17 +1,7 @@
 <template>
     <div class="pt-3">
         <h5>Contents</h5><hr>
-        <ul class="list-unstyled">
-            <li v-for="page in pages" :key="page.id" class="mb-3">
-                <a :href="getPageUrl(page)" :style="getStyle(page)">{{ page.title }}</a>
-                
-                <ul v-if="hasChildren(page)" class="list-unstyled pl-3">
-                    <li v-for="child in page.children" v-bind:key="child.id">
-                        <a :href="getChildUrl(child)" :style="getStyle(child)">{{ child.title }}</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <sidebar-tree :courseSlug="course.slug" :children="pages" :depth="(-1)" :currentPage="currentPage"></sidebar-tree>
     </div>
 </template>
 

@@ -23,17 +23,7 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane show active" id="pages" role="tabpanel">
                 <div v-if="hasPages()">
-                    <ul class="list-unstyled p-3 m-0">
-                        <li class="mb-3 p-3 bg-light" v-for="page in pages" v-bind:key="page.id">
-                            <h5><a :href="getPageUrl(page)" style="text-decoration: none">{{ page.title }}</a></h5>
-
-                            <ul v-if="hasChildren(page)">
-                                <li v-for="child in page.children" v-bind:key="child.id">
-                                    <a :href="getChildUrl(child)" style="text-decoration: none">{{ child.title }}</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <tree :courseSlug="course.slug" :children="pages" :depth="(-1)"></tree>
 
                     <ul class="pagination" style="display: flex; justify-content: center;">
                         <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.prev_page_url)">Previous</a></li>

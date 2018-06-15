@@ -22,6 +22,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
  */
 
 Vue.component('layoutheader', require('./components/LayoutHeader.vue'));
+Vue.component('tree', require('./components/Tree.vue'));
+Vue.component('sidebar-tree', require('./components/SidebarTree.vue'));
 // Vue.component('categories', require('./components/Categories.vue'));
 // Vue.component('category', require('./components/Category.vue'));
 Vue.component('courses', require('./components/Courses.vue'));
