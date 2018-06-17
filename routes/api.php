@@ -31,13 +31,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('categories', function() { return new CategoryResourceCollection(Category::paginate(5)); });
-// Route::get('categories/{id}', function($id) { return new CategoryResource(Category::find($id)); });
+/*
+    Admin
+*/
+Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::post('/courses', 'CourseController@store');
+    Route::put('/courses/{id}', 'CourseController@update');
+    Route::delete('/courses/{id}', 'CourseController@destroy');
+});
 
+/*
+    Frontend
+*/
 Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(9)); });
-Route::post('/courses', 'CourseController@store');
-Route::put('/courses/{id}', 'CourseController@update');
-Route::delete('courses/{id}', 'CourseController@destroy');
 
 Route::get('/courses/{course_id}/pages', function($course_id) {
     $course = Course::find($course_id);

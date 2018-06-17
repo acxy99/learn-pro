@@ -15,11 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function() { return view('admin.index'); });
+/*
+    Admin
+*/
+Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+    Route::get('/', function() { return view('admin.dashboard'); })->name('dashboard');
 
-// Route::resource('/categories', 'CategoryController');
+    Route::resource('/courses', 'CourseController');
+});
 
-Route::resource('/courses', 'CourseController');
+/*
+    Frontend
+*/
+Route::resource('/courses', 'CourseController')->only(['index', 'show']);
 
 /*Route::resource('/pages', 'PageController')->except([
     'index', 'create', 'show', 'edit'
