@@ -2,13 +2,6 @@
     <div class="container">
         <h3>{{ course.code }} {{ course.title }}</h3>
         <p>{{ course.description }}</p>
-        
-        <div class="mb-3">
-            <a class="btn btn-primary" :href="editCourseUrl" role="button">Edit Course</a>
-            <button type="button" @click="deleteCourse()" class="btn btn-danger">Delete Course</button>
-            <a class="btn btn-primary" :href="addPageUrl" role="button">Add Page</a>
-            <a class="btn btn-primary" :href="uploadFilesUrl" role="button">Upload Files</a>
-        </div>
         <hr>
 
         <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
