@@ -76,7 +76,7 @@ export default {
             }
         },
         createCourse(formData) {
-            axios.post('/api/courses', formData, {
+            axios.post('/api/admin/courses', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -95,7 +95,7 @@ export default {
             formData.append('id', this.course.id);
             formData.append('_method', 'PUT');
 
-            axios.post('/api/courses/' + this.course.id, formData, {
+            axios.post('/api/admin/courses/' + this.course.id, formData, {
                 _method: 'put',
                 headers: {
                     'Content-Type': 'multipart/form-data',

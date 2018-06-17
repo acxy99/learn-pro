@@ -3,5 +3,5 @@
 @section('title', '| Create Course')
 
 @section('content')
-    <course-form :course="{{ $course }}"></course-form>
+    <admin-course-form :course="{{ $course }}"></admin-course-form>
 @endsection
