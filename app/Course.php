@@ -20,6 +20,8 @@ class Course extends Model
 
     protected $appends = [
         'image_path',
+        'pages_count',
+        'files_count',
     ];
 
     public function pages() {
@@ -44,6 +46,14 @@ class Course extends Model
 
     public function getImagePathAttribute() {
         return '/storage/courses/' . $this->image;
+    }
+
+    public function getPagesCountAttribute() {
+        return $this->pages()->count();
+    }
+
+    public function getFilesCountAttribute() {
+        return $this->files()->count();
     }
 
     protected static function boot() {
