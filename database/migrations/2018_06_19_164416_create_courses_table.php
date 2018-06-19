@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->char('code', 8)->unique();
             $table->string('title', 100)->index();
             $table->text('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
         });
