@@ -104402,11 +104402,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editPageUrl: '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit'
         };
     },
-    created: function created() {
-        console.log(this.page);
-    },
+    created: function created() {},
 
-    methods: {}
+    methods: {
+        deletePage: function deletePage() {
+            var _this = this;
+
+            if (confirm('Are you sure you want to delete this page?')) {
+                axios.delete('/api/admin/pages/' + this.page.id).then(function (response) {
+                    window.location.href = '/admin/courses/' + _this.course.slug + '/pages';
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -104437,11 +104447,15 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
-          "a",
+          "button",
           {
             staticClass: "btn btn-danger",
             staticStyle: { "border-radius": "0" },
-            attrs: { href: "#", role: "button" }
+            on: {
+              click: function($event) {
+                _vm.deletePage()
+              }
+            }
           },
           [_vm._v("Delete Page")]
         )

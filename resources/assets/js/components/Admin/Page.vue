@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-5 align-self-center text-right">
                 <a class="btn btn-primary" style="border-radius: 0;" :href="editPageUrl" role="button">Edit Page</a>
-                <a class="btn btn-danger" style="border-radius: 0;" href="#" role="button">Delete Page</a>
+                <button class="btn btn-danger" style="border-radius: 0;" @click="deletePage()">Delete Page</button>
             </div>
         </div>
         <hr>
@@ -62,10 +62,20 @@ export default {
         }
     },
     created() {
-        console.log(this.page)
+        
     },
     methods: {
-
+        deletePage() {
+            if(confirm('Are you sure you want to delete this page?')) {
+                axios.delete('/api/admin/pages/' + this.page.id)
+                    .then(response => {
+                        window.location.href = '/admin/courses/' + this.course.slug + '/pages';
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        }
     },
 }
 </script>
