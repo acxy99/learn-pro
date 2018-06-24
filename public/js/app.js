@@ -20275,7 +20275,7 @@ var OBSERVER_CONFIG = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(76);
-module.exports = __webpack_require__(271);
+module.exports = __webpack_require__(277);
 
 
 /***/ }),
@@ -20324,15 +20324,17 @@ Vue.component('admin-pages', __webpack_require__(235));
 Vue.component('admin-page-form', __webpack_require__(238));
 Vue.component('admin-page', __webpack_require__(243));
 
-Vue.component('tree', __webpack_require__(246));
-Vue.component('sidebar-tree', __webpack_require__(249));
+Vue.component('admin-files', __webpack_require__(246));
+Vue.component('admin-files-upload-form', __webpack_require__(249));
+Vue.component('admin-file-edit-form', __webpack_require__(252));
 
-Vue.component('courses', __webpack_require__(273));
-Vue.component('course', __webpack_require__(276));
+Vue.component('tree', __webpack_require__(255));
+Vue.component('sidebar-tree', __webpack_require__(258));
 
-Vue.component('page', __webpack_require__(279));
+Vue.component('courses', __webpack_require__(261));
+Vue.component('course', __webpack_require__(264));
 
-Vue.component('files-upload-form', __webpack_require__(268));
+Vue.component('page', __webpack_require__(267));
 
 var app = new Vue({
   el: '#app'
@@ -65565,7 +65567,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.course.image = '';
             this.currentImage = '';
         },
-        cancelUpdate: function cancelUpdate() {
+        cancel: function cancel() {
             window.history.back();
         }
     }
@@ -65772,7 +65774,7 @@ var render = function() {
             attrs: { type: "button" },
             on: {
               click: function($event) {
-                _vm.cancelUpdate()
+                _vm.cancel()
               }
             }
           },
@@ -65951,7 +65953,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             editCourseUrl: '/admin/courses/' + this.course.slug + '/edit',
             managePagesUrl: '/admin/courses/' + this.course.slug + '/pages',
-            manageFilesUrl: '#'
+            manageFilesUrl: '/admin/courses/' + this.course.slug + '/files'
         };
     },
     created: function created() {},
@@ -66801,7 +66803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.post('/api/admin/pages', formData).then(function (response) {
-                window.location.href = '/courses/' + _this.course.slug + '/pages/' + response.data.page.slug;
+                window.location.href = '/admin/courses/' + _this.course.slug + '/pages/' + response.data.page.slug;
             }).catch(function (error) {
                 console.log(error);
                 if (error.response.status == 422) {
@@ -104538,6 +104540,936 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/Admin/Files.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f28d28a0", Component.options)
+  } else {
+    hotAPI.reload("data-v-f28d28a0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 247 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course'],
+    data: function data() {
+        return {
+            active: '',
+            uploadFilesUrl: '/admin/courses/' + this.course.slug + '/files/create',
+            files: [],
+            pagination: {}
+        };
+    },
+    created: function created() {
+        this.getFiles();
+    },
+
+    methods: {
+        getFiles: function getFiles(url) {
+            var _this = this;
+
+            url = url || '/api/admin/courses/' + this.course.id + '/files';
+
+            axios.get(url).then(function (response) {
+                _this.files = response.data.data;
+                _this.makePagination(response.data.links, response.data.meta);
+            }).catch(function (response) {
+                console.log(error);
+            });
+        },
+        makePagination: function makePagination(links, meta) {
+            var pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next
+            };
+            this.pagination = pagination;
+        },
+        getFileUrl: function getFileUrl(file) {
+            return file.file_path;
+        },
+        getEditFileUrl: function getEditFileUrl(file) {
+            return '/admin/courses/' + this.course.slug + '/files/' + file.id + '/edit';
+        },
+        deleteFile: function deleteFile(file) {
+            var _this2 = this;
+
+            if (confirm('Are you sure you want to delete this file?')) {
+                axios.delete('/api/admin/files/' + file.id).then(function (response) {
+                    _this2.getFiles();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("small", { staticClass: "text-muted" }, [_vm._v("List of Files")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mb-3" }, [
+      _c("div", { staticClass: "col-md-9 align-self-center" }, [
+        _c("h5", { staticClass: "m-0" }, [
+          _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 text-right" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-primary",
+            staticStyle: { "border-radius": "0" },
+            attrs: { href: _vm.uploadFilesUrl, role: "button" }
+          },
+          [_vm._v("Upload Files")]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-hover" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.files, function(file) {
+          return _c(
+            "tr",
+            {
+              key: file.id,
+              on: {
+                mouseover: function($event) {
+                  _vm.active = file.id
+                }
+              }
+            },
+            [
+              _c("td", { staticStyle: { width: "70%" } }, [
+                _c(
+                  "a",
+                  {
+                    staticStyle: { "text-decoration": "none" },
+                    attrs: { href: _vm.getFileUrl(file), download: "" }
+                  },
+                  [_vm._v(_vm._s(file.name))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { width: "10%" } }, [
+                _vm._v(_vm._s(file.id))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { width: "20%" } }, [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.active == file.id,
+                        expression: "active == file.id"
+                      }
+                    ]
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn p-1",
+                        attrs: { href: _vm.getEditFileUrl(file) }
+                      },
+                      [
+                        _c("i", { staticClass: "material-icons" }, [
+                          _vm._v("create")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn p-1",
+                        staticStyle: { "background-color": "transparent" },
+                        on: {
+                          click: function($event) {
+                            _vm.deleteFile(file)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "i",
+                          {
+                            staticClass: "material-icons",
+                            staticStyle: { color: "red" }
+                          },
+                          [_vm._v("delete")]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          )
+        })
+      )
+    ]),
+    _vm._v(" "),
+    _c("ul", { staticClass: "pagination mb-5" }, [
+      _c(
+        "li",
+        {
+          staticClass: "page-item",
+          class: [{ disabled: !_vm.pagination.prev_page_url }]
+        },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  _vm.getFiles(_vm.pagination.prev_page_url)
+                }
+              }
+            },
+            [_vm._v("Previous")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("li", { staticClass: "page-item disabled" }, [
+        _c("a", { staticClass: "page-link text-dark", attrs: { href: "#" } }, [
+          _vm._v(
+            "Page " +
+              _vm._s(_vm.pagination.current_page) +
+              " of " +
+              _vm._s(_vm.pagination.last_page)
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "li",
+        {
+          staticClass: "page-item",
+          class: [{ disabled: !_vm.pagination.next_page_url }]
+        },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  _vm.getFiles(_vm.pagination.next_page_url)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { width: "70%" } }, [_vm._v("File Name")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "10%" } }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "20%" } }, [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f28d28a0", module.exports)
+  }
+}
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(250)
+/* template */
+var __vue_template__ = __webpack_require__(251)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Admin/FilesUploadForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1f66a5b5", Component.options)
+  } else {
+    hotAPI.reload("data-v-1f66a5b5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 250 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course'],
+    data: function data() {
+        return {
+            fileList: [],
+            fileNames: [],
+            files: [],
+            errors: {},
+            cancelUrl: '/courses/' + this.course.slug
+        };
+    },
+
+    methods: {
+        getCourseUrl: function getCourseUrl() {
+            return '/courses/' + this.course.slug;
+        },
+        handleFiles: function handleFiles() {
+            this.errors = [];
+
+            this.fileList = [];
+            this.fileList = this.$refs.files.files;
+
+            // convert filelist to array, extract file names
+            var fileListArray = Array.from(this.fileList);
+            this.fileNames = [];
+            this.fileNames = fileListArray.map(function (a) {
+                return a.name;
+            });
+
+            // console.log(this.fileNames);
+        },
+        onSubmit: function onSubmit() {
+            var _this = this;
+
+            this.errors = [];
+
+            // create new files with new file names
+            this.files = [];
+            for (var i = 0; i < this.fileList.length; i++) {
+                var file = new File([this.fileList[i]], this.fileNames[i] ? this.fileNames[i] : 'null', { type: this.fileList[i].type });
+                this.files[i] = file;
+            }
+
+            // console.log(this.fileNames);
+            // console.log(this.files);
+
+            var formData = new FormData();
+            formData.append('course_id', this.course.id);
+            formData.append('course_slug', this.course.slug);
+            for (var i = 0; i < this.files.length; i++) {
+                formData.append('files[]', this.files[i]);
+            }
+
+            /*for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }*/
+
+            axios.post('/api/admin/files', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (response) {
+                // console.log(response);
+                window.location.href = '/admin/courses/' + _this.course.slug + '/files';
+            }).catch(function (error) {
+                console.log(error);
+                if (error.response.status == 422) {
+                    _this.errors = error.response.data.errors;
+                }
+                console.log(_this.errors);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 251 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("small", [
+      _c(
+        "a",
+        {
+          staticStyle: { "text-decoration": "none" },
+          attrs: { href: _vm.getCourseUrl() }
+        },
+        [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
+      )
+    ]),
+    _vm._v(" "),
+    _c("h3", [_vm._v("Files Upload")]),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: { enctype: "multipart/form-data" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "files" } }, [_vm._v("Files")]),
+          _vm._v(" "),
+          _c("input", {
+            ref: "files",
+            staticClass: "form-control",
+            attrs: { type: "file", id: "files", multiple: "" },
+            on: {
+              change: function($event) {
+                _vm.handleFiles()
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm.fileList.length
+          ? _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.fileList, function(file, index) {
+                  return _c("tr", { key: index, staticClass: "d-flex" }, [
+                    _c("th", { staticClass: "col-1" }, [_vm._v(_vm._s(index))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-5" }, [
+                      _vm._v(_vm._s(file.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.fileNames[index],
+                            expression: "fileNames[index]"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors["file_names." + index]
+                        },
+                        attrs: { type: "text", id: "name" },
+                        domProps: { value: _vm.fileNames[index] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.fileNames, index, $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors["file_names." + index]
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors["file_names." + index][0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
+                })
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Upload")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-light",
+            attrs: { href: _vm.cancelUrl, role: "button" }
+          },
+          [_vm._v("Cancel")]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "d-flex" }, [
+        _c("th", { staticClass: "col-1" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "col-5" }, [_vm._v("Original file name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "col-6" }, [_vm._v("New file name")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1f66a5b5", module.exports)
+  }
+}
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(253)
+/* template */
+var __vue_template__ = __webpack_require__(254)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Admin/FileEditForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-438f683e", Component.options)
+  } else {
+    hotAPI.reload("data-v-438f683e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 253 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course', 'file'],
+    data: function data() {
+        return {
+            errors: [],
+            cancelUrl: '#'
+        };
+    },
+    created: function created() {},
+
+    methods: {
+        getCourseUrl: function getCourseUrl() {
+            return '/admin/courses/' + this.course.slug;
+        },
+        onSubmit: function onSubmit() {
+            var _this = this;
+
+            this.errors = [];
+
+            var formData = new FormData();
+            formData.append('id', this.file.id);
+            formData.append('name', this.file.name);
+            formData.append('course_id', this.file.course_id);
+            formData.append('_method', 'PUT');
+
+            axios.post('/api/admin/files/' + this.file.id, formData, {
+                _method: 'put',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (response) {
+                window.location.href = _this.getCourseUrl() + '/files';
+            }).catch(function (error) {
+                console.log(error);
+                if (error.response.status == 422) {
+                    _this.errors = error.response.data.errors;
+                }
+            });
+        },
+        cancel: function cancel() {
+            window.history.back();
+        }
+    }
+});
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("small", [
+      _c(
+        "a",
+        {
+          staticStyle: { "text-decoration": "none" },
+          attrs: { href: _vm.getCourseUrl() }
+        },
+        [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
+      )
+    ]),
+    _vm._v(" "),
+    _c("h5", [_vm._v("Update File Details")]),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "course_id" } }, [_vm._v("Course ID")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.file.course_id,
+                expression: "file.course_id"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "course_id", readonly: "" },
+            domProps: { value: _vm.file.course_id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.file, "course_id", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "name" } }, [_vm._v("File Name")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.file.name,
+                expression: "file.name"
+              }
+            ],
+            staticClass: "form-control",
+            class: { "is-invalid": _vm.errors["name"] },
+            attrs: { type: "text", id: "name" },
+            domProps: { value: _vm.file.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.file, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors["name"]
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errors["name"][0]))
+              ])
+            : _vm._e()
+        ]),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Save")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                _vm.cancel()
+              }
+            }
+          },
+          [_vm._v("Cancel")]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-438f683e", module.exports)
+  }
+}
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(256)
+/* template */
+var __vue_template__ = __webpack_require__(257)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/Tree.vue"
 
 /* hot reload */
@@ -104560,7 +105492,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 247 */
+/* 256 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104629,7 +105561,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 248 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -104678,15 +105610,15 @@ if (false) {
 }
 
 /***/ }),
-/* 249 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(6)
 /* script */
-var __vue_script__ = __webpack_require__(250)
+var __vue_script__ = __webpack_require__(259)
 /* template */
-var __vue_template__ = __webpack_require__(251)
+var __vue_template__ = __webpack_require__(260)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -104725,7 +105657,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 250 */
+/* 259 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104761,7 +105693,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	created: function created() {
 		if (this.depth == 0) {
-			this.liClass['font-weight-bold mt-3'] = true;
+			this.liClass['h6 mt-3'] = true;
 		}
 	},
 
@@ -104772,11 +105704,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		checkCurrentPage: function checkCurrentPage() {
 			if (this.currentPage == this.title) {
 				return {
-					color: '#1691b7'
+					color: '#007bff'
 				};
 			} else {
 				return {
-					color: '#222'
+					color: '#555'
 				};
 			}
 		}
@@ -104784,7 +105716,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 251 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -104835,15 +105767,776 @@ if (false) {
 }
 
 /***/ }),
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(262)
+/* template */
+var __vue_template__ = __webpack_require__(263)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Frontend/Courses.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e860d5c", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e860d5c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 262 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            courses: [],
+            pagination: {}
+        };
+    },
+    created: function created() {
+        this.getCourses();
+    },
+
+    methods: {
+        getCourses: function getCourses(url) {
+            var _this = this;
+
+            url = url || '/api/courses';
+            axios.get(url).then(function (response) {
+                _this.courses = response.data.data;
+                _this.makePagination(response.data.links, response.data.meta);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        makePagination: function makePagination(links, meta) {
+            var pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next
+            };
+            this.pagination = pagination;
+        },
+        getImagePath: function getImagePath(course) {
+            return course.image_path;
+        },
+        getCourseUrl: function getCourseUrl(course) {
+            return '/courses/' + course.slug;
+        }
+    }
+});
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("h2", [_vm._v("Courses")]),
+    _c("hr"),
+    _vm._v(" "),
+    _vm.courses.length
+      ? _c("div", [
+          _c(
+            "div",
+            { staticClass: "card-columns" },
+            _vm._l(_vm.courses, function(course) {
+              return _c("div", { key: course.id, staticClass: "card" }, [
+                _c("div", { staticClass: "wrapper" }, [
+                  _c("img", {
+                    staticClass: "card-img-top img",
+                    attrs: { src: _vm.getImagePath(course) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: { "text-decoration": "none" },
+                      attrs: { href: _vm.getCourseUrl(course) }
+                    },
+                    [
+                      _c("small", [_vm._v(_vm._s(course.code))]),
+                      _vm._v(" "),
+                      _c("h5", { staticClass: "card-title text-truncate" }, [
+                        _vm._v(_vm._s(course.title))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text text-truncate" }, [
+                    _vm._v(_vm._s(course.description))
+                  ])
+                ])
+              ])
+            })
+          ),
+          _vm._v(" "),
+          _c("ul", { staticClass: "pagination" }, [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.prev_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        _vm.getCourses(_vm.pagination.prev_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Previous")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item disabled" }, [
+              _c(
+                "a",
+                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                [
+                  _vm._v(
+                    "Page " +
+                      _vm._s(_vm.pagination.current_page) +
+                      " of " +
+                      _vm._s(_vm.pagination.last_page)
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.next_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        _vm.getCourses(_vm.pagination.next_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Next")]
+                )
+              ]
+            )
+          ])
+        ])
+      : _c("div", [_vm._v("No courses to display")])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e860d5c", module.exports)
+  }
+}
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(265)
+/* template */
+var __vue_template__ = __webpack_require__(266)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Frontend/Course.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5349341e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5349341e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 265 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course'],
+    data: function data() {
+        return {
+            pages: [],
+            files: [],
+            pagination: {},
+            editCourseUrl: '/courses/' + this.course.slug + '/edit',
+            addPageUrl: '/courses/' + this.course.slug + '/pages/create',
+            uploadFilesUrl: '/courses/' + this.course.slug + '/files/create'
+        };
+    },
+    created: function created() {
+        this.getPages(null);
+        this.getFiles();
+    },
+
+    methods: {
+        getPages: function getPages(url) {
+            var _this = this;
+
+            url = url || '/api/courses/' + this.course.id + '/pages';
+            axios.get(url).then(function (response) {
+                _this.pages = response.data.data;
+                _this.makePagination(response.data.links, response.data.meta);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getFiles: function getFiles() {
+            var _this2 = this;
+
+            axios.get('/api/courses/' + this.course.id + '/files').then(function (response) {
+                _this2.files = response.data.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        makePagination: function makePagination(links, meta) {
+            var pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next
+            };
+            this.pagination = pagination;
+        },
+        deleteCourse: function deleteCourse() {
+            if (confirm('Are you sure you want to delete this course?')) {
+                axios.delete('/api/courses/' + this.course.id).then(function (response) {
+                    window.location.href = '/courses';
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                console.log('delete');
+            }
+        },
+        hasPages: function hasPages() {
+            return this.pages.length;
+        },
+        getPageUrl: function getPageUrl(page) {
+            return '/courses/' + this.course.slug + '/pages/' + page.slug;
+        },
+        hasChildren: function hasChildren(page) {
+            return page.children.length;
+        },
+        getChildUrl: function getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
+        },
+        hasFiles: function hasFiles() {
+            return this.files.length;
+        },
+        getFileUrl: function getFileUrl(file) {
+            return file.file_path;
+        }
+    }
+});
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("h3", [
+      _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
+    ]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.course.description))]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "tab-content", attrs: { id: "myTabContent" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "tab-pane show active",
+          attrs: { id: "pages", role: "tabpanel" }
+        },
+        [
+          _vm.hasPages()
+            ? _c(
+                "div",
+                [
+                  _c("tree", {
+                    attrs: {
+                      courseSlug: _vm.course.slug,
+                      children: _vm.pages,
+                      depth: -1
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    {
+                      staticClass: "pagination",
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "center"
+                      }
+                    },
+                    [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.prev_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.getPages(_vm.pagination.prev_page_url)
+                                }
+                              }
+                            },
+                            [_vm._v("Previous")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item disabled" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link text-dark",
+                            attrs: { href: "#" }
+                          },
+                          [
+                            _vm._v(
+                              "Page " +
+                                _vm._s(_vm.pagination.current_page) +
+                                " of " +
+                                _vm._s(_vm.pagination.last_page)
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.next_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.getPages(_vm.pagination.next_page_url)
+                                }
+                              }
+                            },
+                            [_vm._v("Next")]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            : _c("div", [_vm._v("No pages to display")])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "tab-pane", attrs: { id: "files", role: "tabpanel" } },
+        [
+          _vm.hasFiles()
+            ? _c(
+                "div",
+                _vm._l(_vm.files, function(file) {
+                  return _c("div", { key: file.id, staticClass: "m-2" }, [
+                    _c(
+                      "a",
+                      {
+                        staticStyle: { "text-decoration": "none" },
+                        attrs: { href: _vm.getFileUrl(file), download: "" }
+                      },
+                      [
+                        _c("span", {
+                          staticClass: "icon ion-ios-document pr-3"
+                        }),
+                        _vm._v(_vm._s(file.name)),
+                        _c("br")
+                      ]
+                    )
+                  ])
+                })
+              )
+            : _c("div", [_vm._v("No files uploaded")])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-tabs mb-3",
+        attrs: { id: "myTab", role: "tablist" }
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: {
+                id: "pages-tab",
+                "data-toggle": "tab",
+                href: "#pages",
+                role: "tab"
+              }
+            },
+            [_vm._v("Pages")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "files-tab",
+                "data-toggle": "tab",
+                href: "#files",
+                role: "tab"
+              }
+            },
+            [_vm._v("Files")]
+          )
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5349341e", module.exports)
+  }
+}
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(268)
+/* template */
+var __vue_template__ = __webpack_require__(276)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Frontend/Page.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4779a5e5", Component.options)
+  } else {
+    hotAPI.reload("data-v-4779a5e5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 268 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs_prism__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Sidebar__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// Prism - syntax highlighting
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course', 'page'],
+    data: function data() {
+        return {
+            editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit'
+        };
+    },
+
+    components: {
+        'sidebar': __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default.a
+    },
+    methods: {
+        getCourseUrl: function getCourseUrl() {
+            return '/courses/' + this.course.slug;
+        },
+        getChildUrl: function getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
+        },
+        deletePage: function deletePage() {
+            var _this = this;
+
+            if (confirm('Are you sure you want to delete this page?')) {
+                axios.delete('/api/pages/' + this.page.id).then(function (response) {
+                    window.location.href = _this.getCourseUrl();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    },
+    watch: {
+        'page.body': function pageBody(value) {
+            this.$nextTick(function () {
+                return Prism.highlightAll();
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* PrismJS 1.14.0
@@ -106449,7 +108142,7 @@ Prism.languages.python = {
 	var ClipboardJS = window.ClipboardJS || undefined;
 
 	if (!ClipboardJS && "function" === 'function') {
-		ClipboardJS = __webpack_require__(261);
+		ClipboardJS = __webpack_require__(270);
 	}
 
 	var callbacks = [];
@@ -106515,7 +108208,7 @@ Prism.languages.python = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 261 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -107459,13 +109152,13 @@ module.exports = select;
 });
 
 /***/ }),
-/* 262 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(263);
+var content = __webpack_require__(272);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -107490,7 +109183,7 @@ if(false) {
 }
 
 /***/ }),
-/* 263 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(13)(false);
@@ -107504,15 +109197,15 @@ exports.push([module.i, "/* PrismJS 1.14.0\nhttps://prismjs.com/download.html#th
 
 
 /***/ }),
-/* 264 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(6)
 /* script */
-var __vue_script__ = __webpack_require__(265)
+var __vue_script__ = __webpack_require__(274)
 /* template */
-var __vue_template__ = __webpack_require__(266)
+var __vue_template__ = __webpack_require__(275)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -107551,7 +109244,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 265 */
+/* 274 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -107616,7 +109309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 266 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -107653,1103 +109346,7 @@ if (false) {
 }
 
 /***/ }),
-/* 267 */,
-/* 268 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(269)
-/* template */
-var __vue_template__ = __webpack_require__(270)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/FilesUploadForm.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-78806155", Component.options)
-  } else {
-    hotAPI.reload("data-v-78806155", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 269 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course'],
-    data: function data() {
-        return {
-            fileList: [],
-            fileNames: [],
-            files: [],
-            errors: {},
-            cancelUrl: '/courses/' + this.course.slug
-        };
-    },
-
-    methods: {
-        getCourseUrl: function getCourseUrl() {
-            return '/courses/' + this.course.slug;
-        },
-        handleFiles: function handleFiles() {
-            this.errors = [];
-
-            this.fileList = [];
-            this.fileList = this.$refs.files.files;
-
-            // convert filelist to array, extract file names
-            var fileListArray = Array.from(this.fileList);
-            this.fileNames = [];
-            this.fileNames = fileListArray.map(function (a) {
-                return a.name;
-            });
-
-            // console.log(this.fileNames);
-        },
-        onSubmit: function onSubmit() {
-            var _this = this;
-
-            this.errors = [];
-
-            // create new files with new file names
-            this.files = [];
-            for (var i = 0; i < this.fileList.length; i++) {
-                var file = new File([this.fileList[i]], this.fileNames[i] ? this.fileNames[i] : 'null', { type: this.fileList[i].type });
-                this.files[i] = file;
-            }
-
-            // console.log(this.fileNames);
-            // console.log(this.files);
-
-            var formData = new FormData();
-            formData.append('course_id', this.course.id);
-            formData.append('course_slug', this.course.slug);
-            for (var i = 0; i < this.files.length; i++) {
-                formData.append('files[]', this.files[i]);
-            }
-
-            /*for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
-            }*/
-
-            axios.post('/api/files', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(function (response) {
-                // console.log(response);
-                window.location.href = '/courses/' + _this.course.slug;
-            }).catch(function (error) {
-                console.log(error);
-                if (error.response.status == 422) {
-                    _this.errors = error.response.data.errors;
-                }
-                console.log(_this.errors);
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 270 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("small", [
-      _c(
-        "a",
-        {
-          staticStyle: { "text-decoration": "none" },
-          attrs: { href: _vm.getCourseUrl() }
-        },
-        [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
-      )
-    ]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Files Upload")]),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        attrs: { enctype: "multipart/form-data" },
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.onSubmit($event)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "files" } }, [_vm._v("Files")]),
-          _vm._v(" "),
-          _c("input", {
-            ref: "files",
-            staticClass: "form-control",
-            attrs: { type: "file", id: "files", multiple: "" },
-            on: {
-              change: function($event) {
-                _vm.handleFiles()
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm.fileList.length
-          ? _c("table", { staticClass: "table" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.fileList, function(file, index) {
-                  return _c("tr", { key: index, staticClass: "d-flex" }, [
-                    _c("th", { staticClass: "col-1" }, [_vm._v(_vm._s(index))]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "col-5" }, [
-                      _vm._v(_vm._s(file.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "col-6" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.fileNames[index],
-                            expression: "fileNames[index]"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: {
-                          "is-invalid": _vm.errors["file_names." + index]
-                        },
-                        attrs: { type: "text", id: "name" },
-                        domProps: { value: _vm.fileNames[index] },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.fileNames, index, $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors["file_names." + index]
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors["file_names." + index][0]))
-                          ])
-                        : _vm._e()
-                    ])
-                  ])
-                })
-              )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Upload")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-light",
-            attrs: { href: _vm.cancelUrl, role: "button" }
-          },
-          [_vm._v("Cancel")]
-        )
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "d-flex" }, [
-        _c("th", { staticClass: "col-1" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "col-5" }, [_vm._v("Original file name")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "col-6" }, [_vm._v("New file name")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-78806155", module.exports)
-  }
-}
-
-/***/ }),
-/* 271 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 272 */,
-/* 273 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(274)
-/* template */
-var __vue_template__ = __webpack_require__(275)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Frontend/Courses.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0e860d5c", Component.options)
-  } else {
-    hotAPI.reload("data-v-0e860d5c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 274 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            courses: [],
-            pagination: {}
-        };
-    },
-    created: function created() {
-        this.getCourses();
-    },
-
-    methods: {
-        getCourses: function getCourses(url) {
-            var _this = this;
-
-            url = url || '/api/courses';
-            axios.get(url).then(function (response) {
-                _this.courses = response.data.data;
-                _this.makePagination(response.data.links, response.data.meta);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        makePagination: function makePagination(links, meta) {
-            var pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next
-            };
-            this.pagination = pagination;
-        },
-        getImagePath: function getImagePath(course) {
-            return course.image_path;
-        },
-        getCourseUrl: function getCourseUrl(course) {
-            return '/courses/' + course.slug;
-        }
-    }
-});
-
-/***/ }),
-/* 275 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h2", [_vm._v("Courses")]),
-    _c("hr"),
-    _vm._v(" "),
-    _vm.courses.length
-      ? _c("div", [
-          _c(
-            "div",
-            { staticClass: "card-columns" },
-            _vm._l(_vm.courses, function(course) {
-              return _c("div", { key: course.id, staticClass: "card" }, [
-                _c("div", { staticClass: "wrapper" }, [
-                  _c("img", {
-                    staticClass: "card-img-top img",
-                    attrs: { src: _vm.getImagePath(course) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "a",
-                    {
-                      staticStyle: { "text-decoration": "none" },
-                      attrs: { href: _vm.getCourseUrl(course) }
-                    },
-                    [
-                      _c("small", [_vm._v(_vm._s(course.code))]),
-                      _vm._v(" "),
-                      _c("h5", { staticClass: "card-title text-truncate" }, [
-                        _vm._v(_vm._s(course.title))
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "card-text text-truncate" }, [
-                    _vm._v(_vm._s(course.description))
-                  ])
-                ])
-              ])
-            })
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "pagination" }, [
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.prev_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        _vm.getCourses(_vm.pagination.prev_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Previous")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item disabled" }, [
-              _c(
-                "a",
-                { staticClass: "page-link text-dark", attrs: { href: "#" } },
-                [
-                  _vm._v(
-                    "Page " +
-                      _vm._s(_vm.pagination.current_page) +
-                      " of " +
-                      _vm._s(_vm.pagination.last_page)
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.next_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        _vm.getCourses(_vm.pagination.next_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Next")]
-                )
-              ]
-            )
-          ])
-        ])
-      : _c("div", [_vm._v("No courses to display")])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0e860d5c", module.exports)
-  }
-}
-
-/***/ }),
 /* 276 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(277)
-/* template */
-var __vue_template__ = __webpack_require__(278)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Frontend/Course.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5349341e", Component.options)
-  } else {
-    hotAPI.reload("data-v-5349341e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 277 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course'],
-    data: function data() {
-        return {
-            pages: [],
-            files: [],
-            pagination: {},
-            editCourseUrl: '/courses/' + this.course.slug + '/edit',
-            addPageUrl: '/courses/' + this.course.slug + '/pages/create',
-            uploadFilesUrl: '/courses/' + this.course.slug + '/files/create'
-        };
-    },
-    created: function created() {
-        this.getPages(null);
-        this.getFiles();
-    },
-
-    methods: {
-        getPages: function getPages(url) {
-            var _this = this;
-
-            url = url || '/api/courses/' + this.course.id + '/pages';
-            axios.get(url).then(function (response) {
-                _this.pages = response.data.data;
-                _this.makePagination(response.data.links, response.data.meta);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getFiles: function getFiles() {
-            var _this2 = this;
-
-            axios.get('/api/courses/' + this.course.id + '/files').then(function (response) {
-                _this2.files = response.data.data;
-                console.log(_this2.files);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        makePagination: function makePagination(links, meta) {
-            var pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next
-            };
-            this.pagination = pagination;
-        },
-        deleteCourse: function deleteCourse() {
-            if (confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/courses/' + this.course.id).then(function (response) {
-                    window.location.href = '/courses';
-                }).catch(function (error) {
-                    console.log(error);
-                });
-                console.log('delete');
-            }
-        },
-        hasPages: function hasPages() {
-            return this.pages.length;
-        },
-        getPageUrl: function getPageUrl(page) {
-            return '/courses/' + this.course.slug + '/pages/' + page.slug;
-        },
-        hasChildren: function hasChildren(page) {
-            return page.children.length;
-        },
-        getChildUrl: function getChildUrl(child) {
-            return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        hasFiles: function hasFiles() {
-            return this.files.length;
-        },
-        getFileUrl: function getFileUrl(file) {
-            return file.file_path;
-        }
-    }
-});
-
-/***/ }),
-/* 278 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h3", [
-      _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
-    ]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.course.description))]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "tab-content", attrs: { id: "myTabContent" } }, [
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane show active",
-          attrs: { id: "pages", role: "tabpanel" }
-        },
-        [
-          _vm.hasPages()
-            ? _c(
-                "div",
-                [
-                  _c("tree", {
-                    attrs: {
-                      courseSlug: _vm.course.slug,
-                      children: _vm.pages,
-                      depth: -1
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    {
-                      staticClass: "pagination",
-                      staticStyle: {
-                        display: "flex",
-                        "justify-content": "center"
-                      }
-                    },
-                    [
-                      _c(
-                        "li",
-                        {
-                          staticClass: "page-item",
-                          class: [{ disabled: !_vm.pagination.prev_page_url }]
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "page-link",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.getPages(_vm.pagination.prev_page_url)
-                                }
-                              }
-                            },
-                            [_vm._v("Previous")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "page-item disabled" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "page-link text-dark",
-                            attrs: { href: "#" }
-                          },
-                          [
-                            _vm._v(
-                              "Page " +
-                                _vm._s(_vm.pagination.current_page) +
-                                " of " +
-                                _vm._s(_vm.pagination.last_page)
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        {
-                          staticClass: "page-item",
-                          class: [{ disabled: !_vm.pagination.next_page_url }]
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "page-link",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.getPages(_vm.pagination.next_page_url)
-                                }
-                              }
-                            },
-                            [_vm._v("Next")]
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
-            : _c("div", [_vm._v("No pages to display")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "tab-pane", attrs: { id: "files", role: "tabpanel" } },
-        [
-          _vm.hasFiles()
-            ? _c(
-                "div",
-                _vm._l(_vm.files, function(file) {
-                  return _c("div", { key: file.id, staticClass: "m-2" }, [
-                    _c(
-                      "a",
-                      {
-                        staticStyle: { "text-decoration": "none" },
-                        attrs: { href: _vm.getFileUrl(file) }
-                      },
-                      [
-                        _c("span", {
-                          staticClass: "icon ion-ios-document pr-3"
-                        }),
-                        _vm._v(_vm._s(file.name)),
-                        _c("br")
-                      ]
-                    )
-                  ])
-                })
-              )
-            : _c("div", [_vm._v("No files uploaded")])
-        ]
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs mb-3",
-        attrs: { id: "myTab", role: "tablist" }
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                id: "pages-tab",
-                "data-toggle": "tab",
-                href: "#pages",
-                role: "tab"
-              }
-            },
-            [_vm._v("Pages")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                id: "files-tab",
-                "data-toggle": "tab",
-                href: "#files",
-                role: "tab"
-              }
-            },
-            [_vm._v("Files")]
-          )
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5349341e", module.exports)
-  }
-}
-
-/***/ }),
-/* 279 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(280)
-/* template */
-var __vue_template__ = __webpack_require__(281)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Frontend/Page.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4779a5e5", Component.options)
-  } else {
-    hotAPI.reload("data-v-4779a5e5", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 280 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs_prism__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Sidebar__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// Prism - syntax highlighting
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course', 'page'],
-    data: function data() {
-        return {
-            editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit'
-        };
-    },
-
-    components: {
-        'sidebar': __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default.a
-    },
-    methods: {
-        getCourseUrl: function getCourseUrl() {
-            return '/courses/' + this.course.slug;
-        },
-        getChildUrl: function getChildUrl(child) {
-            return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        deletePage: function deletePage() {
-            var _this = this;
-
-            if (confirm('Are you sure you want to delete this page?')) {
-                axios.delete('/api/pages/' + this.page.id).then(function (response) {
-                    window.location.href = _this.getCourseUrl();
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-        }
-    },
-    watch: {
-        'page.body': function pageBody(value) {
-            this.$nextTick(function () {
-                return Prism.highlightAll();
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -108782,31 +109379,6 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 mt-3" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { href: _vm.editPageUrl, role: "button" }
-            },
-            [_vm._v("Edit Page")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger",
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  _vm.deletePage()
-                }
-              }
-            },
-            [_vm._v("Delete Page")]
-          )
-        ]),
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
@@ -108841,6 +109413,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-4779a5e5", module.exports)
   }
 }
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

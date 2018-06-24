@@ -29,7 +29,7 @@
             <div class="tab-pane" id="files" role="tabpanel">
                 <div v-if="hasFiles()">
                     <div v-for="file in files" :key="file.id" class="m-2">
-                        <a :href="getFileUrl(file)" style="text-decoration: none;">
+                        <a :href="getFileUrl(file)" style="text-decoration: none;" download>
                             <span class="icon ion-ios-document pr-3"></span>{{ file.name }}<br>
                         </a>
                     </div>
@@ -74,7 +74,6 @@ export default {
             axios.get('/api/courses/' + this.course.id + '/files')
                 .then(response => {
                     this.files = response.data.data;
-                    console.log(this.files);
                 })
                 .catch(error => {
                     console.log(error);

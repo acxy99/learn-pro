@@ -43,7 +43,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-light" @click="cancelUpdate()">Cancel</button>
+            <button type="button" class="btn btn-light" @click="cancel()">Cancel</button>
         </form>
     </div>
 </template>
@@ -126,7 +126,7 @@ export default {
             this.course.image = '';
             this.currentImage = '';
         },
-        cancelUpdate() {
+        cancel() {
             window.history.back();
         },
     },

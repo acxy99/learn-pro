@@ -85,12 +85,10 @@ export default {
         }
     },
     created() {
-        console.log(this.coursesCount)
+        
     },
     methods: {
-        getCoursesCount() {
-            axios.get()
-        }
+        
     },
 }
 </script>
