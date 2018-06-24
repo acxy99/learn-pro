@@ -3,20 +3,12 @@
         <small>
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h3>{{ title }}</h3><hr>
+        <h4>{{ title }}</h4><hr>
 
         <form @submit.prevent="onSubmit">
             <div class="form-group" hidden>
                 <label for="course_id">Course</label>
                 <input type="text" class="form-control" id="course_id" :value="course.id" readonly>
-            </div>
-
-            <div class="form-group">
-                <label for="parent_id">Parent</label>
-                <select class="custom-select" v-model="page.parent_id">
-                    <option selected value="">None</option>
-                    <option v-for="parent in parents" v-bind:key="parent.id" :value="parent.id">{{ parent.title }}</option>
-                </select>
             </div>
 
             <div class="form-group">
@@ -31,8 +23,18 @@
                 <div class="invalid-feedback" v-if="errors['body']">{{ errors['body'][0] }}</div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
-            <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
+            <div class="form-group">
+                <label for="parent_id">Parent</label>
+                <select class="custom-select" v-model="page.parent_id">
+                    <option selected value="">None</option>
+                    <option v-for="parent in parents" v-bind:key="parent.id" :value="parent.id">{{ parent.title }}</option>
+                </select>
+            </div>
+
+            <div class="mb-5">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
+            </div>
         </form>
     </div>
 </template>
@@ -109,7 +111,7 @@ export default {
             }
         },
         createPage(formData) {
-            axios.post('/api/pages', formData)
+            axios.post('/api/admin/pages', formData)
                 .then(response => {
                     window.location.href = '/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
                 })
@@ -124,11 +126,11 @@ export default {
             formData.append('id', this.page.id);
             formData.append('_method', 'PUT');
 
-            axios.post('/api/pages/' + this.page.id, formData, {
+            axios.post('/api/admin/pages/' + this.page.id, formData, {
                 _method: 'put',
             })
             .then(response => {
-                window.location.href = '/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
+                window.location.href = '/admin/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
             })
             .catch(error => {
                 console.log(error);
