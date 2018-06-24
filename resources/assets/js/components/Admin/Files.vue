@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="file in files" :key="file.id" @mouseover="active = file.id">
+                <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px">
                     <td style="width: 70%">
                         <a style="text-decoration: none" :href="getFileUrl(file)" download>{{ file.name }}</a>
                     </td>

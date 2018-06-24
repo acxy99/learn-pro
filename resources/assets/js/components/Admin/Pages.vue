@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="page in pages" :key="page.id" @mouseover="active = page.id">
+                <tr v-for="page in pages" :key="page.id" @mouseover="active = page.id" style="height: 65px">
                     <td style="width: 50%">
                         <a style="text-decoration: none" :href="getManagePageUrl(page)">{{ page.title }}</a>
                     </td>

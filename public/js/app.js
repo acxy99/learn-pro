@@ -66445,6 +66445,7 @@ var render = function() {
             "tr",
             {
               key: page.id,
+              staticStyle: { height: "65px" },
               on: {
                 mouseover: function($event) {
                   _vm.active = page.id
@@ -104729,6 +104730,7 @@ var render = function() {
             "tr",
             {
               key: file.id,
+              staticStyle: { height: "65px" },
               on: {
                 mouseover: function($event) {
                   _vm.active = file.id
