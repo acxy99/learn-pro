@@ -3,5 +3,5 @@
 @section('title', '| Upload Files')
 
 @section('content')
-    <files-upload-form :course="{{ $course }}"></files-upload-form>
+    <admin-files-upload-form :course="{{ $course }}"></admin-files-upload-form>
 @endsection

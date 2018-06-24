@@ -90,14 +90,14 @@ export default {
                 console.log(pair[0]+ ', ' + pair[1]); 
             }*/
 
-            axios.post('/api/files', formData, {
+            axios.post('/api/admin/files', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             })
             .then(response => {
                 // console.log(response);
-                window.location.href = '/courses/' + this.course.slug;
+                window.location.href = '/admin/courses/' + this.course.slug + '/files';
             })
             .catch(error => {
                 console.log(error);

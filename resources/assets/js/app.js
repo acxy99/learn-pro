@@ -33,6 +33,10 @@ Vue.component('admin-pages', require('./components/Admin/Pages.vue'));
 Vue.component('admin-page-form', require('./components/Admin/PageForm.vue'));
 Vue.component('admin-page', require('./components/Admin/Page.vue'));
 
+Vue.component('admin-files', require('./components/Admin/Files.vue'));
+Vue.component('admin-files-upload-form', require('./components/Admin/FilesUploadForm.vue'));
+Vue.component('admin-file-edit-form', require('./components/Admin/FileEditForm.vue'));
+
 Vue.component('tree', require('./components/Tree.vue'));
 Vue.component('sidebar-tree', require('./components/SidebarTree.vue'));
 
@@ -40,8 +44,6 @@ Vue.component('courses', require('./components/Frontend/Courses.vue'));
 Vue.component('course', require('./components/Frontend/Course.vue'));
 
 Vue.component('page', require('./components/Frontend/Page.vue'));
-
-Vue.component('files-upload-form', require('./components/FilesUploadForm.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -104,7 +104,7 @@ export default {
         return {
             editCourseUrl: '/admin/courses/' + this.course.slug + '/edit',
             managePagesUrl: '/admin/courses/' + this.course.slug + '/pages',
-            manageFilesUrl: '#',
+            manageFilesUrl: '/admin/courses/' + this.course.slug + '/files',
         }
     },
     created() {

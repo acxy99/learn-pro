@@ -52,6 +52,16 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::post('/pages', 'PageController@store');
     Route::put('/pages/{id}', 'PageController@update');
     Route::delete('/pages/{id}', 'PageController@destroy');
+
+    Route::get('/courses/{course_id}/files', function($course_id) {
+        $course = Course::findOrFail($course_id);
+        return new FileResourceCollection(
+            File::where([
+                'course_id' => $course->id,
+            ])->paginate(10)
+        ); 
+    });
+    Route::apiResource('files', 'FileController')->only(['store', 'update', 'destroy']);
 });
 
 /*
