@@ -27,14 +27,14 @@
     </nav>
 </template>-->
 <template>
-    <b-navbar type="dark" variant="dark" class="mb-5" toggleable>
-        <b-navbar-brand>LEARN<b>PRO</b></b-navbar-brand>
+    <nav class="navbar navbar-expand navbar-dark bg-dark sticky-top mb-5">
+        <a class="navbar-brand" href="#">LEARN<b>PRO</b></a>
 
-        <b-navbar-nav>
-            <b-nav-item to="/admin">Admin</b-nav-item>
-            <b-nav-item to="/courses">Courses</b-nav-item>
-        </b-navbar-nav>
-    </b-navbar>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/admin">Admin</a>
+            <a class="nav-item nav-link" href="/courses">Courses</a>
+        </div>
+    </nav>
 </template>
 
 <script>
