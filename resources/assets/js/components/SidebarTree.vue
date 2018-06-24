@@ -29,7 +29,7 @@ export default {
 	},
 	created() {
 		if (this.depth == 0) {
-            this.liClass['font-weight-bold mt-3'] = true;
+            this.liClass['h6 mt-3'] = true;
 		}
 	},
 	methods: {
@@ -39,11 +39,11 @@ export default {
 		checkCurrentPage() {
 			if (this.currentPage == this.title) {
 				return {
-                    color: '#1691b7',
+                    color: '#007bff',
                 }
 			} else {
 				return {
-                    color: '#222',
+                    color: '#555',
                 }
 			}
 		},

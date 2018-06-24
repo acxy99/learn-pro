@@ -12,11 +12,6 @@
                     <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
                 </small>
                 <h3>{{ page.title }}</h3>
-                
-                <div class="mb-3 mt-3">
-                    <a class="btn btn-primary" :href="editPageUrl" role="button">Edit Page</a>
-                    <button type="button" @click="deletePage()" class="btn btn-danger">Delete Page</button>
-                </div>
                 <hr>
       
                 <p v-html="page.body"></p><hr>
