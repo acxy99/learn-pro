@@ -20327,10 +20327,10 @@ Vue.component('admin-page', __webpack_require__(243));
 Vue.component('tree', __webpack_require__(246));
 Vue.component('sidebar-tree', __webpack_require__(249));
 
-Vue.component('courses', __webpack_require__(252));
-Vue.component('course', __webpack_require__(255));
+Vue.component('courses', __webpack_require__(273));
+Vue.component('course', __webpack_require__(276));
 
-Vue.component('page', __webpack_require__(258));
+Vue.component('page', __webpack_require__(279));
 
 Vue.component('files-upload-form', __webpack_require__(268));
 
@@ -64731,15 +64731,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             learnersCount: 0
         };
     },
-    created: function created() {
-        console.log(this.coursesCount);
-    },
+    created: function created() {},
 
-    methods: {
-        getCoursesCount: function getCoursesCount() {
-            axios.get();
-        }
-    }
+    methods: {}
 });
 
 /***/ }),
@@ -65552,31 +65546,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             formData.append('id', this.course.id);
             formData.append('hasImage', this.course.image || document.querySelector('#image').files[0] ? true : false);
             formData.append('_method', 'PUT');
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = formData.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var pair = _step.value;
-
-                    console.log(pair[0] + ', ' + pair[1]);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
 
             axios.post('/api/admin/courses/' + this.course.id, formData, {
                 _method: 'put',
@@ -104866,781 +104835,14 @@ if (false) {
 }
 
 /***/ }),
-/* 252 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(253)
-/* template */
-var __vue_template__ = __webpack_require__(254)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Courses.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3d5ea3d1", Component.options)
-  } else {
-    hotAPI.reload("data-v-3d5ea3d1", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 253 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            courses: [],
-            pagination: {}
-        };
-    },
-    created: function created() {
-        this.getCourses();
-    },
-
-    methods: {
-        getCourses: function getCourses(url) {
-            var _this = this;
-
-            url = url || '/api/courses';
-            axios.get(url).then(function (response) {
-                _this.courses = response.data.data;
-                _this.makePagination(response.data.links, response.data.meta);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        makePagination: function makePagination(links, meta) {
-            var pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next
-            };
-            this.pagination = pagination;
-        },
-        getImagePath: function getImagePath(course) {
-            return course.image_path;
-        },
-        getCourseUrl: function getCourseUrl(course) {
-            return '/courses/' + course.slug;
-        }
-    }
-});
-
-/***/ }),
-/* 254 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h2", [_vm._v("Courses")]),
-    _c("hr"),
-    _vm._v(" "),
-    _vm.courses.length
-      ? _c("div", [
-          _c(
-            "div",
-            { staticClass: "card-columns" },
-            _vm._l(_vm.courses, function(course) {
-              return _c("div", { key: course.id, staticClass: "card" }, [
-                _c("div", { staticClass: "wrapper" }, [
-                  _c("img", {
-                    staticClass: "card-img-top img",
-                    attrs: { src: _vm.getImagePath(course) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "a",
-                    {
-                      staticStyle: { "text-decoration": "none" },
-                      attrs: { href: _vm.getCourseUrl(course) }
-                    },
-                    [
-                      _c("small", [_vm._v(_vm._s(course.code))]),
-                      _vm._v(" "),
-                      _c("h5", { staticClass: "card-title text-truncate" }, [
-                        _vm._v(_vm._s(course.title))
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "card-text text-truncate" }, [
-                    _vm._v(_vm._s(course.description))
-                  ])
-                ])
-              ])
-            })
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "pagination" }, [
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.prev_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        _vm.getCourses(_vm.pagination.prev_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Previous")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item disabled" }, [
-              _c(
-                "a",
-                { staticClass: "page-link text-dark", attrs: { href: "#" } },
-                [
-                  _vm._v(
-                    "Page " +
-                      _vm._s(_vm.pagination.current_page) +
-                      " of " +
-                      _vm._s(_vm.pagination.last_page)
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.next_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        _vm.getCourses(_vm.pagination.next_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Next")]
-                )
-              ]
-            )
-          ])
-        ])
-      : _c("div", [_vm._v("No courses to display")])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3d5ea3d1", module.exports)
-  }
-}
-
-/***/ }),
-/* 255 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(256)
-/* template */
-var __vue_template__ = __webpack_require__(257)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Course.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3baaef92", Component.options)
-  } else {
-    hotAPI.reload("data-v-3baaef92", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 256 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course'],
-    data: function data() {
-        return {
-            pages: [],
-            files: [],
-            pagination: {},
-            editCourseUrl: '/courses/' + this.course.slug + '/edit',
-            addPageUrl: '/courses/' + this.course.slug + '/pages/create',
-            uploadFilesUrl: '/courses/' + this.course.slug + '/files/create'
-        };
-    },
-    created: function created() {
-        this.getPages(null);
-        this.getFiles();
-    },
-
-    methods: {
-        getPages: function getPages(url) {
-            var _this = this;
-
-            url = url || '/api/courses/' + this.course.id + '/pages';
-            axios.get(url).then(function (response) {
-                _this.pages = response.data.data;
-                _this.makePagination(response.data.links, response.data.meta);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getFiles: function getFiles() {
-            var _this2 = this;
-
-            axios.get('/api/courses/' + this.course.id + '/files').then(function (response) {
-                _this2.files = response.data.data;
-                console.log(_this2.files);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        makePagination: function makePagination(links, meta) {
-            var pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next
-            };
-            this.pagination = pagination;
-        },
-        deleteCourse: function deleteCourse() {
-            if (confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/courses/' + this.course.id).then(function (response) {
-                    window.location.href = '/courses';
-                }).catch(function (error) {
-                    console.log(error);
-                });
-                console.log('delete');
-            }
-        },
-        hasPages: function hasPages() {
-            return this.pages.length;
-        },
-        getPageUrl: function getPageUrl(page) {
-            return '/courses/' + this.course.slug + '/pages/' + page.slug;
-        },
-        hasChildren: function hasChildren(page) {
-            return page.children.length;
-        },
-        getChildUrl: function getChildUrl(child) {
-            return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        hasFiles: function hasFiles() {
-            return this.files.length;
-        },
-        getFileUrl: function getFileUrl(file) {
-            return file.file_path;
-        }
-    }
-});
-
-/***/ }),
-/* 257 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h3", [
-      _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
-    ]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.course.description))]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "tab-content", attrs: { id: "myTabContent" } }, [
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane show active",
-          attrs: { id: "pages", role: "tabpanel" }
-        },
-        [
-          _vm.hasPages()
-            ? _c(
-                "div",
-                [
-                  _c("tree", {
-                    attrs: {
-                      courseSlug: _vm.course.slug,
-                      children: _vm.pages,
-                      depth: -1
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    {
-                      staticClass: "pagination",
-                      staticStyle: {
-                        display: "flex",
-                        "justify-content": "center"
-                      }
-                    },
-                    [
-                      _c(
-                        "li",
-                        {
-                          staticClass: "page-item",
-                          class: [{ disabled: !_vm.pagination.prev_page_url }]
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "page-link",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.getPages(_vm.pagination.prev_page_url)
-                                }
-                              }
-                            },
-                            [_vm._v("Previous")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "page-item disabled" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "page-link text-dark",
-                            attrs: { href: "#" }
-                          },
-                          [
-                            _vm._v(
-                              "Page " +
-                                _vm._s(_vm.pagination.current_page) +
-                                " of " +
-                                _vm._s(_vm.pagination.last_page)
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        {
-                          staticClass: "page-item",
-                          class: [{ disabled: !_vm.pagination.next_page_url }]
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "page-link",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.getPages(_vm.pagination.next_page_url)
-                                }
-                              }
-                            },
-                            [_vm._v("Next")]
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
-            : _c("div", [_vm._v("No pages to display")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "tab-pane", attrs: { id: "files", role: "tabpanel" } },
-        [
-          _vm.hasFiles()
-            ? _c(
-                "div",
-                _vm._l(_vm.files, function(file) {
-                  return _c("div", { key: file.id, staticClass: "m-2" }, [
-                    _c(
-                      "a",
-                      {
-                        staticStyle: { "text-decoration": "none" },
-                        attrs: { href: _vm.getFileUrl(file) }
-                      },
-                      [
-                        _c("span", {
-                          staticClass: "icon ion-ios-document pr-3"
-                        }),
-                        _vm._v(_vm._s(file.name)),
-                        _c("br")
-                      ]
-                    )
-                  ])
-                })
-              )
-            : _c("div", [_vm._v("No files uploaded")])
-        ]
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs mb-3",
-        attrs: { id: "myTab", role: "tablist" }
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                id: "pages-tab",
-                "data-toggle": "tab",
-                href: "#pages",
-                role: "tab"
-              }
-            },
-            [_vm._v("Pages")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                id: "files-tab",
-                "data-toggle": "tab",
-                href: "#files",
-                role: "tab"
-              }
-            },
-            [_vm._v("Files")]
-          )
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3baaef92", module.exports)
-  }
-}
-
-/***/ }),
-/* 258 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(6)
-/* script */
-var __vue_script__ = __webpack_require__(259)
-/* template */
-var __vue_template__ = __webpack_require__(267)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Page.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1cb123c6", Component.options)
-  } else {
-    hotAPI.reload("data-v-1cb123c6", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 259 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs_prism__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Sidebar__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// Prism - syntax highlighting
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['course', 'page'],
-    data: function data() {
-        return {
-            editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit'
-        };
-    },
-
-    components: {
-        'sidebar': __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default.a
-    },
-    methods: {
-        getCourseUrl: function getCourseUrl() {
-            return '/courses/' + this.course.slug;
-        },
-        getChildUrl: function getChildUrl(child) {
-            return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        deletePage: function deletePage() {
-            var _this = this;
-
-            if (confirm('Are you sure you want to delete this page?')) {
-                axios.delete('/api/pages/' + this.page.id).then(function (response) {
-                    window.location.href = _this.getCourseUrl();
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-        }
-    },
-    watch: {
-        'page.body': function pageBody(value) {
-            this.$nextTick(function () {
-                return Prism.highlightAll();
-            });
-        }
-    }
-});
-
-/***/ }),
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
 /* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -108451,100 +107653,7 @@ if (false) {
 }
 
 /***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row m-0" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-3 bg-light mb-3" },
-        [
-          _c("sidebar", {
-            attrs: { course: _vm.course, currentPage: _vm.page.title }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("small", [
-          _c(
-            "a",
-            {
-              staticStyle: { "text-decoration": "none" },
-              attrs: { href: _vm.getCourseUrl() }
-            },
-            [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
-          )
-        ]),
-        _vm._v(" "),
-        _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 mt-3" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { href: _vm.editPageUrl, role: "button" }
-            },
-            [_vm._v("Edit Page")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger",
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  _vm.deletePage()
-                }
-              }
-            },
-            [_vm._v("Delete Page")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } }),
-        _c("hr"),
-        _vm._v(" "),
-        _vm.page.children.length
-          ? _c("small", [_c("em", [_vm._v("Related sections")])])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "m-2" },
-          _vm._l(_vm.page.children, function(child) {
-            return _c("li", { key: child.id }, [
-              _c("a", { attrs: { href: _vm.getChildUrl(child) } }, [
-                _vm._v(_vm._s(child.title))
-              ])
-            ])
-          })
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1cb123c6", module.exports)
-  }
-}
-
-/***/ }),
+/* 267 */,
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -108862,6 +107971,876 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 272 */,
+/* 273 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(274)
+/* template */
+var __vue_template__ = __webpack_require__(275)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Frontend/Courses.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e860d5c", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e860d5c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 274 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            courses: [],
+            pagination: {}
+        };
+    },
+    created: function created() {
+        this.getCourses();
+    },
+
+    methods: {
+        getCourses: function getCourses(url) {
+            var _this = this;
+
+            url = url || '/api/courses';
+            axios.get(url).then(function (response) {
+                _this.courses = response.data.data;
+                _this.makePagination(response.data.links, response.data.meta);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        makePagination: function makePagination(links, meta) {
+            var pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next
+            };
+            this.pagination = pagination;
+        },
+        getImagePath: function getImagePath(course) {
+            return course.image_path;
+        },
+        getCourseUrl: function getCourseUrl(course) {
+            return '/courses/' + course.slug;
+        }
+    }
+});
+
+/***/ }),
+/* 275 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("h2", [_vm._v("Courses")]),
+    _c("hr"),
+    _vm._v(" "),
+    _vm.courses.length
+      ? _c("div", [
+          _c(
+            "div",
+            { staticClass: "card-columns" },
+            _vm._l(_vm.courses, function(course) {
+              return _c("div", { key: course.id, staticClass: "card" }, [
+                _c("div", { staticClass: "wrapper" }, [
+                  _c("img", {
+                    staticClass: "card-img-top img",
+                    attrs: { src: _vm.getImagePath(course) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: { "text-decoration": "none" },
+                      attrs: { href: _vm.getCourseUrl(course) }
+                    },
+                    [
+                      _c("small", [_vm._v(_vm._s(course.code))]),
+                      _vm._v(" "),
+                      _c("h5", { staticClass: "card-title text-truncate" }, [
+                        _vm._v(_vm._s(course.title))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text text-truncate" }, [
+                    _vm._v(_vm._s(course.description))
+                  ])
+                ])
+              ])
+            })
+          ),
+          _vm._v(" "),
+          _c("ul", { staticClass: "pagination" }, [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.prev_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        _vm.getCourses(_vm.pagination.prev_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Previous")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item disabled" }, [
+              _c(
+                "a",
+                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                [
+                  _vm._v(
+                    "Page " +
+                      _vm._s(_vm.pagination.current_page) +
+                      " of " +
+                      _vm._s(_vm.pagination.last_page)
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.next_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        _vm.getCourses(_vm.pagination.next_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Next")]
+                )
+              ]
+            )
+          ])
+        ])
+      : _c("div", [_vm._v("No courses to display")])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e860d5c", module.exports)
+  }
+}
+
+/***/ }),
+/* 276 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(277)
+/* template */
+var __vue_template__ = __webpack_require__(278)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Frontend/Course.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5349341e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5349341e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 277 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course'],
+    data: function data() {
+        return {
+            pages: [],
+            files: [],
+            pagination: {},
+            editCourseUrl: '/courses/' + this.course.slug + '/edit',
+            addPageUrl: '/courses/' + this.course.slug + '/pages/create',
+            uploadFilesUrl: '/courses/' + this.course.slug + '/files/create'
+        };
+    },
+    created: function created() {
+        this.getPages(null);
+        this.getFiles();
+    },
+
+    methods: {
+        getPages: function getPages(url) {
+            var _this = this;
+
+            url = url || '/api/courses/' + this.course.id + '/pages';
+            axios.get(url).then(function (response) {
+                _this.pages = response.data.data;
+                _this.makePagination(response.data.links, response.data.meta);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getFiles: function getFiles() {
+            var _this2 = this;
+
+            axios.get('/api/courses/' + this.course.id + '/files').then(function (response) {
+                _this2.files = response.data.data;
+                console.log(_this2.files);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        makePagination: function makePagination(links, meta) {
+            var pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next
+            };
+            this.pagination = pagination;
+        },
+        deleteCourse: function deleteCourse() {
+            if (confirm('Are you sure you want to delete this course?')) {
+                axios.delete('/api/courses/' + this.course.id).then(function (response) {
+                    window.location.href = '/courses';
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                console.log('delete');
+            }
+        },
+        hasPages: function hasPages() {
+            return this.pages.length;
+        },
+        getPageUrl: function getPageUrl(page) {
+            return '/courses/' + this.course.slug + '/pages/' + page.slug;
+        },
+        hasChildren: function hasChildren(page) {
+            return page.children.length;
+        },
+        getChildUrl: function getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
+        },
+        hasFiles: function hasFiles() {
+            return this.files.length;
+        },
+        getFileUrl: function getFileUrl(file) {
+            return file.file_path;
+        }
+    }
+});
+
+/***/ }),
+/* 278 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("h3", [
+      _vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))
+    ]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.course.description))]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "tab-content", attrs: { id: "myTabContent" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "tab-pane show active",
+          attrs: { id: "pages", role: "tabpanel" }
+        },
+        [
+          _vm.hasPages()
+            ? _c(
+                "div",
+                [
+                  _c("tree", {
+                    attrs: {
+                      courseSlug: _vm.course.slug,
+                      children: _vm.pages,
+                      depth: -1
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    {
+                      staticClass: "pagination",
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "center"
+                      }
+                    },
+                    [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.prev_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.getPages(_vm.pagination.prev_page_url)
+                                }
+                              }
+                            },
+                            [_vm._v("Previous")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item disabled" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link text-dark",
+                            attrs: { href: "#" }
+                          },
+                          [
+                            _vm._v(
+                              "Page " +
+                                _vm._s(_vm.pagination.current_page) +
+                                " of " +
+                                _vm._s(_vm.pagination.last_page)
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.next_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.getPages(_vm.pagination.next_page_url)
+                                }
+                              }
+                            },
+                            [_vm._v("Next")]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            : _c("div", [_vm._v("No pages to display")])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "tab-pane", attrs: { id: "files", role: "tabpanel" } },
+        [
+          _vm.hasFiles()
+            ? _c(
+                "div",
+                _vm._l(_vm.files, function(file) {
+                  return _c("div", { key: file.id, staticClass: "m-2" }, [
+                    _c(
+                      "a",
+                      {
+                        staticStyle: { "text-decoration": "none" },
+                        attrs: { href: _vm.getFileUrl(file) }
+                      },
+                      [
+                        _c("span", {
+                          staticClass: "icon ion-ios-document pr-3"
+                        }),
+                        _vm._v(_vm._s(file.name)),
+                        _c("br")
+                      ]
+                    )
+                  ])
+                })
+              )
+            : _c("div", [_vm._v("No files uploaded")])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-tabs mb-3",
+        attrs: { id: "myTab", role: "tablist" }
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: {
+                id: "pages-tab",
+                "data-toggle": "tab",
+                href: "#pages",
+                role: "tab"
+              }
+            },
+            [_vm._v("Pages")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "files-tab",
+                "data-toggle": "tab",
+                href: "#files",
+                role: "tab"
+              }
+            },
+            [_vm._v("Files")]
+          )
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5349341e", module.exports)
+  }
+}
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(6)
+/* script */
+var __vue_script__ = __webpack_require__(280)
+/* template */
+var __vue_template__ = __webpack_require__(281)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Frontend/Page.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4779a5e5", Component.options)
+  } else {
+    hotAPI.reload("data-v-4779a5e5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 280 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs_prism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs_prism__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prismjs_themes_prism_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Sidebar__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// Prism - syntax highlighting
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['course', 'page'],
+    data: function data() {
+        return {
+            editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit'
+        };
+    },
+
+    components: {
+        'sidebar': __WEBPACK_IMPORTED_MODULE_2__components_Sidebar___default.a
+    },
+    methods: {
+        getCourseUrl: function getCourseUrl() {
+            return '/courses/' + this.course.slug;
+        },
+        getChildUrl: function getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
+        },
+        deletePage: function deletePage() {
+            var _this = this;
+
+            if (confirm('Are you sure you want to delete this page?')) {
+                axios.delete('/api/pages/' + this.page.id).then(function (response) {
+                    window.location.href = _this.getCourseUrl();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    },
+    watch: {
+        'page.body': function pageBody(value) {
+            this.$nextTick(function () {
+                return Prism.highlightAll();
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row m-0" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-3 bg-light mb-3" },
+        [
+          _c("sidebar", {
+            attrs: { course: _vm.course, currentPage: _vm.page.title }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-9" }, [
+        _c("small", [
+          _c(
+            "a",
+            {
+              staticStyle: { "text-decoration": "none" },
+              attrs: { href: _vm.getCourseUrl() }
+            },
+            [_vm._v(_vm._s(_vm.course.code) + " " + _vm._s(_vm.course.title))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("h3", [_vm._v(_vm._s(_vm.page.title))]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3 mt-3" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { href: _vm.editPageUrl, role: "button" }
+            },
+            [_vm._v("Edit Page")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.deletePage()
+                }
+              }
+            },
+            [_vm._v("Delete Page")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("p", { domProps: { innerHTML: _vm._s(_vm.page.body) } }),
+        _c("hr"),
+        _vm._v(" "),
+        _vm.page.children.length
+          ? _c("small", [_c("em", [_vm._v("Related sections")])])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "m-2" },
+          _vm._l(_vm.page.children, function(child) {
+            return _c("li", { key: child.id }, [
+              _c("a", { attrs: { href: _vm.getChildUrl(child) } }, [
+                _vm._v(_vm._s(child.title))
+              ])
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4779a5e5", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

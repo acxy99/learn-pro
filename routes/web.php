@@ -36,8 +36,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 /*
     Frontend
 */
-Route::resource('/courses', 'CourseController')->only(['index', 'show']);
-
-Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
-
-Route::get('/courses/{course_slug}/files/create', 'FileController@create');
+Route::namespace('Frontend')->name('frontend.')->group(function() {
+    Route::resource('/courses', 'CourseController')->only(['index', 'show']);
+    
+    Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
+});

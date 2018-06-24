@@ -36,10 +36,10 @@ Vue.component('admin-page', require('./components/Admin/Page.vue'));
 Vue.component('tree', require('./components/Tree.vue'));
 Vue.component('sidebar-tree', require('./components/SidebarTree.vue'));
 
-Vue.component('courses', require('./components/Courses.vue'));
-Vue.component('course', require('./components/Course.vue'));
+Vue.component('courses', require('./components/Frontend/Courses.vue'));
+Vue.component('course', require('./components/Frontend/Course.vue'));
 
-Vue.component('page', require('./components/Page.vue'));
+Vue.component('page', require('./components/Frontend/Page.vue'));
 
 Vue.component('files-upload-form', require('./components/FilesUploadForm.vue'));
 

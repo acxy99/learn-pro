@@ -57,24 +57,25 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 /*
     Frontend
 */
-Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(9)); });
-
-Route::get('/courses/{course_id}/pages', function($course_id) {
-    $course = Course::find($course_id);
-    return new PageResourceCollection(
-        Page::where([
-            'course_id' => $course->id,
-            'parent_id' => null,
-        ])->paginate(10)
-    ); 
+Route::namespace('Frontend')->group(function() {
+    Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(9)); });
+    
+    Route::get('/courses/{course_id}/pages', function($course_id) {
+        $course = Course::find($course_id);
+        return new PageResourceCollection(
+            Page::where([
+                'course_id' => $course->id,
+                'parent_id' => null,
+            ])->paginate(10)
+        ); 
+    });
+    
+    Route::get('/courses/{course_id}/files', function($course_id) {
+        $course = Course::find($course_id);
+        return new FileResourceCollection(
+            File::where([
+                'course_id' => $course->id,
+            ])->paginate(10)
+        ); 
+    });
 });
-
-Route::get('/courses/{course_id}/files', function($course_id) {
-    $course = Course::find($course_id);
-    return new FileResourceCollection(
-        File::where([
-            'course_id' => $course->id,
-        ])->paginate(10)
-    ); 
-});
-Route::post('/files', 'FileController@store');
