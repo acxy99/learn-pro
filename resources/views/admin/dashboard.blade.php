@@ -3,5 +3,5 @@
 @section('title', '| Admin')
 
 @section('content')
-    <dashboard></dashboard>
+    <dashboard :courses-count="{{ $courses_count }}"></dashboard>
 @endsection

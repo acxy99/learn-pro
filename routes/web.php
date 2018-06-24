@@ -1,5 +1,7 @@
 <?php
 
+use App\Course;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +21,9 @@ Route::get('/', function () {
     Admin
 */
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
-    Route::get('/', function() { return view('admin.dashboard'); })->name('dashboard');
+    Route::get('/', function() {
+        return view('admin.dashboard', ['courses_count' => Course::count()]); 
+    })->name('dashboard');
 
     Route::resource('/courses', 'CourseController');
 
