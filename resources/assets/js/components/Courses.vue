@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <h2>Courses</h2><hr>
-        <b-button class="mb-3" variant="primary" href="/courses/create">Add New Course</b-button>
         
         <div v-if="courses.length">
             <div class="card-columns">

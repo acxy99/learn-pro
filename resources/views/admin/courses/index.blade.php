@@ -3,5 +3,5 @@
 @section('title', '| Manage Courses')
 
 @section('content')
-    <admin-courses :courses="{{ $courses }}"></admin-courses>
+    <admin-courses></admin-courses>
 @endsection

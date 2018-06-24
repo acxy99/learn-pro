@@ -2,10 +2,10 @@
     <div class="container-fluid">
 
         <div class="row mb-3">
-            <div class="col align-self-center">
+            <div class="col-md-9 align-self-center">
                 <h4 class="m-0">List of Courses</h4>
             </div>
-            <div class="col text-right">
+            <div class="col-md-3 text-right">
                 <a class="btn btn-primary" style="border-radius: 0" :href="createCourseUrl" role="button">Create Course</a>
             </div>
         </div>
@@ -17,22 +17,35 @@
                     <th style="width: 20%">Title</th>
                     <th style="width: 40%">Description</th>
                     <th style="width: 10%">Image</th>
-                    <th style="width: 8%">ID</th>
-                    <th style="width: 12%">Actions</th>
+                    <th style="width: 5%">ID</th>
+                    <th style="width: 15%">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="course in courses" :key="course.id" @mouseover="active = course.id">
-                    <td>{{ course.code }}</td>
-                    <td>{{ course.title }}</td>
-                    <td>{{ course.description }}</td>
-                    <td><a style="text-decoration: none;" :href="course.image_path">{{ course.image }}</a></td>
-                    <td>{{ course.id }}</td>
-                    <td>
+                <tr v-for="course in courses" :key="course.id" @mouseover="active = course.id" style="height: 75px">
+                    <td style="width: 10%">{{ course.code }}</td>
+                    <td style="width: 20%">
+                        <a style="text-decoration: none" :href="getManageCourseUrl(course)">{{ course.title }}</a>
+                    </td>
+                    <td style="width: 40%">{{ course.description }}</td>
+                    <td style="width: 10%">
+                        <div v-if="course.image">
+                            <a style="text-decoration: none;" :href="course.image_path">{{ course.image }}</a>
+                        </div>
+                        <div v-else class="text-muted">none</div>
+                    </td>
+                    <td style="width: 5%">{{ course.id }}</td>
+                    <td style="width: 15%">
                         <div v-show="active == course.id">
-                            <span><a class="btn btn-primary" :href="getEditCourseUrl(course)" role="button">E</a></span>
-                            <span><button type="button" class="btn btn-danger" @click="deleteCourse(course)">D</button></span><br>
-                            <small><a style="text-decoration: none;" :href="getManageCourseUrl(course)">Manage Course</a></small>
+                            <a class="btn p-1" :href="getViewCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="View">
+                                <i class="material-icons">visibility</i>
+                            </a>
+                            <a class="btn p-1" :href="getEditCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                                <i class="material-icons">create</i>
+                            </a>
+                            <button class="btn p-1" style="background-color: transparent" @click="deleteCourse(course)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                <i class="material-icons" style="color: red;">delete</i>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -62,7 +75,7 @@ export default {
     },
     methods: {
         getCourses(url) {
-            url = url || '/api/courses';
+            url = url || '/api/admin/courses';
 
             axios.get(url)
                 .then(response => {
@@ -82,6 +95,12 @@ export default {
             };
             this.pagination = pagination;
         },
+        getManageCourseUrl(course) {
+            return '/admin/courses/' + course.slug;
+        },
+        getViewCourseUrl(course) {
+            return '/courses/' + course.slug;
+        },
         getEditCourseUrl(course) {
             return '/admin/courses/' + course.slug + '/edit';
         },
@@ -89,15 +108,12 @@ export default {
             if(confirm('Are you sure you want to delete this course?')) {
                 axios.delete('/api/admin/courses/' + course.id)
                     .then(response => {
-                        window.location.href = '/admin/courses';
+                        this.getCourses();
                     })
                     .catch(error => {
                         console.log(error);
                     });
             }
-        },
-        getManageCourseUrl(course) {
-            return '/admin/courses/' + course.slug;
         },
     },
 }
