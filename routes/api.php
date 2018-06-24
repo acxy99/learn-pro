@@ -38,6 +38,18 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::post('/courses', 'CourseController@store');
     Route::put('/courses/{id}', 'CourseController@update');
     Route::delete('/courses/{id}', 'CourseController@destroy');
+
+    Route::get('/courses/{course_id}/pages', function($course_id) {
+        $course = Course::findOrFail($course_id);
+        return new PageResourceCollection(
+            Page::where([
+                'course_id' => $course->id,
+            ])->paginate(10)
+        ); 
+    });
+    Route::post('/pages', 'PageController@store');
+    Route::put('/pages/{id}', 'PageController@update');
+    Route::delete('/pages/{id}', 'PageController@destroy');
 });
 
 /*
@@ -54,9 +66,6 @@ Route::get('/courses/{course_id}/pages', function($course_id) {
         ])->paginate(10)
     ); 
 });
-Route::post('/pages', 'PageController@store');
-Route::put('/pages/{id}', 'PageController@update');
-Route::delete('/pages/{id}', 'PageController@destroy');
 
 Route::get('/courses/{course_id}/files', function($course_id) {
     $course = Course::find($course_id);
