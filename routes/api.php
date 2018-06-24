@@ -35,6 +35,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Admin
 */
 Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(10)); });
+    Route::get('/courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
     Route::post('/courses', 'CourseController@store');
     Route::put('/courses/{id}', 'CourseController@update');
     Route::delete('/courses/{id}', 'CourseController@destroy');
