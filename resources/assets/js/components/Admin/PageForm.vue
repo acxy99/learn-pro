@@ -113,7 +113,7 @@ export default {
         createPage(formData) {
             axios.post('/api/admin/pages', formData)
                 .then(response => {
-                    window.location.href = '/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
+                    window.location.href = '/admin/courses/' + this.course.slug + '/pages/' + response.data.page.slug;
                 })
                 .catch(error => {
                     console.log(error);
