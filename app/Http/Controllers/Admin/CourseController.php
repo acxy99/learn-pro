@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 use App\Course;
 use App\Page;
@@ -14,9 +15,7 @@ use App\Http\Requests\UpdateCourse;
 class CourseController extends Controller {
     
     public function index() {
-        $courses = Course::all();
-
-        return view('admin.courses.index', ['courses' => $courses]);
+        return view('admin.courses.index');
     }
 
     public function create() {
@@ -32,8 +31,6 @@ class CourseController extends Controller {
         if($request->hasFile('image')) {
             $course->image = str_slug($course->code) . '.jpg';
             $request->file('image')->storeAs('public/courses', $course->image);
-        } else {
-            $course->image = 'placeholder-image.png';
         }
         
         $course->save();
@@ -64,11 +61,17 @@ class CourseController extends Controller {
         $course = Course::find($id);
         $course->fill($request->except('image'));
 
-        if($request->hasFile('image')) {
-            $course->image = str_slug($course->code) . '.jpg';
-            $request->file('image')->storeAs('public/courses', $course->image);
+        if ($request->hasImage == 'true') {
+            if ($request->hasFile('image')) {
+                $course->image = str_slug($course->code) . '.jpg';
+                $request->file('image')->storeAs('public/courses', $course->image);
+            }
+        } else {
+            if ($course->image)
+                Storage::delete('public/courses/' . $course->image);
+            $course->image = null;
         }
-        
+         
         $course->save();
 
         return response()->json(['course' => $course]);

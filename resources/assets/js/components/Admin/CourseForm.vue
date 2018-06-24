@@ -27,11 +27,23 @@
             <!-- course image -->
             <div class="form-group">
                 <label for="image">Image</label>
-                <input type="file" id="image" accept="image/*" class="form-control">
+                
+                <div v-if="course.image" class="text-muted">
+                    <span class="align-middle">Current image: </span>
+                    <span class="align-middle mr-2">
+                        <a role="button" class="border-0 p-0" style="text-decoration: none" :href="course.image_path">{{ currentImage }}</a>
+                    </span>
+                    <button class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
+                        <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
+                    </button>
+                </div>
+                <div v-else class="text-muted">Current image: none</div>
+
+                <input type="file" id="image" accept="image/*" class="form-control mt-2">
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
-            <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
+            <button type="button" class="btn btn-light" @click="cancelUpdate()">Cancel</button>
         </form>
     </div>
 </template>
@@ -42,21 +54,19 @@ export default {
     data() {
         return {
             title: '',
+            currentImage: this.course.image,
             errors: [],
-            cancelUrl: '',
         }
     },
     created() {
         if (this.course.id) {
-            this.title = 'Update Course';
-            this.cancelUrl = '/courses/' + this.course.slug;
+            this.title = 'Edit Course';
         } else {
             this.title = 'Create Course';
             this.course.code = '';
             this.course.title = '';
             this.course.description = '';
             this.course.image = '';
-            this.cancelUrl = '/courses';
         }
     },
     methods: {
@@ -82,7 +92,7 @@ export default {
                 }
             })
             .then(response => {
-                window.location.href = '/courses/' + response.data.course.slug;
+                window.location.href = '/admin/courses/' + response.data.course.slug;
             })
             .catch(error => {
                 console.log(error);
@@ -93,6 +103,7 @@ export default {
         },
         updateCourse(formData) {
             formData.append('id', this.course.id);
+            formData.append('hasImage', this.course.image || document.querySelector('#image').files[0] ? true : false);
             formData.append('_method', 'PUT');
 
             axios.post('/api/admin/courses/' + this.course.id, formData, {
@@ -102,7 +113,7 @@ export default {
                 }
             })
             .then(response => {
-                window.location.href = '/courses/' + response.data.course.slug;
+                window.location.href = '/admin/courses/' + response.data.course.slug;
             })
             .catch(error => {
                 console.log(error);
@@ -110,6 +121,13 @@ export default {
                     this.errors = error.response.data.errors;
                 }
             })
+        },
+        removeCurrentImage() {
+            this.course.image = '';
+            this.currentImage = '';
+        },
+        cancelUpdate() {
+            window.history.back();
         },
     },
 }

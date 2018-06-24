@@ -45,7 +45,11 @@ class Course extends Model
     }
 
     public function getImagePathAttribute() {
-        return '/storage/courses/' . $this->image;
+        if ($this->image) {
+            return '/storage/courses/' . $this->image;
+        } else {
+            return '/storage/courses/placeholder-image.png';
+        }
     }
 
     public function getPagesCountAttribute() {
