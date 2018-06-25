@@ -75,7 +75,8 @@ class FileController extends Controller {
         $newFileName = $includesExtension ? $request->name : $request->name . '.' . $extension;
         $newFilePath = 'public/courses/' . $course->slug . '/' . $newFileName;
 
-        Storage::move($originalFilePath, $newFilePath);
+        if ($originalFilePath != $newFilePath)
+            Storage::move($originalFilePath, $newFilePath);
 
         $file->fill($request->all());
         $file->save();

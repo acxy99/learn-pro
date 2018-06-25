@@ -46,12 +46,12 @@ export default {
             fileNames: [],
             files: [],
             errors: {},
-            cancelUrl: '/courses/' + this.course.slug,
+            cancelUrl: this.getCourseUrl() + '/files',
         }
     },
     methods: {
         getCourseUrl() {
-            return '/courses/' + this.course.slug;
+            return '/admin/courses/' + this.course.slug;
         },
         handleFiles() {
             this.errors = [];
@@ -63,8 +63,6 @@ export default {
             var fileListArray = Array.from(this.fileList);
             this.fileNames = [];
             this.fileNames = fileListArray.map(function(a) {return a.name});
-
-            // console.log(this.fileNames);
         },
         onSubmit() {
             this.errors = [];
@@ -75,9 +73,6 @@ export default {
                 var file = new File([this.fileList[i]], this.fileNames[i] ? this.fileNames[i] : 'null', {type: this.fileList[i].type});
                 this.files[i] = file;
             }
-            
-            // console.log(this.fileNames);
-            // console.log(this.files);
 
             var formData = new FormData();
             formData.append('course_id', this.course.id);
@@ -86,17 +81,12 @@ export default {
                 formData.append('files[]', this.files[i]);
             }
 
-            /*for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
-            }*/
-
             axios.post('/api/admin/files', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             })
             .then(response => {
-                // console.log(response);
                 window.location.href = '/admin/courses/' + this.course.slug + '/files';
             })
             .catch(error => {
@@ -104,7 +94,6 @@ export default {
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
                 }
-                console.log(this.errors);
             });
         },
     },

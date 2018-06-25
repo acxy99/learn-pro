@@ -21,6 +21,6 @@ class File extends Model
 
     public function getFilePathAttribute() {
         $course = $this->course;
-        return '/storage/courses/' . $course->slug . '/' . $this->name;
+        return '/storage/courses/' . $course['slug'] . '/' . $this->name;
     }
 }
