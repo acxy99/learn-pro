@@ -28,45 +28,36 @@
 </template>
 
 <script>
-    // Prism - syntax highlighting
-    import 'prismjs/prism';
-    import 'prismjs/themes/prism.css';
+import Sidebar from '../../components/Sidebar'
 
-    import Sidebar from '../../components/Sidebar'
-
-    export default {
-        props: ['course', 'page'],
-        data() {
-            return {
-                editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
+export default {
+    props: ['course', 'page'],
+    data() {
+        return {
+            editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
+        }
+    },
+    components: {
+        'sidebar': Sidebar
+    },
+    methods: {
+        getCourseUrl() {
+            return '/courses/' + this.course.slug;
+        },
+        getChildUrl(child) {
+            return '/courses/' + this.course.slug + '/pages/' + child.slug;
+        },
+        deletePage() {
+            if(confirm('Are you sure you want to delete this page?')) {
+                axios.delete('/api/pages/' + this.page.id)
+                    .then(response => {
+                        window.location.href = this.getCourseUrl();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
         },
-        components: {
-            'sidebar': Sidebar
-        },
-        methods: {
-            getCourseUrl() {
-                return '/courses/' + this.course.slug;
-            },
-            getChildUrl(child) {
-                return '/courses/' + this.course.slug + '/pages/' + child.slug;
-            },
-            deletePage() {
-                if(confirm('Are you sure you want to delete this page?')) {
-                    axios.delete('/api/pages/' + this.page.id)
-                        .then(response => {
-                            window.location.href = this.getCourseUrl();
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-                }
-            },
-        },
-        watch: {
-            'page.body': function(value) {
-                this.$nextTick(()=> Prism.highlightAll());
-            }
-        },
-    }
+    },
+}
 </script>
