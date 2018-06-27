@@ -19,6 +19,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'prismjs/prism';
 import 'prismjs/themes/prism.css';
 
+// Vue-multiselect
+import Multiselect from 'vue-multiselect/src/Multiselect.vue';
+Vue.component('multiselect', Multiselect);
+// import 'vue-multiselect/dist/vue-multiselect.min.css';
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -28,6 +33,10 @@ import 'prismjs/themes/prism.css';
 Vue.component('layoutheader', require('./components/LayoutHeader.vue'));
 
 Vue.component('dashboard', require('./components/Admin/Dashboard.vue'));
+
+Vue.component('admin-categories', require('./components/Admin/Categories.vue'));
+Vue.component('admin-category-form', require('./components/Admin/CategoryForm.vue'));
+Vue.component('admin-category', require('./components/Admin/Category.vue'));
 
 Vue.component('admin-courses', require('./components/Admin/Courses.vue'));
 Vue.component('admin-course-form', require('./components/Admin/CourseForm.vue'));

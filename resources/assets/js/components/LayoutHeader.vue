@@ -32,6 +32,7 @@
 
         <div class="navbar-nav">
             <a class="nav-item nav-link" href="/admin">Admin</a>
+            <a class="nav-item nav-link" href="/categories">Categories</a>
             <a class="nav-item nav-link" href="/courses">Courses</a>
         </div>
     </nav>

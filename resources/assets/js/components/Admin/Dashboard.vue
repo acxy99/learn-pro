@@ -22,18 +22,20 @@
             </div>
 
             <div class="card bg-light border-0">
-                <div class="card-body">
-                    <div class="row m-0 p-3">
-                        <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons" style="font-size: 80px; color: #FF7043;">label_important</i><br>
-                        </div>
-                        <div class="col-md-8 align-self-center text-right">
-                            <h6>Categories</h6>
-                            <h3>{{ categoriesCount }}</h3>
+                <a href="/admin/categories" style="text-decoration: none; color: #000;">
+                    <div class="card-body">
+                        <div class="row m-0 p-3">
+                            <div class="col-md-4 align-self-center text-center">
+                                <i class="material-icons" style="font-size: 80px; color: #FF7043;">label_important</i><br>
+                            </div>
+                            <div class="col-md-8 align-self-center text-right">
+                                <h6>Categories</h6>
+                                <h3>{{ categoriesCount }}</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="height: 10px; background-color: #FF7043;"></div>
+                    <div style="height: 10px; background-color: #FF7043;"></div>
+                </a>
             </div>
         </div>
         <br>
@@ -76,10 +78,9 @@
 
 <script>
 export default {
-    props: ['coursesCount'],
+    props: ['coursesCount', 'categoriesCount'],
     data() {
         return {
-            categoriesCount: 0,
             instructorsCount: 0,
             learnersCount: 0,
         }

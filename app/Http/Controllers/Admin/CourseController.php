@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Course;
 use App\Page;
+use App\Category;
 
 use App\Http\Requests\StoreCourse;
 use App\Http\Requests\UpdateCourse;
@@ -20,8 +21,9 @@ class CourseController extends Controller {
 
     public function create() {
         $course = new Course;
+        $categories = Category::get(['id', 'title'])->each->setAppends([]);
 
-        return view('admin.courses.create', ['course' => $course]);
+        return view('admin.courses.create', ['course' => $course, 'categories' => $categories]);
     }
 
     public function store(StoreCourse $request) {
@@ -34,6 +36,9 @@ class CourseController extends Controller {
         }
         
         $course->save();
+
+        $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];
+        $course->categories()->sync($categories);
 
         return response()->json(['course' => $course]);
     }
@@ -53,8 +58,9 @@ class CourseController extends Controller {
 
     public function edit($slug) {
         $course = Course::findBySlugOrFail($slug);
+        $categories = Category::get(['id', 'title'])->each->setAppends([]);
 
-        return view('admin.courses.edit', ['course' => $course]);
+        return view('admin.courses.edit', ['course' => $course, 'categories' => $categories]);
     }
 
     public function update(UpdateCourse $request, $id) {
@@ -74,11 +80,19 @@ class CourseController extends Controller {
          
         $course->save();
 
+        $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];
+        $course->categories()->sync($categories);
+
         return response()->json(['course' => $course]);
     }
 
     public function destroy($id) {
         $course = Course::find($id);
+
+        if ($course->image)
+            Storage::delete('public/courses/' . $course->image);
+        $course->categories()->detach();
+        
         $course->delete();
 
         return response()->json(['course' => $course]);

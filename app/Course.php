@@ -22,6 +22,7 @@ class Course extends Model
         'image_path',
         'pages_count',
         'files_count',
+        'categories',
     ];
 
     public function pages() {
@@ -30,26 +31,6 @@ class Course extends Model
 
     public function files() {
         return $this->hasMany(File::class);
-    }
-
-    public function categories() {
-        return $this->belongsToMany(Category::class);
-    }
-
-    public function sluggable() {
-        return [
-            'slug' => [
-                'source' => 'code'
-            ]
-        ];
-    }
-
-    public function getImagePathAttribute() {
-        if ($this->image) {
-            return '/storage/courses/' . $this->image;
-        } else {
-            return '/storage/courses/placeholder-image.png';
-        }
     }
 
     public function getPagesCountAttribute() {
@@ -67,5 +48,29 @@ class Course extends Model
              $course->pages()->delete();
              $course->files()->delete();
         });
+    }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function getCategoriesAttribute() {
+        return $this->categories()->get(['id', 'title', 'slug'])->each->setAppends([]);
+    }
+
+    public function sluggable() {
+        return [
+            'slug' => [
+                'source' => 'code'
+            ]
+        ];
+    }
+
+    public function getImagePathAttribute() {
+        if ($this->image) {
+            return '/storage/courses/' . $this->image;
+        } else {
+            return '/storage/courses/placeholder-image.png';
+        }
     }
 }

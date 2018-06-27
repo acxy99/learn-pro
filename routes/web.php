@@ -1,6 +1,7 @@
 <?php
 
 use App\Course;
+use App\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,13 @@ Route::get('/', function () {
 */
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', function() {
-        return view('admin.dashboard', ['courses_count' => Course::count()]); 
+        return view('admin.dashboard', [
+            'courses_count' => Course::count(),
+            'categories_count' => Category::count(),
+        ]); 
     })->name('dashboard');
+
+    Route::resource('/categories', 'CategoryController');
 
     Route::resource('/courses', 'CourseController');
 
@@ -41,6 +47,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Frontend
 */
 Route::namespace('Frontend')->name('frontend.')->group(function() {
+    Route::resource('/categories', 'CategoryController')->only(['index', 'show']);
+
     Route::resource('/courses', 'CourseController')->only(['index', 'show']);
     
     Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');

@@ -33,13 +33,28 @@
                     <span class="align-middle mr-2">
                         <a role="button" class="border-0 p-0" style="text-decoration: none" :href="course.image_path">{{ currentImage }}</a>
                     </span>
-                    <button class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
+                    <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
                         <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
                     </button>
                 </div>
                 <div v-else class="text-muted">Current image: none</div>
 
                 <input type="file" id="image" accept="image/*" class="form-control mt-2">
+            </div>
+
+            <div class="form-group">
+                <label for="categories">Categories</label>
+                <multiselect
+                    id="categories"
+                    v-model="selected"
+                    :options="options"
+                    :multiple="true"
+                    :hide-selected="true"
+                    track-by="title"
+                    :custom-label="customLabel"
+                    placeholder="Select categories">
+                </multiselect>
+                <!-- <pre class="language-json"><code>{{ selected }}</code></pre> -->
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
@@ -50,17 +65,20 @@
 
 <script>
 export default {
-    props: ['course'],
+    props: ['course', 'categories'],
     data() {
         return {
             title: '',
             currentImage: this.course.image,
+            selected: [],
+            options: this.categories,
             errors: [],
         }
     },
     created() {
         if (this.course.id) {
             this.title = 'Edit Course';
+            this.selected = this.course.categories;
         } else {
             this.title = 'Create Course';
             this.course.code = '';
@@ -78,6 +96,7 @@ export default {
             formData.append('title', this.course.title);
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
+            formData.append('categories', this.selected.map(category => (category.id)));
 
             if (!this.course.id) {
                 this.createCourse(formData);
@@ -125,6 +144,9 @@ export default {
         removeCurrentImage() {
             this.course.image = '';
             this.currentImage = '';
+        },
+        customLabel(option) {
+            return option.title;
         },
         cancel() {
             window.history.back();

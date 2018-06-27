@@ -12,50 +12,56 @@
             </div>
         </div>
         <hr>
-        
-        <table class="table table-sm table-borderless">
-            <tbody>
-                <tr>
-                    <td style="width: 15%">Code:</td>
-                    <td style="width: 85%">{{ course.code }}</td>
-                </tr>
-                <tr>
-                    <td>Title:</td>
-                    <td>{{ course.title }}</td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                    <td>{{ course.description }}</td>
-                </tr>
-                <tr>
-                    <td>ID:</td>
-                    <td>{{ course.id }}</td>
-                </tr>
-                <tr>
-                    <td>Image:</td>
-                    <td>
-                        <span class="align-middle">
-                            <a role="button" class="border-0 p-0" :href="course.image_path" data-toggle="tooltip" data-placement="bottom" title="View">
-                                <i class="material-icons align-middle" style="font-size: 1.2em; color: #888;">visibility</i>
-                            </a>
-                        </span>
-                        <span class="align-middle mr-2">{{ course.image }}</span>
-                    </td>
-                    <!-- <td><img class="img-fluid" style="width: 500px" :src="course.image_path"></td> -->
-                </tr>
-                <tr>
-                    <td>Created at:</td>
-                    <td>{{ course.created_at }}</td>
-                </tr>
-                <tr>
-                    <td>Updated at:</td>
-                    <td>{{ course.updated_at }}</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div class="row">
+            <div class="col-md-1">
+                <small class="text-muted">ID</small>
+                <p>{{ course.id }}</p>
+            </div>
+            <div class="col-md-3">
+                <small class="text-muted">Code</small>
+                <p>{{ course.code }}</p>
+            </div>
+            <div class="col-md-8">
+                <small class="text-muted">Title</small>
+                <p>{{ course.title }}</p>
+            </div>
+        </div>
+
+        <small class="text-muted">Description</small>
+        <p>{{ course.description }}</p>
+
+        <small class="text-muted">Image</small>
+        <p>
+            <a role="button" class="border-0 p-0" :href="course.image_path" data-toggle="tooltip" data-placement="bottom" title="View">
+                <i class="material-icons align-middle" style="font-size: 1.2em; color: #888;">visibility</i>
+            </a>
+            <span v-if="course.image">{{ course.image }}</span>
+            <span v-else>none</span>
+        </p>
+
+        <small class="text-muted">Categories</small>
+        <p v-if="course.categories.length" class="mt-2">
+            <a role="button" v-for="category in course.categories" :key="category.id" :href="getCategoryUrl(category)" style="text-decoration: none; color: #000;">
+                <span class="p-2 mr-1" style="background-color: #EEE">{{ category.title }}</span>
+            </a>
+        </p>
+        <p v-else>none</p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <small class="text-muted">Created at</small>
+                <p>{{ course.created_at }}</p>
+            </div>
+            <div class="col-md-4">
+                <small class="text-muted">Updated at</small>
+                <p>{{ course.updated_at }}</p>
+            </div>
+        </div>
+   
         <hr>
 
-        <div class="card-group">
+        <div class="card-group mb-5">
             <div class="card bg-light border-0 m-1">
                 <div class="card-body">
                     <div class="row m-0 p-3">
@@ -122,6 +128,9 @@ export default {
                     });
             }
         },
+        getCategoryUrl(category) {
+            return '/admin/categories/' + category.slug;
+        }
     },
 }
 </script>

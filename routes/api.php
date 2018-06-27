@@ -35,6 +35,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Admin
 */
 Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::get('/categories', function() { return new CategoryResourceCollection(Category::paginate(10)); });
+    Route::get('/categories/{id}/courses', function($id) {
+        $category = Category::findOrFail($id);
+        return new CourseResourceCollection (
+            $category->courses()->paginate(5)
+        );
+    });
+    Route::apiResource('categories', 'CategoryController')->only(['store', 'update', 'destroy']);
+
     Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(10)); });
     Route::get('/courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
     Route::post('/courses', 'CourseController@store');
@@ -68,6 +77,8 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Frontend
 */
 Route::namespace('Frontend')->group(function() {
+    Route::get('/categories', function() { return new CategoryResourceCollection(Category::paginate(10)); });
+
     Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(9)); });
     
     Route::get('/courses/{course_id}/pages', function($course_id) {
