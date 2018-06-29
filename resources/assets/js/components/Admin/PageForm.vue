@@ -3,7 +3,7 @@
         <small>
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h4>{{ title }}</h4><hr>
+        <h4>{{ header }}</h4><hr>
 
         <form @submit.prevent="onSubmit">
             <div class="form-group" hidden>
@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" v-model="page.title" :class="{'is-invalid': errors['title']}">
+                <input type="text" class="form-control" id="title" v-model="page.title" v-on:change="pageTitleChanged()" :class="{'is-invalid': errors['title']}">
                 <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
             </div>
 
@@ -31,11 +31,29 @@
                 </select>
             </div>
 
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="border-radius: 0px">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-label">{{ pageTitle }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p v-html="pageBody"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="mb-5">
                 <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">Preview</button>
                 <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
             </div>
         </form>
+
     </div>
 </template>
 
@@ -47,24 +65,27 @@ export default {
     props: ['course', 'parents', 'files', 'page'],
     data() {
         return {
-            title: '',
+            header: '',
             fileList: [],
             errors: [],
             cancelUrl: '',
+            pageTitle: this.page.title,
+            pageBody: this.page.body,
         }
     },
     created() {
-        this.setTitle();
+        this.setHeader();
         this.setFileList();
         this.initEditor();
     },
     methods: {
-        setTitle() {
+        setHeader() {
             if (this.page.id) { 
-                this.title = 'Update Page';
+                this.header = 'Update Page';
                 this.cancelUrl = this.getCourseUrl() + '/pages/' + this.page.slug;
+                // this.body = this.page.body;
             } else {
-                this.title = 'Create Page';
+                this.header = 'Create Page';
                 this.page.title = '';
                 this.cancelUrl = this.getCourseUrl();
             }
@@ -88,12 +109,18 @@ export default {
                 init_instance_callback : function(editor) {
                     if (vm.page.id) {
                         editor.setContent(vm.page.body);
+                        vm.pageBody = tinymce.get('body').getContent();
                     }
+                },
+                setup: function (editor) {
+                    editor.on('Change', function (e) {
+                        vm.pageBodyChanged();
+                    })
                 }
             });
         },
         getCourseUrl() {
-            return '/courses/' + this.course.slug;
+            return '/admin/courses/' + this.course.slug;
         },
         onSubmit() {
             this.errors = [];
@@ -139,6 +166,17 @@ export default {
                 }
             })
         },
+        pageTitleChanged() {
+            this.pageTitle = this.page.title
+        },
+        pageBodyChanged() {
+            this.pageBody = tinymce.get('body').getContent();
+        }
+    },
+    watch: {
+        'pageBody': function(value) {
+            this.$nextTick(()=> Prism.highlightAll());
+        }
     },
 }
 </script>
