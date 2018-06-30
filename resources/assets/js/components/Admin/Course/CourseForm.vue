@@ -64,7 +64,11 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect/src/Multiselect.vue';
+// import 'vue-multiselect/dist/vue-multiselect.min.css';
+
 export default {
+    components: { Multiselect },
     props: ['course', 'categories'],
     data() {
         return {

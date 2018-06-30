@@ -19,11 +19,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'prismjs/prism';
 import 'prismjs/themes/prism.css';
 
-// Vue-multiselect
-import Multiselect from 'vue-multiselect/src/Multiselect.vue';
-Vue.component('multiselect', Multiselect);
-// import 'vue-multiselect/dist/vue-multiselect.min.css';
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
