@@ -18,6 +18,7 @@
 </template>
 <script>
 export default {
+	name: 'sidebar-tree',
 	props: ['courseSlug', 'pageSlug', 'currentPage', 'title',  'children', 'depth'],
 	data() {
 		return {

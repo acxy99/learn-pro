@@ -53,7 +53,10 @@
 </template>
 
 <script>
+import Tree from '../Tree'
+
 export default {
+    components: { Tree },
     props: ['course'],
     data() {
         return {

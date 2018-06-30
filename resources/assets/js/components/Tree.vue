@@ -17,6 +17,7 @@
 </template>
 <script>
 export default {
+	name: 'tree',
 	props: ['courseSlug', 'pageSlug', 'title', 'children', 'depth'],
 	data() {
 		return {

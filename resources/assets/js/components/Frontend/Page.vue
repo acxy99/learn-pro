@@ -28,17 +28,15 @@
 </template>
 
 <script>
-import Sidebar from '../../components/Sidebar'
+import Sidebar from '../Sidebar'
 
 export default {
+    components: { Sidebar },
     props: ['course', 'page'],
     data() {
         return {
             editPageUrl: '/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
         }
-    },
-    components: {
-        'sidebar': Sidebar
     },
     methods: {
         getCourseUrl() {

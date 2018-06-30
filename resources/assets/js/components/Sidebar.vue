@@ -6,7 +6,10 @@
 </template>
 
 <script>
+import SidebarTree from './SidebarTree'
+
 export default {
+    components: { SidebarTree },
     props: ['course', 'currentPage'],
     data() {
         return {
