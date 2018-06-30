@@ -50,13 +50,13 @@ Vue.component('admin-files', require('./components/Admin/Files.vue'));
 Vue.component('admin-files-upload-form', require('./components/Admin/FilesUploadForm.vue'));
 Vue.component('admin-file-edit-form', require('./components/Admin/FileEditForm.vue'));
 
-Vue.component('categories', require('./components/Frontend/Categories.vue'));
-Vue.component('category', require('./components/Frontend/Category.vue'));
+Vue.component('categories', require('./components/Frontend/Category/Categories.vue'));
+Vue.component('category', require('./components/Frontend/Category/Category.vue'));
 
-Vue.component('courses', require('./components/Frontend/Courses.vue'));
-Vue.component('course', require('./components/Frontend/Course.vue'));
+Vue.component('courses', require('./components/Frontend/Course/Courses.vue'));
+Vue.component('course', require('./components/Frontend/Course/Course.vue'));
 
-Vue.component('page', require('./components/Frontend/Page.vue'));
+Vue.component('page', require('./components/Frontend/Page/Page.vue'));
 
 const app = new Vue({
     el: '#app'

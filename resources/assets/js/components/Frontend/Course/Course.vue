@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import Tree from '../Tree'
+import Tree from './Tree'
 
 export default {
     components: { Tree },
