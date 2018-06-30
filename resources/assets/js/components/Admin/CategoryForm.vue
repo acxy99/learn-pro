@@ -11,25 +11,28 @@
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" v-model="category.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
+                <small class="text-muted">(maximum 500 characters)</small>
+                <textarea id="description" v-model="category.description" class="form-control" :class="{'is-invalid': errors['description']}" maxlength="500" rows="3"></textarea>
                 <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
             </div>
 
             <div class="form-group">
                 <label for="image">Image</label>
                 
-                <div v-if="category.image" class="text-muted">
-                    <span class="align-middle">Current image: </span>
-                    <span class="align-middle mr-2">
-                        <a role="button" class="border-0 p-0" style="text-decoration: none" :href="category.image_path">{{ currentImage }}</a>
-                    </span>
-                    <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
-                        <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
-                    </button>
+                <div v-if="category.id">
+                    <div v-if="category.image" class="text-muted">
+                        <span class="align-middle">Current image: </span>
+                        <span class="align-middle mr-2">
+                            <a role="button" class="border-0 p-0" style="text-decoration: none" :href="category.image_path">{{ currentImage }}</a>
+                        </span>
+                        <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
+                            <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
+                        </button>
+                    </div>
+                    <div v-else class="text-muted">Current image: none</div>
                 </div>
-                <div v-else class="text-muted">Current image: none</div>
 
-                <input type="file" id="image" accept="image/*" class="form-control mt-2">
+                <input type="file" id="image" accept="image/*" class="form-control mt-1">
             </div>
             <br>
 
