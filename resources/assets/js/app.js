@@ -30,7 +30,7 @@ Vue.component('multiselect', Multiselect);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('layoutheader', require('./components/LayoutHeader.vue'));
+Vue.component('layout-header', require('./components/Layout/Header.vue'));
 
 Vue.component('dashboard', require('./components/Admin/Dashboard.vue'));
 
