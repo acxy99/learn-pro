@@ -30,34 +30,45 @@ Vue.component('multiselect', Multiselect);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('layout-header', require('./components/Layout/Header.vue'));
+import LayoutHeader from './components/Layout/Header.vue';
 
-Vue.component('dashboard', require('./components/Admin/Dashboard.vue'));
+import Dashboard from './components/Admin/Dashboard.vue';
 
-Vue.component('admin-categories', require('./components/Admin/Category/Categories.vue'));
-Vue.component('admin-category-form', require('./components/Admin/Category/CategoryForm.vue'));
-Vue.component('admin-category', require('./components/Admin/Category/Category.vue'));
+import AdminCategories from './components/Admin/Category/Categories.vue';
+import AdminCategory from './components/Admin/Category/Category.vue';
+import AdminCategoryForm from './components/Admin/Category/CategoryForm.vue';
 
-Vue.component('admin-courses', require('./components/Admin/Course/Courses.vue'));
-Vue.component('admin-course-form', require('./components/Admin/Course/CourseForm.vue'));
-Vue.component('admin-course', require('./components/Admin/Course/Course.vue'));
+import AdminCourses from './components/Admin/Course/Courses.vue';
+import AdminCourse from './components/Admin/Course/Course.vue';
+import AdminCourseForm from './components/Admin/Course/CourseForm.vue';
 
-Vue.component('admin-pages', require('./components/Admin/Page/Pages.vue'));
-Vue.component('admin-page-form', require('./components/Admin/Page/PageForm.vue'));
-Vue.component('admin-page', require('./components/Admin/Page/Page.vue'));
+import AdminPages from './components/Admin/Page/Pages.vue';
+import AdminPage from './components/Admin/Page/Page.vue';
+import AdminPageForm from './components/Admin/Page/PageForm.vue';
 
-Vue.component('admin-files', require('./components/Admin/File/Files.vue'));
-Vue.component('admin-files-upload-form', require('./components/Admin/File/FilesUploadForm.vue'));
-Vue.component('admin-file-edit-form', require('./components/Admin/File/FileEditForm.vue'));
+import AdminFiles from './components/Admin/File/Files.vue';
+import AdminFilesUploadForm from './components/Admin/File/FilesUploadForm.vue';
+import AdminFileEditForm from './components/Admin/File/FileEditForm.vue';
 
-Vue.component('categories', require('./components/Frontend/Category/Categories.vue'));
-Vue.component('category', require('./components/Frontend/Category/Category.vue'));
+import Categories from './components/Frontend/Category/Categories.vue';
+import Category from './components/Frontend/Category/Category.vue';
 
-Vue.component('courses', require('./components/Frontend/Course/Courses.vue'));
-Vue.component('course', require('./components/Frontend/Course/Course.vue'));
+import Courses from './components/Frontend/Course/Courses.vue';
+import Course from './components/Frontend/Course/Course.vue';
 
-Vue.component('page', require('./components/Frontend/Page/Page.vue'));
+import Page from './components/Frontend/Page/Page.vue';
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    components: {
+        LayoutHeader,
+        Dashboard,
+        AdminCategories, AdminCategory, AdminCategoryForm,
+        AdminCourses, AdminCourse, AdminCourseForm,
+        AdminPages, AdminPage, AdminPageForm,
+        AdminFiles, AdminFilesUploadForm, AdminFileEditForm,
+        Categories, Category,
+        Courses, Course,
+        Page,
+    }
 });
