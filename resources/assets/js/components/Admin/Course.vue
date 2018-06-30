@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <div class="row m-0 p-3">
                         <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons p-1 bg-white" style="font-size: 80px; color: #004ecc;">format_align_left</i><br>
+                            <i class="material-icons p-1" style="font-size: 100px; color: #004ecc;">format_align_left</i><br>
                         </div>
                         <div class="col-md-8 align-self-center text-right">
                             <p class="mb-1" style="font-size: 20;">Pages</p>

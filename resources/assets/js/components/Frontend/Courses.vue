@@ -1,19 +1,22 @@
 <template>
     <div class="container">
-        <h2>Courses</h2><hr>
+        <h3 class="d-inline-flex align-items-center"><i class="material-icons mr-2" style="font-size: 1.75rem">school</i>Courses</h3>
+        <hr>
         
         <div v-if="courses.length">
-            <div class="card-columns">
-                <div class="card" v-for="course in courses" v-bind:key="course.id">
-                    <div class="wrapper">
-                        <img class="card-img-top img" :src="getImagePath(course)">
-                    </div>
-                    <div class="card-body">
-                        <a :href="getCourseUrl(course)" style="text-decoration: none">
-                            <small>{{ course.code }}</small>
-                            <h5 class="card-title text-truncate">{{ course.title }}</h5>
-                        </a>
-                        <p class="card-text text-truncate">{{ course.description }}</p>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3" v-for="course in courses" v-bind:key="course.id">
+                    <div class="card" style="border-radius: 0">
+                        <div class="wrapper">
+                            <img class="card-img-top img" :src="course.image_path">
+                        </div>
+                        <div class="card-body">
+                            <a :href="getCourseUrl(course)" style="text-decoration: none">
+                                <small>{{ course.code }}</small>
+                                <h5 class="card-title text-truncate">{{ course.title }}</h5>
+                            </a>
+                            <p class="card-text">{{ course.description }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,9 +62,6 @@
                     next_page_url: links.next,
                 };
                 this.pagination = pagination;
-            },
-            getImagePath(course) {
-                return course.image_path;
             },
             getCourseUrl(course) {
                 return '/courses/' + course.slug;

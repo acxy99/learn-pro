@@ -1,15 +1,26 @@
 <template>
     <div class="container">
-        <h3>{{ course.code }} {{ course.title }}</h3>
-        <p>{{ course.description }}</p>
-        <hr>
+        <div class="jumbotron" :style="jumbotronStyle">
+            <div class="m-5">
+                <div class="text-center"><small>{{ course.code }}</small></div>
+                <h1 class="text-center">{{ course.title }}</h1>
+                <hr style="border-color: #CCC">
+                <p class="text-center font-weight-light">{{ course.description }}</p>
+            </div>
+        </div>
 
         <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pages-tab" data-toggle="tab" href="#pages" role="tab">Pages</a>
+                <a class="nav-link active d-inline-flex align-items-center" style="color: #495057" id="pages-tab" data-toggle="tab" href="#pages" role="tab">
+                    <i class="material-icons mr-3">notes</i>
+                    <span>Pages</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab">Files</a>
+                <a class="nav-link d-inline-flex align-items-center" style="color: #495057" id="files-tab" data-toggle="tab" href="#files" role="tab">
+                    <i class="material-icons mr-3">insert_drive_file</i>
+                    <span>Files</span>
+                </a>
             </li>
         </ul>
 
@@ -52,6 +63,14 @@ export default {
             editCourseUrl: '/courses/' + this.course.slug + '/edit',
             addPageUrl: '/courses/' + this.course.slug + '/pages/create',
             uploadFilesUrl: '/courses/' + this.course.slug + '/files/create',
+            jumbotronStyle: {
+                'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + this.course.image_path + ')',
+                'background-size': 'cover',
+                'background-position': 'center',
+                'height': '100%',
+                'color': 'white',
+                'border-radius': '0',
+            },
         }
     },
     created() {
@@ -102,15 +121,6 @@ export default {
         },
         hasPages() {
             return this.pages.length;
-        },
-        getPageUrl(page) {
-            return '/courses/' + this.course.slug + '/pages/' + page.slug;
-        },
-        hasChildren(page) {
-            return page.children.length;
-        },
-        getChildUrl(child) {
-            return '/courses/' + this.course.slug + '/pages/' + child.slug;
         },
         hasFiles() {
             return this.files.length;
