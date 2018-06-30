@@ -53,6 +53,9 @@ Vue.component('admin-file-edit-form', require('./components/Admin/FileEditForm.v
 Vue.component('tree', require('./components/Tree.vue'));
 Vue.component('sidebar-tree', require('./components/SidebarTree.vue'));
 
+Vue.component('categories', require('./components/Frontend/Categories.vue'));
+Vue.component('category', require('./components/Frontend/Category.vue'));
+
 Vue.component('courses', require('./components/Frontend/Courses.vue'));
 Vue.component('course', require('./components/Frontend/Course.vue'));
 
