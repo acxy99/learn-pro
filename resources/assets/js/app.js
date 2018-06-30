@@ -34,21 +34,21 @@ Vue.component('layout-header', require('./components/Layout/Header.vue'));
 
 Vue.component('dashboard', require('./components/Admin/Dashboard.vue'));
 
-Vue.component('admin-categories', require('./components/Admin/Categories.vue'));
-Vue.component('admin-category-form', require('./components/Admin/CategoryForm.vue'));
-Vue.component('admin-category', require('./components/Admin/Category.vue'));
+Vue.component('admin-categories', require('./components/Admin/Category/Categories.vue'));
+Vue.component('admin-category-form', require('./components/Admin/Category/CategoryForm.vue'));
+Vue.component('admin-category', require('./components/Admin/Category/Category.vue'));
 
-Vue.component('admin-courses', require('./components/Admin/Courses.vue'));
-Vue.component('admin-course-form', require('./components/Admin/CourseForm.vue'));
-Vue.component('admin-course', require('./components/Admin/Course.vue'));
+Vue.component('admin-courses', require('./components/Admin/Course/Courses.vue'));
+Vue.component('admin-course-form', require('./components/Admin/Course/CourseForm.vue'));
+Vue.component('admin-course', require('./components/Admin/Course/Course.vue'));
 
-Vue.component('admin-pages', require('./components/Admin/Pages.vue'));
-Vue.component('admin-page-form', require('./components/Admin/PageForm.vue'));
-Vue.component('admin-page', require('./components/Admin/Page.vue'));
+Vue.component('admin-pages', require('./components/Admin/Page/Pages.vue'));
+Vue.component('admin-page-form', require('./components/Admin/Page/PageForm.vue'));
+Vue.component('admin-page', require('./components/Admin/Page/Page.vue'));
 
-Vue.component('admin-files', require('./components/Admin/Files.vue'));
-Vue.component('admin-files-upload-form', require('./components/Admin/FilesUploadForm.vue'));
-Vue.component('admin-file-edit-form', require('./components/Admin/FileEditForm.vue'));
+Vue.component('admin-files', require('./components/Admin/File/Files.vue'));
+Vue.component('admin-files-upload-form', require('./components/Admin/File/FilesUploadForm.vue'));
+Vue.component('admin-file-edit-form', require('./components/Admin/File/FileEditForm.vue'));
 
 Vue.component('categories', require('./components/Frontend/Category/Categories.vue'));
 Vue.component('category', require('./components/Frontend/Category/Category.vue'));
