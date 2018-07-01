@@ -113,9 +113,6 @@ export default {
             manageFilesUrl: '/admin/courses/' + this.course.slug + '/files',
         }
     },
-    created() {
-        
-    },
     methods: {
         deleteCourse() {
             if(confirm('Are you sure you want to delete this course?')) {

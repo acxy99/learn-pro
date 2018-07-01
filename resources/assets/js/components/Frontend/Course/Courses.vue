@@ -32,40 +32,40 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                courses: [],
-                pagination: {},
-            }
-        },
-        created() {
-            this.getCourses();
-        },
-        methods: {
-            getCourses(url) {
-                url = url || '/api/courses';
-                axios.get(url)
-                    .then(response => {
-                        this.courses = response.data.data;
-                        this.makePagination(response.data.links, response.data.meta);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            },
-            makePagination(links, meta) {
-                let pagination = {
-                    current_page: meta.current_page,
-                    last_page: meta.last_page,
-                    prev_page_url: links.prev,
-                    next_page_url: links.next,
-                };
-                this.pagination = pagination;
-            },
-            getCourseUrl(course) {
-                return '/courses/' + course.slug;
-            },
+export default {
+    data() {
+        return {
+            courses: [],
+            pagination: {},
         }
+    },
+    created() {
+        this.getCourses();
+    },
+    methods: {
+        getCourses(url) {
+            url = url || '/api/courses';
+            axios.get(url)
+                .then(response => {
+                    this.courses = response.data.data;
+                    this.makePagination(response.data.links, response.data.meta);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        makePagination(links, meta) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                prev_page_url: links.prev,
+                next_page_url: links.next,
+            };
+            this.pagination = pagination;
+        },
+        getCourseUrl(course) {
+            return '/courses/' + course.slug;
+        },
     }
+}
 </script>

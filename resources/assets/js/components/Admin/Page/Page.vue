@@ -61,9 +61,6 @@ export default {
             editPageUrl: '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
         }
     },
-    created() {
-        
-    },
     methods: {
         deletePage() {
             if(confirm('Are you sure you want to delete this page?')) {

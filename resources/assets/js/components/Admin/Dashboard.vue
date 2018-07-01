@@ -85,11 +85,5 @@ export default {
             learnersCount: 0,
         }
     },
-    created() {
-        
-    },
-    methods: {
-        
-    },
 }
 </script>

@@ -32,9 +32,6 @@ export default {
             cancelUrl: '#',
         }
     },
-    created() {
-
-    },
     methods: {
         getCourseUrl() {
             return '/admin/courses/' + this.course.slug;
