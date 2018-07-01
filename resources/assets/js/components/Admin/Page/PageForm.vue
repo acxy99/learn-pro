@@ -3,7 +3,7 @@
         <small>
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h4>{{ header }}</h4><hr>
+        <h4>{{ title }}</h4><hr>
 
         <form @submit.prevent="onSubmit">
             <div class="form-group" hidden>
@@ -50,7 +50,7 @@
             <div class="mb-5">
                 <button type="submit" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">Preview</button>
-                <a class="btn btn-light" :href="cancelUrl" role="button">Cancel</a>
+                <a role="button" class="btn btn-light" @click="cancel">Cancel</a>
             </div>
         </form>
 
@@ -65,7 +65,7 @@ export default {
     props: ['course', 'parents', 'files', 'page'],
     data() {
         return {
-            header: '',
+            title: '',
             fileList: [],
             errors: [],
             cancelUrl: '',
@@ -74,20 +74,16 @@ export default {
         }
     },
     created() {
-        this.setHeader();
+        this.setTitle();
         this.setFileList();
         this.initEditor();
     },
     methods: {
-        setHeader() {
+        setTitle() {
             if (this.page.id) { 
-                this.header = 'Update Page';
-                this.cancelUrl = this.getCourseUrl() + '/pages/' + this.page.slug;
-                // this.body = this.page.body;
+                this.title = 'Update Page';
             } else {
-                this.header = 'Create Page';
-                this.page.title = '';
-                this.cancelUrl = this.getCourseUrl();
+                this.title = 'Create Page';
             }
         },
         setFileList() {
@@ -95,7 +91,6 @@ export default {
                 var obj = { title: this.files[i].name, value: this.files[i].file_path }
                 this.fileList[i] = obj;
             }
-            console.log(this.fileList);
         },
         initEditor() {
             let vm = this;
@@ -166,12 +161,15 @@ export default {
                 }
             })
         },
+        cancel() {
+            window.history.back();
+        },
         pageTitleChanged() {
             this.pageTitle = this.page.title
         },
         pageBodyChanged() {
             this.pageBody = tinymce.get('body').getContent();
-        }
+        },
     },
     watch: {
         'pageBody': function(value) {
