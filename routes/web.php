@@ -26,7 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 /*
     Admin
 */
-Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', function() {
         return view('admin.dashboard', [
             'courses_count' => Course::count(),
