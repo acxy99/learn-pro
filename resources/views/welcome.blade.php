@@ -1,4 +1,4 @@
-<!doctype html>
+{{-- <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
@@ -92,4 +92,12 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}
+
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h3 class="text-center">Welcome to LEARN<b>PRO</b></h3>
+</div>
+@endsection
