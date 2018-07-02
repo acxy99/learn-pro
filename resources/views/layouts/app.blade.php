@@ -20,6 +20,7 @@
     <body>
         <div id="app">
             @include('layouts.header')
+            @include('layouts.success')
             @yield('content')
         </div>
 
