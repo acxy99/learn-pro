@@ -67249,17 +67249,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['authUser'],
     data: function data() {
         return {
+            currentUser: this.authUser,
             currentPath: this.$router.currentRoute.path
         };
+    },
+    created: function created() {
+        console.log('current user: ' + this.currentUser);
     },
 
     methods: {
         isCurrentPath: function isCurrentPath(path) {
             return this.currentPath == path;
+        },
+        logout: function logout() {
+            axios.post('/logout').then(function (response) {
+                // this.currentUser = null;
+                // console.log('logged out');
+                window.location.href = '/';
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 });
@@ -67274,7 +67291,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "nav",
-    { staticClass: "navbar navbar-expand navbar-dark bg-dark sticky-top mb-5" },
+    { staticClass: "navbar navbar-expand navbar-dark bg-dark sticky-top mb-4" },
     [
       _vm._m(0),
       _vm._v(" "),
@@ -67317,31 +67334,36 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("ul", { staticClass: "navbar-nav" }, [
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                class: { active: _vm.isCurrentPath("/login") },
-                attrs: { href: "/login" }
-              },
-              [_vm._v("Login")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                class: { active: _vm.isCurrentPath("/register") },
-                attrs: { href: "/register" }
-              },
-              [_vm._v("Register")]
-            )
-          ])
-        ])
+        _vm.currentUser
+          ? _c("ul", { staticClass: "navbar-nav" }, [
+              _c("li", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-link border-0 nav-link",
+                    on: {
+                      click: function($event) {
+                        _vm.logout()
+                      }
+                    }
+                  },
+                  [_vm._v("Logout")]
+                )
+              ])
+            ])
+          : _c("ul", { staticClass: "navbar-nav" }, [
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.isCurrentPath("/login") },
+                    attrs: { href: "/login" }
+                  },
+                  [_vm._v("Login")]
+                )
+              ])
+            ])
       ])
     ]
   )
