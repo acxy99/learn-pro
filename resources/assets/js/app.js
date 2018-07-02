@@ -53,8 +53,15 @@ import Course from './components/Frontend/Course/Course.vue';
 
 import Page from './components/Frontend/Page/Page.vue';
 
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+const router = new VueRouter({ 
+    mode:'history' 
+});
+
 const app = new Vue({
     el: '#app',
+    router,
     components: {
         LayoutHeader,
         Dashboard,
