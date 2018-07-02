@@ -14,9 +14,14 @@ use App\Category;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+    Authentication (login, logout, user registration, password reset)
+*/
+Auth::routes();
+
+Route::get('/', function () { return view('welcome'); });
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 /*
     Admin
