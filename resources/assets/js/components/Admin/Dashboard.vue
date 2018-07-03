@@ -53,7 +53,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div style="height: 10px; background-color: #4DB6AC;"></div>
             </div>
 
@@ -72,13 +71,31 @@
                 <div style="height: 10px; background-color: #9C5B7B;"></div>
             </div>
         </div>
+        <br>
+
+        <div class="card bg-light border-0">
+            <a href="/admin/users" style="text-decoration: none; color: #000;">
+                <div class="card-body">
+                    <div class="row m-0 p-3">
+                        <div class="col-md-4 align-self-center text-center">
+                            <i class="material-icons" style="font-size: 80px; color: #0277BD;">person</i><br>
+                        </div>
+                        <div class="col-md-8 align-self-center text-right">
+                            <h6>Users</h6>
+                            <h3>{{ usersCount }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 10px; background-color: #0277BD;"></div>
+            </a>
+        </div>
 
     </div>
 </template>
 
 <script>
 export default {
-    props: ['coursesCount', 'categoriesCount'],
+    props: ['coursesCount', 'categoriesCount', 'usersCount'],
     data() {
         return {
             instructorsCount: 0,

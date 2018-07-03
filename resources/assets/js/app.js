@@ -29,6 +29,9 @@ import LayoutHeader from './components/Layout/Header.vue';
 
 import Dashboard from './components/Admin/Dashboard.vue';
 
+import AdminUsers from './components/Admin/User/Users.vue';
+import AdminUserForm from './components/Admin/User/UserForm.vue';
+
 import AdminCategories from './components/Admin/Category/Categories.vue';
 import AdminCategory from './components/Admin/Category/Category.vue';
 import AdminCategoryForm from './components/Admin/Category/CategoryForm.vue';
@@ -65,6 +68,7 @@ const app = new Vue({
     components: {
         LayoutHeader,
         Dashboard,
+        AdminUsers, AdminUserForm,
         AdminCategories, AdminCategory, AdminCategoryForm,
         AdminCourses, AdminCourse, AdminCourseForm,
         AdminPages, AdminPage, AdminPageForm,

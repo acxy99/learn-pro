@@ -1,6 +1,9 @@
 <?php
 use Illuminate\Http\Request;
 
+use App\User;
+use App\Http\Resources\UserResourceCollection;
+
 use App\Category;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryResourceCollection;
@@ -35,6 +38,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Admin
 */
 Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::get('/users', function() { return new UserResourceCollection(User::paginate(10)); });
+    Route::apiResource('users', 'UserController')->only(['store', 'update', 'destroy']);
+
     Route::get('/categories', function() { return new CategoryResourceCollection(Category::paginate(10)); });
     Route::get('/categories/{id}/courses', function($id) {
         $category = Category::findOrFail($id);

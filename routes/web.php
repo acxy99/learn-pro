@@ -2,6 +2,7 @@
 
 use App\Course;
 use App\Category;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +32,11 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
         return view('admin.dashboard', [
             'courses_count' => Course::count(),
             'categories_count' => Category::count(),
+            'users_count' => User::count(),
         ]); 
     })->name('dashboard');
+
+    Route::resource('/users', 'UserController');
 
     Route::resource('/categories', 'CategoryController');
 
