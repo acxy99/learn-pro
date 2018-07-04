@@ -55,7 +55,7 @@ import Multiselect from 'vue-multiselect/src/Multiselect.vue';
 
 export default {
     components: { Multiselect },
-    props: ['user', 'roles', 'currentRole'],
+    props: ['user', 'roles'],
     data() {
         return {
             title: '',
@@ -73,7 +73,7 @@ export default {
         initData() {
             if (this.user.id) {
                 this.title = 'Update User';
-                this.value = this.user.roles[0];
+                this.value = this.user.role;
                 this.submitButtonText = 'Update';
                 this.user.password = '';
                 this.user.password_confirmation = '';

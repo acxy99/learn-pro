@@ -21,12 +21,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = [
-        'roles',
-    ];
+    protected $appends = ['role'];
 
-    public function getRolesAttribute() {
-        return $this->roles()->get();
+    public function getRoleAttribute() {
+        return $this->roles()->first(['id', 'name', 'title']);
     }
 
     public function teachingCourses() {

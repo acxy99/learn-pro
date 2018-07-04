@@ -44,9 +44,8 @@ class UserController extends Controller {
     public function edit($id) {
         $user = User::findOrFail($id);
         $roles = Bouncer::role()->all();
-        $currentRole = $user->roles;
 
-        return view('admin.users.edit', ['user' => $user, 'roles' => $roles, 'currentRole' => $currentRole]);
+        return view('admin.users.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     public function update(UpdateUser $request, $id) {
