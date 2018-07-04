@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Bouncer;
 
 use App\User;
 
@@ -18,7 +19,9 @@ class UserController extends Controller {
 
     public function create() {
         $user = new User;
-        return view('admin.users.create', ['user' => $user]);
+        $roles = Bouncer::role()->all();
+
+        return view('admin.users.create', ['user' => $user, 'roles' => $roles]);
     }
 
     public function store(StoreUser $request) {
@@ -28,8 +31,9 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
+        $user->assign($request->role);
 
-        return response()->json(['user' => $user]);
+        return response()->json(['user' => $user, 'roles' => $request->role]);
     }
 
     public function show($id) {
@@ -39,7 +43,10 @@ class UserController extends Controller {
 
     public function edit($id) {
         $user = User::findOrFail($id);
-        return view('admin.users.edit', ['user' => $user]);
+        $roles = Bouncer::role()->all();
+        $currentRole = $user->roles;
+
+        return view('admin.users.edit', ['user' => $user, 'roles' => $roles, 'currentRole' => $currentRole]);
     }
 
     public function update(UpdateUser $request, $id) {

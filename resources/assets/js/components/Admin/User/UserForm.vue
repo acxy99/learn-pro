@@ -28,6 +28,21 @@
                     <div class="invalid-feedback" v-if="errors['password_confirmation']">{{ errors['password_confirmation'][0] }}</div>
                 </div>
 
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <multiselect 
+                        id="role"
+                        v-model="value"
+                        deselect-label="Can't remove this value"
+                        track-by="name"
+                        label="title"
+                        :options="options"
+                        :searchable="true"
+                        :allow-empty="false"
+                        :disabled="user.id != null">
+                    </multiselect>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block mt-4">{{ submitButtonText }}</button>
                 <button type="button" class="btn btn-light btn-block mt-2" @click="cancel()">Cancel</button>
             </form>
@@ -36,11 +51,16 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect/src/Multiselect.vue';
+
 export default {
-    props: ['user'],
+    components: { Multiselect },
+    props: ['user', 'roles', 'currentRole'],
     data() {
         return {
             title: '',
+            value: [],
+            options: this.roles,
             submitButtonText: '',
             cancelUrl: '',
             errors: [],
@@ -53,11 +73,13 @@ export default {
         initData() {
             if (this.user.id) {
                 this.title = 'Update User';
+                this.value = this.user.roles[0];
                 this.submitButtonText = 'Update';
                 this.user.password = '';
                 this.user.password_confirmation = '';
             } else {
                 this.title = 'Create User';
+                this.value = this.roles[0];
                 this.submitButtonText = 'Create';
                 this.user.username = '';
                 this.user.email = '';
@@ -73,6 +95,7 @@ export default {
             formData.append('email', this.user.email);
             formData.append('password', this.user.password);
             formData.append('password_confirmation', this.user.password_confirmation);
+            formData.append('role', this.value.name);
 
             if (!this.user.id) {
                 this.createUser(formData);
@@ -90,7 +113,6 @@ export default {
                     if (error.response.status == 422) {
                         this.errors = error.response.data.errors;
                     }
-                    console.log(this.errors);
                 });
         },
         updateUser(formData) {
