@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h3>{{ title }}</h3><hr>
+        <h4>{{ title }}</h4><hr>
 
         <form enctype="multipart/form-data" @submit.prevent="onSubmit">
             <!-- course code -->
@@ -46,15 +46,30 @@
                 <label for="categories">Categories</label>
                 <multiselect
                     id="categories"
-                    v-model="selected"
-                    :options="options"
+                    v-model="selectedCategories"
+                    :options="categoryOptions"
                     :multiple="true"
                     :hide-selected="true"
                     track-by="title"
-                    :custom-label="customLabel"
+                    :custom-label="customCategoryLabel"
                     placeholder="Select categories">
                 </multiselect>
-                <!-- <pre class="language-json"><code>{{ selected }}</code></pre> -->
+                <!-- <pre class="language-json"><code>{{ selectedCategories }}</code></pre> -->
+            </div>
+
+            <div class="form-group">
+                <label for="instructors">Instructors</label>
+                <multiselect
+                    id="instructors"
+                    v-model="selectedInstructors"
+                    :options="instructorsOptions"
+                    :multiple="true"
+                    :hide-selected="true"
+                    track-by="id"
+                    :custom-label="customInstructorLabel"
+                    placeholder="Select instructors">
+                </multiselect>
+                <!-- <pre class="language-json"><code>{{ selectedInstructors }}</code></pre> -->
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
@@ -69,20 +84,23 @@ import Multiselect from 'vue-multiselect/src/Multiselect.vue';
 
 export default {
     components: { Multiselect },
-    props: ['course', 'categories'],
+    props: ['course', 'categories', 'instructors'],
     data() {
         return {
             title: '',
             currentImage: this.course.image,
-            selected: [],
-            options: this.categories,
+            selectedCategories: [],
+            categoryOptions: this.categories,
+            selectedInstructors: [],
+            instructorsOptions: this.instructors,
             errors: [],
         }
     },
     created() {
         if (this.course.id) {
             this.title = 'Edit Course';
-            this.selected = this.course.categories;
+            this.selectedCategories = this.course.categories;
+            this.selectedInstructors = this.course.instructors;
         } else {
             this.title = 'Create Course';
             this.course.code = '';
@@ -100,7 +118,8 @@ export default {
             formData.append('title', this.course.title);
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
-            formData.append('categories', this.selected.map(category => (category.id)));
+            formData.append('categories', this.selectedCategories.map(category => (category.id)));
+            formData.append('instructors', this.selectedInstructors.map(instructor => (instructor.id)));
 
             if (!this.course.id) {
                 this.createCourse(formData);
@@ -149,8 +168,11 @@ export default {
             this.course.image = '';
             this.currentImage = '';
         },
-        customLabel(option) {
-            return option.title;
+        customCategoryLabel(category) {
+            return category.title;
+        },
+        customInstructorLabel(instructor) {
+            return instructor.username;
         },
         cancel() {
             window.history.back();

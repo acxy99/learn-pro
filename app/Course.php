@@ -23,7 +23,25 @@ class Course extends Model
         'pages_count',
         'files_count',
         'categories',
+        'instructors',
+        'learners',
     ];
+
+    public function instructors() {
+        return $this->belongsToMany(User::class, 'course_instructor');
+    }
+
+    public function getInstructorsAttribute() {
+        return $this->instructors()->get(['id', 'username']);
+    }
+
+    public function learners() {
+        return $this->belongsToMany(User::class, 'course_learner');
+    }
+
+    public function getLearnersAttribute() {
+        return $this->learners()->get(['id', 'username']);
+    }
 
     public function pages() {
         return $this->hasMany(Page::class);

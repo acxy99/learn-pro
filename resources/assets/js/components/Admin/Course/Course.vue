@@ -48,6 +48,14 @@
         </p>
         <p v-else>none</p>
 
+        <small class="text-muted">Instructors</small>
+        <p v-if="course.instructors.length" class="mt-2">
+            <a role="button" v-for="instructor in course.instructors" :key="instructor.id" style="text-decoration: none; color: #000;">
+                <span class="p-2 mr-1" style="background-color: #EEE">{{ instructor.username }}</span>
+            </a>
+        </p>
+        <p v-else>none</p>
+
         <div class="row">
             <div class="col-md-4">
                 <small class="text-muted">Created at</small>

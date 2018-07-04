@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
+use App\User;
 use App\Course;
 use App\Page;
 use App\Category;
@@ -22,8 +23,9 @@ class CourseController extends Controller {
     public function create() {
         $course = new Course;
         $categories = Category::get(['id', 'title'])->each->setAppends([]);
+        $instructors = User::whereIs('instructor')->get(['id', 'username']);
 
-        return view('admin.courses.create', ['course' => $course, 'categories' => $categories]);
+        return view('admin.courses.create', ['course' => $course, 'categories' => $categories, 'instructors' => $instructors]);
     }
 
     public function store(StoreCourse $request) {
@@ -39,6 +41,9 @@ class CourseController extends Controller {
 
         $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];
         $course->categories()->sync($categories);
+
+        $instructors = $request->instructors ? array_map('intval', explode(',', $request->instructors)) : [];
+        $course->instructors()->sync($instructors);
 
         return response()->json(['course' => $course]);
     }
@@ -59,8 +64,9 @@ class CourseController extends Controller {
     public function edit($slug) {
         $course = Course::findBySlugOrFail($slug);
         $categories = Category::get(['id', 'title'])->each->setAppends([]);
+        $instructors = User::whereIs('instructor')->get(['id', 'username']);
 
-        return view('admin.courses.edit', ['course' => $course, 'categories' => $categories]);
+        return view('admin.courses.edit', ['course' => $course, 'categories' => $categories, 'instructors' => $instructors]);
     }
 
     public function update(UpdateCourse $request, $id) {
@@ -82,6 +88,9 @@ class CourseController extends Controller {
 
         $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];
         $course->categories()->sync($categories);
+
+        $instructors = $request->instructors ? array_map('intval', explode(',', $request->instructors)) : [];
+        $course->instructors()->sync($instructors);
 
         return response()->json(['course' => $course]);
     }

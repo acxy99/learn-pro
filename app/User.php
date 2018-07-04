@@ -28,4 +28,12 @@ class User extends Authenticatable
     public function getRolesAttribute() {
         return $this->roles()->get();
     }
+
+    public function teachingCourses() {
+        return $this->belongsToMany(Course::class, 'course_instructor');
+    }
+
+    public function learningCourses() {
+        return $this->belongsToMany(Course::class, 'course_learner');
+    }
 }
