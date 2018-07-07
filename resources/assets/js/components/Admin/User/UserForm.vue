@@ -32,11 +32,11 @@
                     <label for="role">Role</label>
                     <multiselect 
                         id="role"
-                        v-model="value"
-                        deselect-label="Can't remove this value"
+                        v-model="role"
+                        deselect-label="This role is selected"
                         track-by="name"
                         label="title"
-                        :options="options"
+                        :options="roleOptions"
                         :searchable="true"
                         :allow-empty="false"
                         :disabled="user.id != null">
@@ -59,10 +59,9 @@ export default {
     data() {
         return {
             title: '',
-            value: [],
-            options: this.roles,
+            role: '',
+            roleOptions: this.roles,
             submitButtonText: '',
-            cancelUrl: '',
             errors: [],
         }
     },
@@ -73,13 +72,13 @@ export default {
         initData() {
             if (this.user.id) {
                 this.title = 'Update User';
-                this.value = this.user.role;
+                this.role = this.user.role;
                 this.submitButtonText = 'Update';
                 this.user.password = '';
                 this.user.password_confirmation = '';
             } else {
                 this.title = 'Create User';
-                this.value = this.roles[0];
+                this.role = this.roles[0];
                 this.submitButtonText = 'Create';
                 this.user.username = '';
                 this.user.email = '';
@@ -95,7 +94,7 @@ export default {
             formData.append('email', this.user.email);
             formData.append('password', this.user.password);
             formData.append('password_confirmation', this.user.password_confirmation);
-            formData.append('role', this.value.name);
+            formData.append('role', this.role.name);
 
             if (!this.user.id) {
                 this.createUser(formData);
