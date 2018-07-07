@@ -95,12 +95,6 @@
 
 <script>
 export default {
-    props: ['coursesCount', 'categoriesCount', 'usersCount'],
-    data() {
-        return {
-            instructorsCount: 0,
-            learnersCount: 0,
-        }
-    },
+    props: ['coursesCount', 'categoriesCount', 'usersCount', 'instructorsCount', 'learnersCount'],
 }
 </script>
