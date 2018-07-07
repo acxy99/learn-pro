@@ -56,6 +56,9 @@ import Course from './components/Frontend/Course/Course.vue';
 
 import Page from './components/Frontend/Page/Page.vue';
 
+import Profile from './components/Frontend/Profile/Profile';
+import ProfileForm from './components/Frontend/Profile/ProfileForm';
+
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 const router = new VueRouter({ 
@@ -76,5 +79,6 @@ const app = new Vue({
         Categories, Category,
         Courses, Course,
         Page,
+        Profile, ProfileForm,
     }
 });

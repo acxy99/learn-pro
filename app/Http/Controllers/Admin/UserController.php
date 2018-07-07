@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Bouncer;
 
 use App\User;
+use App\Profile;
 
 use App\Http\Requests\StoreUser;
 use App\Http\Requests\UpdateUser;
@@ -31,7 +32,9 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
+
         $user->assign($request->role);
+        $user->profile()->save(new Profile);
 
         return response()->json(['user' => $user, 'roles' => $request->role]);
     }
@@ -55,6 +58,10 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
+
+        $profile = Profile::find($id);
+        $profile->slug = null;
+        $profile->save();
 
         return response()->json(['user' => $user]);
     }

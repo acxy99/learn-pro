@@ -23,6 +23,12 @@ class User extends Authenticatable
 
     protected $appends = ['role'];
 
+    protected $with = ['profile'];
+
+    public function profile() {
+        return $this->hasOne(Profile::class);
+    }
+
     public function getRoleAttribute() {
         return $this->roles()->first(['id', 'name', 'title']);
     }

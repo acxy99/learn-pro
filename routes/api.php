@@ -85,6 +85,8 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Frontend
 */
 Route::namespace('Frontend')->group(function() {
+    Route::resource('profiles', 'ProfileController')->only(['update', 'destroy']);
+
     Route::get('/categories', function() { return new CategoryResourceCollection(Category::paginate(10)); });
     Route::get('/categories/{category_id}/courses', function($category_id) {
         $category = Category::findOrFail($category_id);

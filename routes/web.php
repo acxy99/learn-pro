@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/', function () { return view('welcome'); });
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 /*
     Admin
@@ -33,6 +33,8 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
             'courses_count' => Course::count(),
             'categories_count' => Category::count(),
             'users_count' => User::count(),
+            'instructors_count' => User::whereIs('instructor')->count(),
+            'learners_count' => User::whereIs('learner')->count(),
         ]); 
     })->name('dashboard');
 
@@ -61,4 +63,6 @@ Route::namespace('Frontend')->name('frontend.')->group(function() {
     Route::resource('/courses', 'CourseController')->only(['index', 'show']);
     
     Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
+
+    Route::resource('/profiles', 'ProfileController')->only(['show', 'edit']);
 });

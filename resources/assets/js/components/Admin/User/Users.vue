@@ -29,6 +29,9 @@
                             <a class="btn p-1" :href="getEditUserUrl(user)" data-toggle="tooltip" data-placement="bottom" title="Edit">
                                 <i class="material-icons">create</i>
                             </a>
+                            <a class="btn p-1" :href="getProfileUrl(user)" data-toggle="tooltip" data-placement="bottom" title="User profile">
+                                <i class="material-icons">account_circle</i>
+                            </a>
                             <button class="btn p-1" style="background-color: transparent" @click="deleteUser(user)" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                 <i class="material-icons" style="color: red;">delete</i>
                             </button>
@@ -83,6 +86,9 @@ export default {
         },
         getEditUserUrl(user) {
             return '/admin/users/' + user.id + '/edit';
+        },
+        getProfileUrl(user) {
+            return '/profiles/' + user.profile.slug;
         },
         deleteUser(user) {
             if(confirm('Are you sure you want to delete this user?')) {
