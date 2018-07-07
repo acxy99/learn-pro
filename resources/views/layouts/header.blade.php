@@ -1,1 +1,1 @@
-<layout-header auth-user="{{ Auth::user() }}"></layout-header>
+<layout-header :auth-user="{{ json_encode(Auth::user()) }}"></layout-header>

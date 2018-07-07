@@ -10,7 +10,25 @@
             </ul>
 
             <ul v-if="currentUser" class="navbar-nav">
-                <li><button class="btn btn-link border-0 nav-link" @click="logout()">Logout</button></li>
+                <li class="nav-item mr-2">
+                    <span class="d-flex rounded-circle" style="width: 30px; height:30px; overflow: hidden; display: inline-block">
+                        <img :src="currentUser.profile.picture_path" style="object-fit: cover; max-width: 100%;">
+                    </span>
+                </li>
+                <li class="nav-item dropdown align-self-center">
+                    <a class="nav-link dropdown-toggle p-0 align-middle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ currentUser.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mt-3" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item">Logged in as <strong>{{ currentUser.username }}</strong></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" :href="viewProfileUrl">View profile</a>
+                        <a v-if="currentUser.role.name != 'admin'" class="dropdown-item" :href="getMyCoursesUrl()">My courses</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item btn btn-link border-0" @click="logout()">Logout</button>
+                    </div>
+                </li>
+                <!-- <li><button class="btn btn-link border-0 nav-link" @click="logout()">Logout</button></li> -->
             </ul>
             <ul v-else class="navbar-nav">
                 <li><a class="nav-link" :class="{ active: isCurrentPath('/login') }" href="/login">Login</a></li>
@@ -27,14 +45,22 @@ export default {
         return {
             currentUser: this.authUser,
             currentPath: this.$router.currentRoute.path,
+            viewProfileUrl: '',
         }
     },
     created() {
-        console.log('current user: ' + this.currentUser);
+        this.initData();
+        console.log(this.currentUser);
     },
     methods: {
+        initData() {
+            this.viewProfileUrl = this.currentUser ? ('/profiles/' + this.currentUser.profile.slug) : '#';
+        },
         isCurrentPath(path) {
             return this.currentPath == path;
+        },
+        getMyCoursesUrl() {
+            return '#';
         },
         logout() {
             axios.post('/logout')
