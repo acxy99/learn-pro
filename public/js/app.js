@@ -20458,6 +20458,8 @@ var router = new __WEBPACK_IMPORTED_MODULE_28_vue_router__["a" /* default */]({
     mode: 'history'
 });
 
+Vue.prototype.$user = window.user;
+
 var app = new Vue({
     el: '#app',
     router: router,
@@ -67337,27 +67339,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['authUser'],
     data: function data() {
         return {
-            currentUser: this.authUser,
             currentPath: this.$router.currentRoute.path,
             viewProfileUrl: ''
         };
     },
     created: function created() {
         this.initData();
-        console.log(this.currentUser);
+        console.log(this.$user);
     },
 
     methods: {
         initData: function initData() {
-            this.viewProfileUrl = this.currentUser ? '/profiles/' + this.currentUser.profile.slug : '#';
+            this.viewProfileUrl = this.$user ? '/profiles/' + this.$user.profile.slug : '#';
         },
         isCurrentPath: function isCurrentPath(path) {
             return this.currentPath == path;
+        },
+        userIsAdmin: function userIsAdmin() {
+            return this.$user && this.$user.role.name == 'admin';
+        },
+        userIsInstructor: function userIsInstructor() {
+            return this.$user && this.$user.role.name == 'instructor';
+        },
+        userIsLearner: function userIsLearner() {
+            return this.$user && this.$user.role.name == 'learner';
         },
         getMyCoursesUrl: function getMyCoursesUrl() {
             return '#';
@@ -67388,17 +67400,19 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "collapse navbar-collapse" }, [
         _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                class: { active: _vm.isCurrentPath("/admin") },
-                attrs: { href: "/admin" }
-              },
-              [_vm._v("Admin")]
-            )
-          ]),
+          _vm.userIsAdmin() || _vm.uerIsInstructor()
+            ? _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.isCurrentPath("/admin") },
+                    attrs: { href: "/admin" }
+                  },
+                  [_vm._v("Admin Dashboard")]
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("li", [
             _c(
@@ -67425,7 +67439,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm.currentUser
+        _vm.$user
           ? _c("ul", { staticClass: "navbar-nav" }, [
               _c("li", { staticClass: "nav-item mr-2" }, [
                 _c(
@@ -67445,7 +67459,7 @@ var render = function() {
                         "object-fit": "cover",
                         "max-width": "100%"
                       },
-                      attrs: { src: _vm.currentUser.profile.picture_path }
+                      attrs: { src: _vm.$user.profile.picture_path }
                     })
                   ]
                 )
@@ -67468,7 +67482,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                    " +
-                        _vm._s(_vm.currentUser.username) +
+                        _vm._s(_vm.$user.username) +
                         "\n                "
                     )
                   ]
@@ -67483,7 +67497,7 @@ var render = function() {
                   [
                     _c("a", { staticClass: "dropdown-item" }, [
                       _vm._v("Logged in as "),
-                      _c("strong", [_vm._v(_vm._s(_vm.currentUser.username))])
+                      _c("strong", [_vm._v(_vm._s(_vm.$user.username))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "dropdown-divider" }),
@@ -67497,7 +67511,7 @@ var render = function() {
                       [_vm._v("View profile")]
                     ),
                     _vm._v(" "),
-                    _vm.currentUser.role.name != "admin"
+                    !_vm.userIsAdmin()
                       ? _c(
                           "a",
                           {
@@ -114951,10 +114965,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['profile'],
@@ -114971,6 +114981,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 return 'Male';
             }
+        },
+        userCanEditProfile: function userCanEditProfile() {
+            return this.$user && (this.$user.role.name == 'admin' || this.$user.id == this.profile.user_id);
         }
     }
 });
@@ -114991,22 +115004,26 @@ var render = function() {
         _c("h4", { staticClass: "m-0" }, [_vm._v(_vm._s(_vm.profile.username))])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-5 align-self-center text-right" }, [
-        _c(
-          "a",
-          {
-            staticClass:
-              "btn btn-outline-primary d-inline-flex align-items-center",
-            staticStyle: { "border-radius": "0" },
-            attrs: { href: _vm.editProfileUrl, role: "button" }
-          },
-          [
-            _c("i", { staticClass: "material-icons mr-1" }, [_vm._v("create")]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Edit Profile")])
-          ]
-        )
-      ])
+      _vm.userCanEditProfile()
+        ? _c("div", { staticClass: "col-md-5 align-self-center text-right" }, [
+            _c(
+              "a",
+              {
+                staticClass:
+                  "btn btn-outline-primary d-inline-flex align-items-center",
+                staticStyle: { "border-radius": "0" },
+                attrs: { href: _vm.editProfileUrl, role: "button" }
+              },
+              [
+                _c("i", { staticClass: "material-icons mr-1" }, [
+                  _vm._v("create")
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Edit Profile")])
+              ]
+            )
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("hr"),

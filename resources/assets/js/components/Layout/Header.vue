@@ -4,26 +4,28 @@
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li><a class="nav-link" :class="{ active: isCurrentPath('/admin') }" href="/admin">Admin</a></li>
+                <li v-if="userIsAdmin() || uerIsInstructor()">
+                    <a class="nav-link" :class="{ active: isCurrentPath('/admin') }" href="/admin">Admin Dashboard</a>
+                </li>
                 <li><a class="nav-link" :class="{ active: isCurrentPath('/categories') }" href="/categories">Categories</a></li>
                 <li><a class="nav-link" :class="{ active: isCurrentPath('/courses') }" href="/courses">Courses</a></li>
             </ul>
 
-            <ul v-if="currentUser" class="navbar-nav">
+            <ul v-if="$user" class="navbar-nav">
                 <li class="nav-item mr-2">
                     <span class="d-flex rounded-circle" style="width: 30px; height:30px; overflow: hidden; display: inline-block">
-                        <img :src="currentUser.profile.picture_path" style="object-fit: cover; max-width: 100%;">
+                        <img :src="$user.profile.picture_path" style="object-fit: cover; max-width: 100%;">
                     </span>
                 </li>
                 <li class="nav-item dropdown align-self-center">
                     <a class="nav-link dropdown-toggle p-0 align-middle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ currentUser.username }}
+                        {{ $user.username }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mt-3" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item">Logged in as <strong>{{ currentUser.username }}</strong></a>
+                        <a class="dropdown-item">Logged in as <strong>{{ $user.username }}</strong></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" :href="viewProfileUrl">View profile</a>
-                        <a v-if="currentUser.role.name != 'admin'" class="dropdown-item" :href="getMyCoursesUrl()">My courses</a>
+                        <a v-if="!userIsAdmin()" class="dropdown-item" :href="getMyCoursesUrl()">My courses</a>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item btn btn-link border-0" @click="logout()">Logout</button>
                     </div>
@@ -43,21 +45,29 @@ export default {
     props: ['authUser'],
     data() {
         return {
-            currentUser: this.authUser,
             currentPath: this.$router.currentRoute.path,
             viewProfileUrl: '',
         }
     },
     created() {
         this.initData();
-        console.log(this.currentUser);
+        console.log(this.$user);
     },
     methods: {
         initData() {
-            this.viewProfileUrl = this.currentUser ? ('/profiles/' + this.currentUser.profile.slug) : '#';
+            this.viewProfileUrl = this.$user ? ('/profiles/' + this.$user.profile.slug) : '#';
         },
         isCurrentPath(path) {
             return this.currentPath == path;
+        },
+        userIsAdmin() {
+            return this.$user && this.$user.role.name == 'admin';
+        },
+        userIsInstructor() {
+            return this.$user && this.$user.role.name == 'instructor';
+        },
+        userIsLearner() {
+            return this.$user && this.$user.role.name == 'learner';
         },
         getMyCoursesUrl() {
             return '#';

@@ -5,7 +5,7 @@
             <div class="col-md-7 align-self-center">
                 <h4 class="m-0">{{ profile.username }}</h4>
             </div>
-            <div class="col-md-5 align-self-center text-right">
+            <div v-if="userCanEditProfile()" class="col-md-5 align-self-center text-right">
                 <a class="btn btn-outline-primary d-inline-flex align-items-center" style="border-radius: 0;" :href="editProfileUrl" role="button">
                     <i class="material-icons mr-1">create</i>
                     <span>Edit Profile</span>
@@ -34,7 +34,6 @@
             </div>
         </div>
 
-        <!-- gender -->
         <div class="">
             <small class="text-muted">Gender</small>
             <div class="bg-light p-2 mt-1 mb-2">
@@ -43,7 +42,6 @@
             </div>
         </div>
 
-        <!-- dob -->
         <div class="">
             <small class="text-muted">Date of Birth</small>
             <div class="bg-light p-2 mt-1 mb-2">
@@ -52,7 +50,6 @@
             </div>
         </div>
 
-        <!-- phone -->
         <div class="">
             <small class="text-muted">Phone Number</small>
             <div class="bg-light p-2 mt-1 mb-2">
@@ -61,7 +58,6 @@
             </div>
         </div>
 
-        <!-- country -->
         <div class="">
             <small class="text-muted">Country</small>
             <div class="bg-light p-2 mt-1 mb-2">
@@ -87,7 +83,10 @@ export default {
             } else {
                 return 'Male';
             }
-        }
+        },
+        userCanEditProfile() {
+            return this.$user &&  (this.$user.role.name == 'admin' || this.$user.id == this.profile.user_id);
+        },
     }
 }
 </script>

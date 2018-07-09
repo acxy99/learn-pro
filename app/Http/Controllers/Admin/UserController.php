@@ -19,6 +19,8 @@ class UserController extends Controller {
     }
 
     public function create() {
+        $this->authorize('create', User::class);
+
         $user = new User;
         $roles = Bouncer::role()->all();
 
@@ -46,6 +48,8 @@ class UserController extends Controller {
 
     public function edit($id) {
         $user = User::findOrFail($id);
+
+        $this->authorize('update', $user);
         $roles = Bouncer::role()->all();
 
         return view('admin.users.edit', ['user' => $user, 'roles' => $roles]);
@@ -68,6 +72,8 @@ class UserController extends Controller {
 
     public function destroy($id) {
         $user = User::findOrFail($id);
+
+        $this->authorize('delete', $user);
         $user->delete();
 
         return response()->json(['user' => $user]);

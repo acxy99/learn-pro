@@ -21,6 +21,7 @@ class ProfileController extends Controller {
 
     public function edit($slug) {
         $profile = Profile::findBySlugOrFail($slug);
+        $this->authorize('update', $profile);
 
         return view('frontend.profiles.edit', ['profile' => $profile]);
     }

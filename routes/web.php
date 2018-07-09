@@ -35,8 +35,8 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
             'users_count' => User::count(),
             'instructors_count' => User::whereIs('instructor')->count(),
             'learners_count' => User::whereIs('learner')->count(),
-        ]); 
-    })->name('dashboard');
+        ]);
+    })->middleware('can:view-dashboard')->name('dashboard');
 
     Route::resource('/users', 'UserController');
 
