@@ -24,7 +24,7 @@
             @yield('content')
         </div>
 
-        <script>window.currentUser = {!! Auth::user() !!}</script>
+        <script>window.user = {!! Auth::user() !!}</script>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

@@ -65,7 +65,7 @@ const router = new VueRouter({
     mode:'history' 
 });
 
-Vue.prototype.$currentUser = window.currentUser
+Vue.prototype.$user = window.user
 
 const app = new Vue({
     el: '#app',
