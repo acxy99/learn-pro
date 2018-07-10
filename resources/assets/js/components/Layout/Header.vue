@@ -4,7 +4,7 @@
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li v-if="userIsAdmin() || uerIsInstructor()">
+                <li v-if="$userIsAdmin() || $userIsInstructor()">
                     <a class="nav-link" :class="{ active: isCurrentPath('/admin') }" href="/admin">Admin Dashboard</a>
                 </li>
                 <li><a class="nav-link" :class="{ active: isCurrentPath('/categories') }" href="/categories">Categories</a></li>
@@ -25,7 +25,7 @@
                         <a class="dropdown-item">Logged in as <strong>{{ $user.username }}</strong></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" :href="viewProfileUrl">View profile</a>
-                        <a v-if="!userIsAdmin()" class="dropdown-item" :href="getMyCoursesUrl()">My courses</a>
+                        <a v-if="!$userIsAdmin()" class="dropdown-item" :href="getMyCoursesUrl()">My courses</a>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item btn btn-link border-0" @click="logout()">Logout</button>
                     </div>
@@ -59,15 +59,6 @@ export default {
         },
         isCurrentPath(path) {
             return this.currentPath == path;
-        },
-        userIsAdmin() {
-            return this.$user && this.$user.role.name == 'admin';
-        },
-        userIsInstructor() {
-            return this.$user && this.$user.role.name == 'instructor';
-        },
-        userIsLearner() {
-            return this.$user && this.$user.role.name == 'learner';
         },
         getMyCoursesUrl() {
             return '#';

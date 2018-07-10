@@ -67,6 +67,18 @@ const router = new VueRouter({
 
 Vue.prototype.$user = window.user
 
+Vue.prototype.$userIsAdmin = function() {
+    return this.$user && this.$user.role.name == 'admin';
+}
+
+Vue.prototype.$userIsInstructor = function() {
+    return this.$user && this.$user.role.name == 'instructor';
+}
+
+Vue.prototype.$userIsLearner = function() {
+    return this.$user && this.$user.role.name == 'learner';
+}
+
 const app = new Vue({
     el: '#app',
     router,
