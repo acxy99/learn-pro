@@ -29,9 +29,13 @@ class ProfileController extends Controller {
     public function update(UpdateProfile $request, $id) {
         $profile = Profile::findOrFail($id);
 
-        // dd($request->date_of_birth);
         $profile->fill($request->except('date_of_birth'));
-        $profile->date_of_birth = Carbon::parse($request->date_of_birth);
+
+        if ($request->date) {
+            $profile->date_of_birth = Carbon::parse($request->date);
+        } else {
+            $profile->date_of_birth = null;
+        }
 
         if ($request->hasFile('picture')) {
             $profile->picture = 'user-' . $profile->user_id . '.jpg';

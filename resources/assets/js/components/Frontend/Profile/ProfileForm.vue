@@ -23,7 +23,6 @@
             <div class="form-group">
                 <label for="gender">Gender</label>
                 <multiselect 
-                    id="gender"
                     v-model="gender"
                     label="title"
                     track-by="value"
@@ -70,6 +69,7 @@
 <script>
 import Multiselect from 'vue-multiselect/src/Multiselect.vue';
 import DatePicker from 'vue2-datepicker'
+import moment from 'moment'
 
 export default {
     components: { Multiselect, DatePicker },
@@ -101,8 +101,6 @@ export default {
             }
         },
         onSubmit() {
-            // console.log(this.profile.gender)
-
             var form = document.getElementById('form');
             var formData = new FormData(form);
             formData.append('gender', this.profile.gender ? this.profile.gender : '');
@@ -114,12 +112,6 @@ export default {
             for (var pair of formData.entries()) {
                 console.log(pair[0]+ ', ' + pair[1]); 
             }
-            // if (this.profile.first_name) formData.append('first_name', this.profile.first_name);
-            // if (this.profile.last_name) formData.append('last_name', this.profile.last_name);
-            // if (document.querySelector('#picture').files[0]) formData.append('picture', document.querySelector('#picture').files[0]);
-            // if (this.profile.gender) formData.append('gender', this.profile.gender);
-            // if (this.profile.date_of_birth) formData.append('date_of_birth', this.profile.date_of_birth);
-            // formData.append('_method', 'PUT');
 
             axios.post('/api/profiles/' + this.profile.user_id, formData, {
                 _method: 'put',
@@ -149,7 +141,7 @@ export default {
             this.profile.country = val
         },
         dob: function(val) {
-            this.profile.date_of_birth = val
+            this.profile.date_of_birth = val ? moment(val).format('YYYY-MM-DD') : '';
         }
     }
 }
