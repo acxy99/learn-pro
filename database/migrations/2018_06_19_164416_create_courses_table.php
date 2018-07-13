@@ -20,7 +20,10 @@ class CreateCoursesTable extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->string('slug')->unique();
+            $table->unsignedInteger('owner_id');
             $table->timestamps();
+
+            $table->foreign('owner_id')->references('id')->on('users');
         });
     }
 

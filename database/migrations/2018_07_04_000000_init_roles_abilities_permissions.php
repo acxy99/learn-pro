@@ -15,7 +15,6 @@ class InitRolesAbilitiesPermissions extends Migration
      */
     public function up()
     {
-        // roles
         $admin = Bouncer::role()->create([
             'name' => 'admin',
             'title' => 'Administrator',
@@ -25,6 +24,7 @@ class InitRolesAbilitiesPermissions extends Migration
             'name' => 'instructor',
             'title' => 'Instructor',
         ]);
+
         $learner = Bouncer::role()->create([
             'name' => 'learner',
             'title' => 'Learner',
@@ -36,32 +36,33 @@ class InitRolesAbilitiesPermissions extends Migration
 
         Bouncer::allow('admin')->to('view-user');
         Bouncer::allow('admin')->to('create-user');
-        Bouncer::allow('admin')->to('manage-user');
+        Bouncer::allow('admin')->to('update-user');
+        Bouncer::allow('admin')->to('delete-user');
+
+        Bouncer::allow('admin')->to('view-profile');
+        Bouncer::allow('admin')->to('create-profile');
+        Bouncer::allow('admin')->to('update-profile');
+        Bouncer::allow('admin')->to('delete-profile');
 
         Bouncer::allow('admin')->to('view-category');
         Bouncer::allow('admin')->to('create-category');
-        Bouncer::allow('admin')->to('manage-category');
+        Bouncer::allow('admin')->to('update-category');
+        Bouncer::allow('admin')->to('delete-category');
 
         Bouncer::allow('admin')->to('view-course');
         Bouncer::allow('admin')->to('create-course');
-        Bouncer::allow('admin')->to('manage-course');
-        Bouncer::allow('instructor')->to('view-course');
-        Bouncer::allow('instructor')->to('create-course');
-        Bouncer::allow('instructor')->to('manage-course');
+        Bouncer::allow('admin')->to('update-course');
+        Bouncer::allow('admin')->to('delete-course');
 
         Bouncer::allow('admin')->to('view-page');
         Bouncer::allow('admin')->to('create-page');
-        Bouncer::allow('admin')->to('manage-page');
-        Bouncer::allow('instructor')->to('view-page');
-        Bouncer::allow('instructor')->to('create-page');
-        Bouncer::allow('instructor')->to('manage-page');
+        Bouncer::allow('admin')->to('update-page');
+        Bouncer::allow('admin')->to('delete-page');
 
         Bouncer::allow('admin')->to('view-file');
         Bouncer::allow('admin')->to('create-file');
-        Bouncer::allow('admin')->to('manage-file');
-        Bouncer::allow('instructor')->to('view-file');
-        Bouncer::allow('instructor')->to('create-file');
-        Bouncer::allow('instructor')->to('manage-file');
+        Bouncer::allow('admin')->to('update-file');
+        Bouncer::allow('admin')->to('delete-file');
 
         $user = User::find(1);
         Bouncer::assign('admin')->to($user);

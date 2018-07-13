@@ -18,6 +18,11 @@ class CreateFirstUser extends Migration
             'password' => bcrypt('admin'),
             'username' => 'admin',
         ]);
+
+        DB::table('profiles')->insert([
+            'user_id' => 1,
+            'slug' => 'admin',
+        ]);
     }
 
     /**
