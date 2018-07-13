@@ -14,10 +14,23 @@ use App\Category;
 use App\Http\Requests\StoreCourse;
 use App\Http\Requests\UpdateCourse;
 
+use App\Http\Resources\CourseResource;
+use App\Http\Resources\CourseResourceCollection;
+
 class CourseController extends Controller {
     
     public function index() {
         return view('admin.courses.index');
+    }
+
+    public function apiIndex(Request $request) {
+        $user = User::find($request->get('user_id'));
+        if ($user->isAn('admin')) {
+            $courses = Course::paginate(10);
+        } else {
+            $courses = $user->teachingCourses()->paginate(10);
+        }
+        return new CourseResourceCollection($courses); 
     }
 
     public function create() {
@@ -50,7 +63,7 @@ class CourseController extends Controller {
 
     public function show($slug) {
         $course = Course::findBySlugOrFail($slug);
-        
+
         $lastUpdatedPage = $course->pages()->orderBy('updated_at', 'desc')->pluck('updated_at')->first();
         $lastUpdatedFile = $course->files()->orderBy('updated_at', 'desc')->pluck('updated_at')->first();
 
@@ -59,6 +72,10 @@ class CourseController extends Controller {
             'lastUpdatedPage' => $lastUpdatedPage,
             'lastUpdatedFile' => $lastUpdatedFile,
         ]);
+    }
+
+    public function apiShow($id) {
+        return new CourseResource(Course::find($id));
     }
 
     public function edit($slug) {

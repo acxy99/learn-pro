@@ -52,11 +52,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     });
     Route::apiResource('categories', 'CategoryController')->only(['store', 'update', 'destroy']);
 
-    Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(10)); });
-    Route::get('/courses/{id}', function($id) { return new CourseResource(Course::find($id)); });
-    Route::post('/courses', 'CourseController@store');
-    Route::put('/courses/{id}', 'CourseController@update');
-    Route::delete('/courses/{id}', 'CourseController@destroy');
+    Route::get('/courses', 'CourseController@apiIndex');
+    Route::get('/courses/{id}', 'CourseController@apiShow');
+    Route::apiResource('courses', 'CourseController')->only(['store', 'update', 'destroy']);
 
     Route::get('/courses/{course_id}/pages', function($course_id) {
         $course = Course::findOrFail($course_id);
