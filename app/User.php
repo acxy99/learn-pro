@@ -21,7 +21,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = ['role'];
+    protected $appends = ['role', 'teaching_courses', 'learning_courses'];
 
     protected $with = ['profile'];
 
@@ -39,5 +39,13 @@ class User extends Authenticatable
 
     public function learningCourses() {
         return $this->belongsToMany(Course::class, 'course_learner');
+    }
+
+    public function getTeachingCoursesAttribute() {
+        return $this->teachingCourses()->pluck('id');
+    }
+
+    public function getLearningCoursesAttribute() {
+        return $this->learningCourses()->pluck('id');
     }
 }
