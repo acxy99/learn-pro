@@ -12,9 +12,9 @@
                         </div>
                         <div class="card-body">
                             <a :href="getCategoryUrl(category)" style="text-decoration: none">
-                                <h5 class="card-title text-truncate">{{ category.title }}</h5>
+                                <h5 class="card-title line-clamp">{{ category.title }}</h5>
                             </a>
-                            <p class="card-text">{{ category.description }}</p>
+                            <p class="card-text line-clamp">{{ category.description }}</p>
                         </div>
                     </div>
                 </div>

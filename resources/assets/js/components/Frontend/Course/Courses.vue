@@ -13,9 +13,9 @@
                         <div class="card-body">
                             <a :href="getCourseUrl(course)" style="text-decoration: none">
                                 <small>{{ course.code }}</small>
-                                <h5 class="card-title text-truncate">{{ course.title }}</h5>
+                                <h5 class="card-title line-clamp">{{ course.title }}</h5>
                             </a>
-                            <p class="card-text">{{ course.description }}</p>
+                            <p class="card-text line-clamp">{{ course.description }}</p>
                         </div>
                     </div>
                 </div>

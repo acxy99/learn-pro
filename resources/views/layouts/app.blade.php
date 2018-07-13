@@ -11,6 +11,16 @@
         <title>LearnPro @yield('title')</title>
 
         @yield('stylesheets')
+        <style>
+        .line-clamp {
+            display: -webkit-box!important;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 48px;
+        }
+        </style>
 
         <!-- Icons -->
         <link href="https://unpkg.com/ionicons@4.2.0/dist/css/ionicons.min.css" rel="stylesheet">
