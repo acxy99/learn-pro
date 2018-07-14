@@ -16,6 +16,7 @@ class Course extends Model
         'title',
         'description',
         'slug',
+        'owner_id',
     ];
 
     protected $appends = [
@@ -24,23 +25,21 @@ class Course extends Model
         'files_count',
         'categories',
         'instructors',
-        'learners',
+        'co_instructors'
     ];
+
+    protected $with = ['owner'];
+
+    public function owner() {
+        return $this->belongsTo(User::class);
+    }
 
     public function instructors() {
         return $this->belongsToMany(User::class, 'course_instructor');
     }
 
-    public function getInstructorsAttribute() {
-        return $this->instructors()->get(['id', 'username']);
-    }
-
     public function learners() {
         return $this->belongsToMany(User::class, 'course_learner');
-    }
-
-    public function getLearnersAttribute() {
-        return $this->learners()->get(['id', 'username']);
     }
 
     public function pages() {
@@ -49,6 +48,14 @@ class Course extends Model
 
     public function files() {
         return $this->hasMany(File::class);
+    }
+
+    public function getInstructorsAttribute() {
+        return $this->instructors()->get(['id', 'username'])->each->setAppends([]);
+    }
+
+    public function getCoInstructorsAttribute() {
+        return $this->instructors()->where('id', '!=', $this->owner_id)->get(['id', 'username'])->each->setAppends([]);
     }
 
     public function getPagesCountAttribute() {
@@ -63,8 +70,11 @@ class Course extends Model
         parent::boot();
 
         static::deleting(function($course) {
-             $course->pages()->delete();
-             $course->files()->delete();
+            $course->instructors()->detach();
+            $course->learners()->detach();
+            $course->categories()->detach();
+            $course->pages()->delete();
+            $course->files()->delete();
         });
     }
 

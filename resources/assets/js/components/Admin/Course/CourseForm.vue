@@ -3,28 +3,55 @@
         <h4>{{ title }}</h4><hr>
 
         <form enctype="multipart/form-data" @submit.prevent="onSubmit">
-            <!-- course code -->
             <div class="form-group invalid">
                 <label for="code">Code</label>
                 <input type="text" id="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
                 <div class="invalid-feedback" v-if="errors['code']">{{ errors['code'][0] }}</div>
             </div>
 
-            <!-- course title -->
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="50">
                 <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
             </div>
 
-            <!-- course description -->
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea id="description" v-model="course.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
                 <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
             </div>
 
-            <!-- course image -->
+            <div class="form-group">
+                <label for="owner">Primary instructor (owner)</label>
+                <multiselect 
+                    :class="{'is-danger': selectedOwner == null || errors['owner_id']}"
+                    v-model="selectedOwner"
+                    deselect-label="Selected"
+                    :options="ownerOptions"
+                    track-by="id"
+                    :custom-label="customInstructorLabel"
+                    :searchable="true"
+                    :allow-empty="false"
+                    placeholder="Select primary instructor"
+                    :disabled="$userIsInstructor() || course.id != null">
+                </multiselect>
+                <div class="invalid-feedback" style="display: block" v-if="errors['owner_id']">{{ errors['owner_id'][0] }}</div>
+            </div>
+
+            <div class="form-group">
+                <label for="co-instructors">Co-instructors</label>
+                <multiselect
+                    v-model="selectedCoInstructors"
+                    :options="coInstructorsOptions"
+                    :multiple="true"
+                    :hide-selected="true"
+                    track-by="id"
+                    :custom-label="customInstructorLabel"
+                    placeholder="Select co-instructors"
+                    :disabled="!$userIsAdmin() && (course.id != null && !userIsCourseOwner())">
+                </multiselect>
+            </div>
+
             <div class="form-group">
                 <label for="image">Image</label>
                 
@@ -54,22 +81,6 @@
                     :custom-label="customCategoryLabel"
                     placeholder="Select categories">
                 </multiselect>
-                <!-- <pre class="language-json"><code>{{ selectedCategories }}</code></pre> -->
-            </div>
-
-            <div class="form-group">
-                <label for="instructors">Instructors</label>
-                <multiselect
-                    id="instructors"
-                    v-model="selectedInstructors"
-                    :options="instructorsOptions"
-                    :multiple="true"
-                    :hide-selected="true"
-                    track-by="id"
-                    :custom-label="customInstructorLabel"
-                    placeholder="Select instructors">
-                </multiselect>
-                <!-- <pre class="language-json"><code>{{ selectedInstructors }}</code></pre> -->
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
@@ -89,20 +100,24 @@ export default {
         return {
             title: '',
             currentImage: this.course.image,
+            selectedOwner: [],
+            ownerOptions: this.instructors,
+            selectedCoInstructors: [],
+            coInstructorsOptions: this.instructors,
             selectedCategories: [],
             categoryOptions: this.categories,
-            selectedInstructors: [],
-            instructorsOptions: this.instructors,
             errors: [],
         }
     },
     created() {
         if (this.course.id) {
             this.title = 'Edit Course';
+            this.selectedOwner = this.course.owner;
             this.selectedCategories = this.course.categories;
-            this.selectedInstructors = this.course.instructors;
+            this.selectedCoInstructors = this.course.co_instructors;
         } else {
             this.title = 'Create Course';
+            this.selectedOwner = this.$userIsInstructor() ? this.$user : '';
             this.course.code = '';
             this.course.title = '';
             this.course.description = '';
@@ -118,8 +133,11 @@ export default {
             formData.append('title', this.course.title);
             formData.append('description', this.course.description);
             formData.append('image', document.querySelector('#image').files[0]);
+            formData.append('owner_id', this.selectedOwner.id || '');
+            for (var i = 0; i < this.selectedCoInstructors.length; i++) {
+                formData.append('co_instructors_id[]', this.selectedCoInstructors[i].id);
+            }
             formData.append('categories', this.selectedCategories.map(category => (category.id)));
-            formData.append('instructors', this.selectedInstructors.map(instructor => (instructor.id)));
 
             if (!this.course.id) {
                 this.createCourse(formData);
@@ -174,10 +192,41 @@ export default {
         customInstructorLabel(instructor) {
             return instructor.username;
         },
+        userIsCourseOwner() {
+            return this.course.owner_id == this.$user.id;
+        },
         cancel() {
             window.history.back();
         },
     },
+    watch: {
+        selectedOwner: function(val) {
+            var vm = this;
+            if (vm.selectedOwner) {
+                vm.coInstructorsOptions = vm.instructors.filter(function(el) {
+                    return el.id !== vm.selectedOwner.id;
+                })
+            } else {
+                vm.coInstructorsOptions = vm.instructors;
+                vm.selectedOwner = '';
+            }
+        },
+        selectedCoInstructors: function(val) {
+            var vm = this;
+            if (vm.selectedCoInstructors.length) {
+                vm.ownerOptions = vm.instructors.filter(function(el) {
+                    return !(vm.selectedCoInstructors.map(instructor => instructor.id)).includes(el.id);
+                })
+            } else {
+                vm.ownerOptions = vm.instructors;
+            }
+        }
+    }
 }
 </script>
 
+<style>
+.is-danger .multiselect__tags {
+    border-color: #dc3545;
+}
+</style>

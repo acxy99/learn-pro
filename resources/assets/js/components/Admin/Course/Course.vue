@@ -7,8 +7,8 @@
                 <h5 class="m-0">{{ course.code }} {{ course.title }}</h5>
             </div>
             <div class="col-md-5 align-self-center text-right">
-                <a class="btn btn-primary" style="border-radius: 0;" :href="editCourseUrl" role="button">Edit Course</a>
-                <button class="btn btn-danger" style="border-radius: 0;" @click="deleteCourse()">Delete Course</button>
+                <a v-if="userCanEditCourse()" class="btn btn-primary" style="border-radius: 0;" :href="editCourseUrl" role="button">Edit Course</a>
+                <button v-if="userCanDeleteCourse()" class="btn btn-danger" style="border-radius: 0;" @click="deleteCourse()">Delete Course</button>
             </div>
         </div>
         <hr>
@@ -50,7 +50,7 @@
 
         <small class="text-muted">Instructors</small>
         <p v-if="course.instructors.length" class="mt-2">
-            <a role="button" v-for="instructor in course.instructors" :key="instructor.id" style="text-decoration: none; color: #000;">
+            <a role="button" v-for="instructor in course.instructors" :key="instructor.id" :href="getInstructorProfileUrl(instructor)" style="text-decoration: none; color: #000;">
                 <span class="p-2 mr-1" style="background-color: #EEE">{{ instructor.username }}</span>
             </a>
         </p>
@@ -122,9 +122,15 @@ export default {
         }
     },
     methods: {
+        userCanEditCourse() {
+            return this.$userIsAdmin() || this.$user.teaching_courses.includes(this.course.id);
+        },
+        userCanDeleteCourse() {
+            return this.$userIsAdmin() || this.course.owner_id == this.$user.id;
+        },
         deleteCourse() {
             if(confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/admin/courses/' + this.course.id)
+                axios.delete('/admin/courses/' + this.course.id)
                     .then(response => {
                         window.location.href = '/admin/courses';
                     })
@@ -135,7 +141,10 @@ export default {
         },
         getCategoryUrl(category) {
             return '/admin/categories/' + category.slug;
-        }
+        },
+        getInstructorProfileUrl(instructor) {
+            return '/profiles/' + instructor.profile.slug;
+        },
     },
 }
 </script>

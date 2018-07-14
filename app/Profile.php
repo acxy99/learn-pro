@@ -25,7 +25,6 @@ class Profile extends Model
     ];
 
     protected $appends = [
-        'username',
         'picture_path',
     ];
 
@@ -39,10 +38,6 @@ class Profile extends Model
                 'source' => 'user.username'
             ]
         ];
-    }
-
-    public function getUsernameAttribute() {
-        return $this->user()->first()->username;
     }
 
     public function getPicturePathAttribute() {

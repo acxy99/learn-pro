@@ -20,6 +20,8 @@ use App\Http\Resources\CourseResourceCollection;
 class CourseController extends Controller {
     
     public function index() {
+        $this->authorize('view', Course::class);
+
         return view('admin.courses.index');
     }
 
@@ -34,11 +36,13 @@ class CourseController extends Controller {
     }
 
     public function create() {
-        $course = new Course;
-        $categories = Category::get(['id', 'title'])->each->setAppends([]);
-        $instructors = User::whereIs('instructor')->get(['id', 'username']);
+        $this->authorize('create', Course::class);
 
-        return view('admin.courses.create', ['course' => $course, 'categories' => $categories, 'instructors' => $instructors]);
+        $course = new Course;
+        $instructors = User::whereIs('instructor')->get(['id', 'username'])->each->setAppends([]);
+        $categories = Category::get(['id', 'title'])->each->setAppends([]);
+
+        return view('admin.courses.create', ['course' => $course, 'instructors' => $instructors, 'categories' => $categories]);
     }
 
     public function store(StoreCourse $request) {
@@ -54,8 +58,14 @@ class CourseController extends Controller {
 
         $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];
         $course->categories()->sync($categories);
+   
+        $owner = [(int)$request->owner_id];
+        $coInstructors = $request->co_instructors_id ? array_map(
+            create_function('$value', 'return (int)$value;'),
+            $request->co_instructors_id
+        ) : [];
+        $instructors = array_merge($owner, $coInstructors);
 
-        $instructors = $request->instructors ? array_map('intval', explode(',', $request->instructors)) : [];
         $course->instructors()->sync($instructors);
 
         return response()->json(['course' => $course]);
@@ -64,6 +74,8 @@ class CourseController extends Controller {
     public function show($slug) {
         $course = Course::findBySlugOrFail($slug);
 
+        $this->authorize('show', $course);
+        
         $lastUpdatedPage = $course->pages()->orderBy('updated_at', 'desc')->pluck('updated_at')->first();
         $lastUpdatedFile = $course->files()->orderBy('updated_at', 'desc')->pluck('updated_at')->first();
 
@@ -80,10 +92,17 @@ class CourseController extends Controller {
 
     public function edit($slug) {
         $course = Course::findBySlugOrFail($slug);
-        $categories = Category::get(['id', 'title'])->each->setAppends([]);
-        $instructors = User::whereIs('instructor')->get(['id', 'username']);
 
-        return view('admin.courses.edit', ['course' => $course, 'categories' => $categories, 'instructors' => $instructors]);
+        $this->authorize('update', $course);
+
+        $instructors = User::whereIs('instructor')->get(['id', 'username'])->each->setAppends([]);
+        $categories = Category::get(['id', 'title'])->each->setAppends([]);
+
+        return view('admin.courses.edit', [
+            'course' => $course, 
+            'instructors' => $instructors, 
+            'categories' => $categories, 
+        ]);
     }
 
     public function update(UpdateCourse $request, $id) {
@@ -106,7 +125,12 @@ class CourseController extends Controller {
         $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];
         $course->categories()->sync($categories);
 
-        $instructors = $request->instructors ? array_map('intval', explode(',', $request->instructors)) : [];
+        $owner = [(int)$request->owner_id];
+        $coInstructors = $request->co_instructors_id ? array_map(
+            create_function('$value', 'return (int)$value;'),
+            $request->co_instructors_id
+        ) : [];
+        $instructors = array_merge($owner, $coInstructors);
         $course->instructors()->sync($instructors);
 
         return response()->json(['course' => $course]);
@@ -115,9 +139,10 @@ class CourseController extends Controller {
     public function destroy($id) {
         $course = Course::find($id);
 
+        $this->authorize('delete', $course);
+
         if ($course->image)
             Storage::delete('public/courses/' . $course->image);
-        $course->categories()->detach();
         
         $course->delete();
 

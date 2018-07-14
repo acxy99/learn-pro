@@ -14,7 +14,7 @@ class CoursePolicy {
     }
 
     public function show(User $user, Course $course) {
-        return $user->isAn('admin') || $user->teachingCourses->contains($course->id);
+        return $user->isAn('admin') || $user->teaching_courses->contains($course->id);
     }
 
     public function create(User $user) {
@@ -22,10 +22,10 @@ class CoursePolicy {
     }
 
     public function update(User $user, Course $course) {
-        return $user->isAn('admin') || $user->teachingCourses->contains($course->id);
+        return $user->isAn('admin') || $user->teaching_courses->contains($course->id);
     }
 
     public function delete(User $user, Course $course) {
-        return $user->isAn('admin') || $user->teachingCourses->contains($course->id);
+        return $user->isAn('admin') || $user->owning_courses->contains($course->id);
     }
 }
