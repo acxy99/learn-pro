@@ -3,7 +3,7 @@
         <small class="text-muted">User Profile</small>
         <div class="row">
             <div class="col-md-7 align-self-center">
-                <h4 class="m-0">{{ profile.username }}</h4>
+                <h4 class="m-0">{{ profile.slug }}</h4>
             </div>
             <div v-if="userCanEditProfile()" class="col-md-5 align-self-center text-right">
                 <a class="btn btn-outline-primary d-inline-flex align-items-center" style="border-radius: 0;" :href="editProfileUrl" role="button">

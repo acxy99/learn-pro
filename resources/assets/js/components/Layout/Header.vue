@@ -42,7 +42,6 @@
 
 <script>
 export default {
-    props: ['authUser'],
     data() {
         return {
             currentPath: this.$router.currentRoute.path,
