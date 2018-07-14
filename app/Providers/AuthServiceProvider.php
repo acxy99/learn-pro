@@ -8,9 +8,11 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\User;
 use App\Profile;
 use App\Course;
+use App\Page;
 use App\Policies\UserPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\CoursePolicy;
+use App\Policies\PagePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Profile::class => ProfilePolicy::class,
         Course::class => CoursePolicy::class,
+        Page::class => PagePolicy::class,
     ];
 
     /**

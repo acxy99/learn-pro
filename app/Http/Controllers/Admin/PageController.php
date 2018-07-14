@@ -16,6 +16,8 @@ class PageController extends Controller {
 
     public function index($course_slug) {
         $course = Course::findBySlugOrFail($course_slug);
+        
+        $this->authorize('index', [Page::class, $course]);
 
         return view('admin.pages.index', ['course' => $course]);
     }
@@ -23,11 +25,11 @@ class PageController extends Controller {
     public function create($course_slug) {
         $course = Course::findBySlugOrFail($course_slug);
 
+        $this->authorize('create', [Page::class, $course]);
+
         $parents = Page::where([
             'course_id' => $course->id,
-            // 'parent_id'=> null,
-        ])->select('title', 'id')->get();
-
+        ])->get(['title', 'id'])->each->setAppends([]);
         $files = File::where('course_id', $course->id)->get();
         $page = new Page;
 
@@ -49,23 +51,24 @@ class PageController extends Controller {
             'slug' => $page_slug,
         ])->firstOrFail();
 
+        $this->authorize('show', $page);
+
         return view('admin.pages.show', ['course' => $course, 'page' => $page]);
     }
 
     public function edit($course_slug, $page_slug) {
         $course = Course::findBySlugOrFail($course_slug);
-        
         $page = Page::where([
             'course_id' => $course->id,
             'slug' => $page_slug,
         ])->firstOrFail();
 
+        $this->authorize('update', $page);
+
         $parents = Page::where([
             'course_id' => $course->id,
-            // 'parent_id' => null,
             ['id', '!=', $page->id],
-        ])->select('title', 'id')->get();
-
+        ])->get(['title', 'id'])->each->setAppends([]);
         $files = File::where('course_id', $course->id)->get();
         
         return view('admin.pages.edit', ['course' => $course, 'parents' => $parents, 'files' => $files, 'page' => $page]);
@@ -82,6 +85,10 @@ class PageController extends Controller {
 
     public function destroy($id) {
         $page = Page::find($id);
+        $course = Course::find($page->course_id);
+
+        $this->authorize('delete', $page);
+
         $page->delete();
 
         return response()->json(['page' => $page]);
