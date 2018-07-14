@@ -1,6 +1,16 @@
 <template>
     <div class="container">
-        <h3 class="d-inline-flex align-items-center"><i class="material-icons mr-2" style="font-size: 1.75rem">apps</i>Categories</h3>
+        <div class="row">
+            <div class="col-md-8 align-self-center">
+                <h3 class="d-inline-flex align-items-center">
+                    <i class="material-icons mr-2" style="font-size: 1.75rem">apps</i>
+                    <span>Categories</span>
+                </h3>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <input class="form-control" type="search" placeholder="Search" v-model="searchInput" @keyup="searchInputChanged()">
+            </div>
+        </div>
         <hr>
 
         <div v-if="categories.length">
@@ -26,7 +36,9 @@
                 <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getCategories(pagination.next_page_url)">Next</a></li>
             </ul>
         </div>
-        <div v-else>No categories to display</div>
+        <div v-else class="p-5 bg-light text-center">
+            <span class="text-muted align-middle">No categories found.</span>
+        </div>
     </div>
 </template>
 
@@ -36,6 +48,7 @@ export default {
         return {
             categories: [],
             pagination: {},
+            searchInput: '',
         }
     },
     created() {
@@ -44,7 +57,11 @@ export default {
     methods: {
         getCategories(url) {
             url = url || '/api/categories';
-            axios.get(url)
+            axios.get(url, {
+                    params: {
+                        searchInput: this.searchInput
+                    }
+                })
                 .then(response => {
                     this.categories = response.data.data;
                     this.makePagination(response.data.links, response.data.meta);
@@ -64,6 +81,10 @@ export default {
         },
         getCategoryUrl(category) {
             return '/categories/' + category.slug;
+        },
+        searchInputChanged() {
+            console.log(this.searchInput)
+            this.getCategories();
         },
     }
 }
