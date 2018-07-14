@@ -9,10 +9,12 @@ use App\User;
 use App\Profile;
 use App\Course;
 use App\Page;
+use App\File;
 use App\Policies\UserPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\CoursePolicy;
 use App\Policies\PagePolicy;
+use App\Policies\FilePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         Profile::class => ProfilePolicy::class,
         Course::class => CoursePolicy::class,
         Page::class => PagePolicy::class,
+        File::class => FilePolicy::class,
     ];
 
     /**

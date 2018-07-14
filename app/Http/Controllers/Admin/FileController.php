@@ -17,11 +17,15 @@ class FileController extends Controller {
     public function index($course_slug) {
         $course = Course::findBySlugOrFail($course_slug);
 
+        $this->authorize('index', [File::class, $course]);
+
         return view('admin.files.index', ['course' => $course]);
     }
 
     public function create($course_slug) {
         $course = Course::findBySlugOrFail($course_slug);
+
+        $this->authorize('create', [File::class, $course]);
 
         return view('admin.files.create', ['course' => $course]);
     }
@@ -60,6 +64,8 @@ class FileController extends Controller {
         $course = Course::findBySlugOrFail($course_slug);
         $file = File::findOrFail($id);
 
+        $this->authorize('update', $file);
+
         return view('admin.files.edit', ['course' => $course, 'file' => $file]);
     }
 
@@ -87,6 +93,8 @@ class FileController extends Controller {
     public function destroy($id) {
         $file = File::findOrFail($id);
         $course = Course::findOrFail($file->course_id);
+
+        $this->authorize('delete', $file);
 
         Storage::delete('public/courses/' . $course->slug . '/' . $file->name);
         $file->delete();
