@@ -45,17 +45,6 @@ export default {
         getChildUrl(child) {
             return '/courses/' + this.course.slug + '/pages/' + child.slug;
         },
-        deletePage() {
-            if(confirm('Are you sure you want to delete this page?')) {
-                axios.delete('/api/pages/' + this.page.id)
-                    .then(response => {
-                        window.location.href = this.getCourseUrl();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }
-        },
     },
 }
 </script>

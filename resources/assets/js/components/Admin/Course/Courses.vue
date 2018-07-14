@@ -43,7 +43,7 @@
                             <a class="btn p-1" :href="getEditCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="Edit">
                                 <i class="material-icons">create</i>
                             </a>
-                            <button class="btn p-1" style="background-color: transparent" @click="deleteCourse(course)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                            <button v-if="userCanDeleteCourse(course)" class="btn p-1" style="background-color: transparent" @click="deleteCourse(course)" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                 <i class="material-icons" style="color: red;">delete</i>
                             </button>
                         </div>
@@ -77,7 +77,11 @@ export default {
         getCourses(url) {
             url = url || '/api/admin/courses';
 
-            axios.get(url)
+            axios.get(url, {
+                    params: {
+                        user_id: this.$user.id
+                    }
+                })
                 .then(response => {
                     this.courses = response.data.data;
                     this.makePagination(response.data.links, response.data.meta);
@@ -104,9 +108,12 @@ export default {
         getEditCourseUrl(course) {
             return '/admin/courses/' + course.slug + '/edit';
         },
+        userCanDeleteCourse(course) {
+            return this.$userIsAdmin() || course.owner_id == this.$user.id;
+        },
         deleteCourse(course) {
             if(confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/admin/courses/' + course.id)
+                axios.delete('/admin/courses/' + course.id)
                     .then(response => {
                         this.getCourses();
                     })

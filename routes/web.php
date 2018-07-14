@@ -48,10 +48,12 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
     Route::get('/courses/{course_slug}/pages/create', 'PageController@create');
     Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
     Route::get('/courses/{course_slug}/pages/{page_slug}/edit', 'PageController@edit');
+    Route::resource('/pages', 'PageController')->only(['destroy']);
 
     Route::get('/courses/{course_slug}/files', 'FileController@index');
     Route::get('/courses/{course_slug}/files/create', 'FileController@create');
     Route::get('/courses/{course_slug}/files/{file_id}/edit', 'FileController@edit');
+    Route::resource('/files', 'FileController')->only(['destroy']);
 });
 
 /*

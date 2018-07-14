@@ -103,7 +103,7 @@ export default {
         },
         deleteCategory() {
             if(confirm('Are you sure you want to delete this category?')) {
-                axios.delete('/api/admin/categories/' + this.category.id)
+                axios.delete('/admin/categories/' + this.category.id)
                     .then(response => {
                         window.location.href = '/admin/categories';
                     })

@@ -13,17 +13,19 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th style="width: 30%">Username</th>
+                    <th style="width: 20%">Username</th>
+                    <th style="width: 20%">Role</th>
                     <th style="width: 30%">Email</th>
-                    <th style="width: 20%">ID</th>
+                    <th style="width: 10%">ID</th>
                     <th style="width: 20%">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="user in users" :key="user.id" @mouseover="active = user.id" @mouseout="active = ''" style="height: 65px">
-                    <td style="width: 30%">{{ user.username }}</td>
+                    <td style="width: 20%">{{ user.username }}</td>
+                    <td style="width: 20%">{{ user.role.name }}</td>
                     <td style="width: 30%">{{ user.email }}</td>
-                    <td style="width: 20%">{{ user.id }}</td>
+                    <td style="width: 10%">{{ user.id }}</td>
                     <td style="width: 20%">
                         <div v-show="active == user.id">
                             <a class="btn p-1" :href="getEditUserUrl(user)" data-toggle="tooltip" data-placement="bottom" title="Edit">
@@ -32,7 +34,7 @@
                             <a class="btn p-1" :href="getProfileUrl(user)" data-toggle="tooltip" data-placement="bottom" title="User profile">
                                 <i class="material-icons">account_circle</i>
                             </a>
-                            <button class="btn p-1" style="background-color: transparent" @click="deleteUser(user)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                            <button v-if="user.id != $user.id" class="btn p-1" style="background-color: transparent" @click="deleteUser(user)" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                 <i class="material-icons" style="color: red;">delete</i>
                             </button>
                         </div>
@@ -92,7 +94,7 @@ export default {
         },
         deleteUser(user) {
             if(confirm('Are you sure you want to delete this user?')) {
-                axios.delete('/api/admin/users/' + user.id)
+                axios.delete('/admin/users/' + user.id)
                     .then(response => {
                         this.getUsers();
                     })

@@ -64,7 +64,7 @@ export default {
     methods: {
         deletePage() {
             if(confirm('Are you sure you want to delete this page?')) {
-                axios.delete('/api/admin/pages/' + this.page.id)
+                axios.delete('/admin/pages/' + this.page.id)
                     .then(response => {
                         window.location.href = '/admin/courses/' + this.course.slug + '/pages';
                     })

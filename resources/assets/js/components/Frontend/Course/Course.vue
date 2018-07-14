@@ -110,18 +110,6 @@ export default {
             };
             this.pagination = pagination;
         },
-        deleteCourse() {
-            if(confirm('Are you sure you want to delete this course?')) {
-                axios.delete('/api/courses/' + this.course.id)
-                    .then(response => {
-                        window.location.href = '/courses';
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                console.log('delete');
-            }
-        },
         hasPages() {
             return this.pages.length;
         },

@@ -100,7 +100,7 @@ export default {
         },
         deletePage(page) {
             if(confirm('Are you sure you want to delete this page?')) {
-                axios.delete('/api/admin/pages/' + page.id)
+                axios.delete('/admin/pages/' + page.id)
                     .then(response => {
                         this.getPages();
                     })

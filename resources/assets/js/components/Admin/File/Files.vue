@@ -92,7 +92,7 @@ export default {
         },
         deleteFile(file) {
             if(confirm('Are you sure you want to delete this file?')) {
-                axios.delete('/api/admin/files/' + file.id)
+                axios.delete('/admin/files/' + file.id)
                     .then(response => {
                         this.getFiles();
                     })

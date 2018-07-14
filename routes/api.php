@@ -41,7 +41,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/users', function() { return new UserResourceCollection(User::paginate(10)); });
     Route::get('/users/{id}', function($id) { return new UserResource(User::find($id)); });
-    Route::apiResource('users', 'UserController')->only(['store', 'update', 'destroy']);
+    Route::apiResource('users', 'UserController')->only(['store', 'update']);
 
     Route::get('/categories', function() { return new CategoryResourceCollection(Category::paginate(10)); });
     Route::get('/categories/{id}/courses', function($id) {
@@ -50,11 +50,11 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             $category->courses()->paginate(5)
         );
     });
-    Route::apiResource('categories', 'CategoryController')->only(['store', 'update', 'destroy']);
+    Route::apiResource('categories', 'CategoryController')->only(['store', 'update']);
 
     Route::get('/courses', 'CourseController@apiIndex');
     Route::get('/courses/{id}', 'CourseController@apiShow');
-    Route::apiResource('courses', 'CourseController')->only(['store', 'update', 'destroy']);
+    Route::apiResource('courses', 'CourseController')->only(['store', 'update']);
 
     Route::get('/courses/{course_id}/pages', function($course_id) {
         $course = Course::findOrFail($course_id);
@@ -64,9 +64,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             ])->paginate(10)
         ); 
     });
-    Route::post('/pages', 'PageController@store');
-    Route::put('/pages/{id}', 'PageController@update');
-    Route::delete('/pages/{id}', 'PageController@destroy');
+    Route::apiResource('pages', 'PageController')->only(['store', 'update']);
 
     Route::get('/courses/{course_id}/files', function($course_id) {
         $course = Course::findOrFail($course_id);
@@ -76,7 +74,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             ])->paginate(10)
         ); 
     });
-    Route::apiResource('files', 'FileController')->only(['store', 'update', 'destroy']);
+    Route::apiResource('files', 'FileController')->only(['store', 'update']);
 });
 
 /*

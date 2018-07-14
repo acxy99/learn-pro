@@ -102,7 +102,7 @@ export default {
         },
         deleteCategory(category) {
             if(confirm('Are you sure you want to delete this category?')) {
-                axios.delete('/api/admin/categories/' + category.id)
+                axios.delete('/admin/categories/' + category.id)
                     .then(response => {
                         this.getCategories();
                     })
