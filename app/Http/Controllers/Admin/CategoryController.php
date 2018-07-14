@@ -14,10 +14,14 @@ use App\Http\Requests\UpdateCategory;
 class CategoryController extends Controller {
 
     public function index() {
+        $this->authorize('index', Category::class);
+
         return view('admin.categories.index');
     }
 
     public function create() {
+        $this->authorize('create', Category::class);
+
         $category = new Category;
 
         return view('admin.categories.create', ['category' => $category]);
@@ -41,11 +45,15 @@ class CategoryController extends Controller {
     public function show($slug) {
         $category = Category::findBySlugOrFail($slug);
 
+        $this->authorize('index', $category);
+
         return view('admin.categories.show', ['category' => $category]);
     }
 
     public function edit($slug) {
         $category = Category::findBySlugOrFail($slug);
+
+        $this->authorize('update', $category);
 
         return view('admin.categories.edit', ['category' => $category]);
     }
@@ -73,6 +81,8 @@ class CategoryController extends Controller {
 
     public function destroy($id) {
         $category = Category::findOrFail($id);
+
+        $this->authorize('delete', $category);
 
         if ($category->image)
             Storage::delete('public/categories/' . $category->image);

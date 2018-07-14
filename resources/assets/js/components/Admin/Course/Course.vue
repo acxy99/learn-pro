@@ -140,7 +140,7 @@ export default {
             }
         },
         getCategoryUrl(category) {
-            return '/admin/categories/' + category.slug;
+            return '/categories/' + category.slug;
         },
         getInstructorProfileUrl(instructor) {
             return '/profiles/' + instructor.profile.slug;
