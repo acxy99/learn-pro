@@ -12,6 +12,15 @@
 
         @yield('stylesheets')
         <style>
+        .anchor-custom {
+            opacity: 1;
+        }
+
+        .anchor-custom:hover { 
+            opacity: 0.8;
+            text-decoration: none;
+        }
+
         .line-clamp {
             display: -webkit-box!important;
             -webkit-line-clamp: 2;
