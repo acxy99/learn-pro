@@ -51,11 +51,11 @@ class Course extends Model
     }
 
     public function getInstructorsAttribute() {
-        return $this->instructors()->get(['id', 'username'])->each->setAppends([]);
+        return $this->instructors()->get(['id', 'username', 'email'])->each->setAppends([]);
     }
 
     public function getCoInstructorsAttribute() {
-        return $this->instructors()->where('id', '!=', $this->owner_id)->get(['id', 'username'])->each->setAppends([]);
+        return $this->instructors()->where('id', '!=', $this->owner_id)->get(['id', 'username', 'email'])->each->setAppends([]);
     }
 
     public function getPagesCountAttribute() {
