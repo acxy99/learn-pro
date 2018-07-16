@@ -39,16 +39,7 @@
                 <overview :course="course"></overview>
             </div>
             <div class="tab-pane" id="pages" role="tabpanel">
-                <div v-if="hasPages()">
-                    <tree :courseSlug="course.slug" :children="pages" :depth="(-1)"></tree>
-
-                    <ul class="pagination" style="display: flex; justify-content: center;">
-                        <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.prev_page_url)">Previous</a></li>
-                        <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-                        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.next_page_url)">Next</a></li>
-                    </ul>
-                </div>
-                <div v-else>No pages to display</div>
+                <pages :course="course"></pages>
             </div>
             <div class="tab-pane" id="files" role="tabpanel">
                 <div v-if="hasFiles()">
@@ -67,19 +58,15 @@
 
 <script>
 import Overview from './Overview'
-import Tree from './Tree'
+import Pages from './Pages'
 
 export default {
-    components: { Overview, Tree },
+    components: { Overview, Pages },
     props: ['course'],
     data() {
         return {
-            pages: [],
             files: [],
             pagination: {},
-            editCourseUrl: '/courses/' + this.course.slug + '/edit',
-            addPageUrl: '/courses/' + this.course.slug + '/pages/create',
-            uploadFilesUrl: '/courses/' + this.course.slug + '/files/create',
             jumbotronStyle: {
                 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + this.course.image_path + ')',
                 'background-size': 'cover',
@@ -91,21 +78,9 @@ export default {
         }
     },
     created() {
-        this.getPages(null);
         this.getFiles();
     },
     methods: {
-        getPages(url) {
-            url = url || '/api/courses/' + this.course.id + '/pages';
-            axios.get(url)
-                .then(response => {
-                    this.pages = response.data.data;
-                    this.makePagination(response.data.links, response.data.meta);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
         getFiles() {
             axios.get('/api/courses/' + this.course.id + '/files')
                 .then(response => {
@@ -123,9 +98,6 @@ export default {
                 next_page_url: links.next,
             };
             this.pagination = pagination;
-        },
-        hasPages() {
-            return this.pages.length;
         },
         hasFiles() {
             return this.files.length;
