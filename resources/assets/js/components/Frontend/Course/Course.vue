@@ -42,14 +42,7 @@
                 <pages :course="course"></pages>
             </div>
             <div class="tab-pane" id="files" role="tabpanel">
-                <div v-if="hasFiles()">
-                    <div v-for="file in files" :key="file.id" class="m-2">
-                        <a :href="getFileUrl(file)" style="text-decoration: none;">
-                            <span class="icon ion-ios-document pr-3"></span>{{ file.name }}<br>
-                        </a>
-                    </div>
-                </div>
-                <div v-else>No files uploaded</div>
+                <files :course="course"></files>
             </div>
         </div>
         
@@ -59,14 +52,13 @@
 <script>
 import Overview from './Overview'
 import Pages from './Pages'
+import Files from './Files'
 
 export default {
-    components: { Overview, Pages },
+    components: { Overview, Pages, Files },
     props: ['course'],
     data() {
         return {
-            files: [],
-            pagination: {},
             jumbotronStyle: {
                 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + this.course.image_path + ')',
                 'background-size': 'cover',
@@ -77,34 +69,5 @@ export default {
             },
         }
     },
-    created() {
-        this.getFiles();
-    },
-    methods: {
-        getFiles() {
-            axios.get('/api/courses/' + this.course.id + '/files')
-                .then(response => {
-                    this.files = response.data.data;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-        makePagination(links, meta) {
-            let pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                prev_page_url: links.prev,
-                next_page_url: links.next,
-            };
-            this.pagination = pagination;
-        },
-        hasFiles() {
-            return this.files.length;
-        },
-        getFileUrl(file) {
-            return file.file_path;
-        }
-    }
 }
 </script>
