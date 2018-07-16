@@ -10,11 +10,7 @@ use Bouncer;
 class UserPolicy {
     use HandlesAuthorization;
 
-    public function __construct() {
-        //
-    }
-
-    public function view(User $user, User $model) {
+    public function view(User $user) {
         return $user->can('view-user');
     }
 

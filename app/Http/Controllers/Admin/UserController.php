@@ -15,6 +15,8 @@ use App\Http\Requests\UpdateUser;
 class UserController extends Controller {
 
     public function index() {
+        $this->authorize('view', User::class);
+        
         return view('admin.users.index');
     }
 
@@ -41,10 +43,10 @@ class UserController extends Controller {
         return response()->json(['user' => $user, 'roles' => $request->role]);
     }
 
-    public function show($id) {
-        $user = User::findOrFail($id);
-        return view('admin.users.show', ['user' => $user]);
-    }
+    // public function show($id) {
+    //     $user = User::findOrFail($id);
+    //     return view('admin.users.show', ['user' => $user]);
+    // }
 
     public function edit($id) {
         $user = User::findOrFail($id);
