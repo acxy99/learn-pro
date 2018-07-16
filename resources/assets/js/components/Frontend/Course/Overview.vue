@@ -16,7 +16,7 @@
             <div class="col-md-2">
                 <span class="text-muted">Title</span>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <span>{{ course.title }}</span>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <div class="col-md-2">
                 <span class="text-muted">Description</span>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <span>{{ course.description }}</span>
             </div>
         </div>
@@ -36,10 +36,12 @@
             <div class="col-md-2">
                 <span class="text-muted">Categories</span>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div v-if="course.categories.length">
                     <a role="button" v-for="category in course.categories" :key="category.id" :href="getCategoryUrl(category)" style="text-decoration: none; color: #000;">
-                        <span class="p-2 mr-1" style="background-color: #EEE">{{ category.title }}</span>
+                        <div class="d-inline-block p-2 mb-1 mr-1" style="background-color: #EEE">
+                            <span>{{ category.title }}</span>
+                        </div>
                     </a>
                 </div>
                 <div v-else class="text-muted">none</div>
@@ -59,7 +61,10 @@
                         </span>
                     </div>
                     <div class="d-inline-block align-middle">
-                        <h6>{{ instructor.username }}</h6>
+                        <a class="anchor-custom" :href="getInstructorProfileUrl(instructor)">
+                            <h6 v-if="hasFullName(instructor)">{{ instructor.profile.first_name }} {{ instructor.profile.last_name }}</h6>
+                            <h6 v-else>{{ instructor.username }}</h6>
+                        </a>
                         <small>{{ instructor.email }}</small>
                     </div>
                 </div>
@@ -76,6 +81,12 @@ export default {
         getCategoryUrl(category) {
             return '/categories/' + category.slug;
         },
+        getInstructorProfileUrl(instructor) {
+            return '/profiles/' + instructor.profile.slug;
+        },
+        hasFullName(instructor) {
+            return instructor.profile.first_name && instructor.profile.last_name;
+        }
     }
 }
 </script>
