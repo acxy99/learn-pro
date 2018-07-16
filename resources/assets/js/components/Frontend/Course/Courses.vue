@@ -1,6 +1,16 @@
 <template>
     <div class="container">
-        <h3 class="d-inline-flex align-items-center"><i class="material-icons mr-2" style="font-size: 1.75rem">school</i>Courses</h3>
+        <div class="row">
+            <div class="col-md-8 align-self-center">
+                <h3 class="d-inline-flex align-items-center">
+                    <i class="material-icons mr-2" style="font-size: 1.75rem">school</i>
+                    <span>Courses</span>
+                </h3>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <input class="form-control" type="search" placeholder="Search" v-model="searchInput" @keyup="searchInputChanged()">
+            </div>
+        </div>
         <hr>
         
         <div v-if="courses.length">
@@ -27,7 +37,10 @@
                 <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getCourses(pagination.next_page_url)">Next</a></li>
             </ul>
         </div>
-        <div v-else>No courses to display</div>
+        <div v-else class="p-5 bg-light text-center text-muted">
+            <i class="material-icons" style="font-size: 5rem">school</i>
+            <h5 class="font-weight-light">No courses found.</h5><br>
+        </div>
     </div>
 </template>
 
@@ -37,6 +50,7 @@ export default {
         return {
             courses: [],
             pagination: {},
+            searchInput: '',
         }
     },
     created() {
@@ -45,7 +59,11 @@ export default {
     methods: {
         getCourses(url) {
             url = url || '/api/courses';
-            axios.get(url)
+            axios.get(url, {
+                    params: {
+                        searchInput: this.searchInput
+                    }
+                })
                 .then(response => {
                     this.courses = response.data.data;
                     this.makePagination(response.data.links, response.data.meta);
@@ -65,6 +83,9 @@ export default {
         },
         getCourseUrl(course) {
             return '/courses/' + course.slug;
+        },
+        searchInputChanged() {
+            this.getCourses();
         },
     }
 }

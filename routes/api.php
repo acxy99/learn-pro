@@ -91,7 +91,7 @@ Route::namespace('Frontend')->group(function() {
         );
     });
 
-    Route::get('/courses', function() { return new CourseResourceCollection(Course::paginate(9)); });
+    Route::get('/courses', 'CourseController@apiIndex');
     
     Route::get('/courses/{course_id}/pages', function($course_id) {
         $course = Course::find($course_id);
