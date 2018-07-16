@@ -5,7 +5,7 @@
         <form @submit.prevent="onSubmit" id="form" class="mb-4">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" v-model="profile.username" class="form-control" disabled>
+                <input type="text" id="username" v-model="profile.slug" class="form-control" disabled>
             </div>
 
             <div class="form-group">
