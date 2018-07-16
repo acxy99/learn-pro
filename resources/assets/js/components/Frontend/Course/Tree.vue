@@ -1,7 +1,7 @@
 <template>
 	<ul class='tree-menu list-unstyled' :class='ulClass'>
 		<li :class='liClass' :style='liStyle'>
-			<a :href='getPageUrl()' style='text-decoration: none; color: #222;s'>{{ title }}</a>
+			<a :href='getPageUrl()' style='text-decoration: none; color: #222;'>{{ title }}</a>
 		</li>
 
 		<tree
@@ -30,7 +30,7 @@ export default {
 	},
 	created() {
 		if (this.depth == 0) {
-			this.ulClass['bg-light mb-3 p-3'] = true;
+			this.ulClass['bg-light mb-2 p-3'] = true;
 			this.liClass['font-weight-bold'] = true;
 		}
 

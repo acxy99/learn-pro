@@ -27,7 +27,7 @@
             <li class="nav-item">
                 <a class="nav-link" style="color: #495057" id="files-tab" data-toggle="tab" href="#files" role="tab">
                     <div class="d-inline-flex align-middle">
-                        <i class="material-icons mr-3">link</i>
+                        <i class="material-icons mr-3">folder</i>
                         <span>Files</span>
                     </div>
                 </a>

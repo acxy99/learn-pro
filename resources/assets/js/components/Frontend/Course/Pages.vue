@@ -1,5 +1,7 @@
 <template>
-    <div class="container">
+    <div class="container p-3">
+        <h5 class="mb-4">All pages</h5>
+
         <div v-if="pages.length">
             <tree :courseSlug="course.slug" :children="pages" :depth="(-1)"></tree>
 
@@ -9,7 +11,10 @@
                 <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" v-on:click="getPages(pagination.next_page_url)">Next</a></li>
             </ul>
         </div>
-        <div v-else>No pages to display</div>
+        <div v-else class="p-5 bg-light text-center text-muted">
+            <i class="material-icons" style="font-size: 5rem">notes</i>
+            <h5 class="font-weight-light">No pages found.</h5><br>
+        </div>
     </div>
 </template>
 
