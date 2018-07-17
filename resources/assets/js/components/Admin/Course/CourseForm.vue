@@ -7,7 +7,7 @@
 
         <div class="bg-light p-3 mb-5">
             <form enctype="multipart/form-data" @submit.prevent="onSubmit">
-                <div class="form-group invalid">
+                <div class="form-group">
                     <label for="code">Code</label>
                     <input type="text" id="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
                     <div class="invalid-feedback" v-if="errors['code']">{{ errors['code'][0] }}</div>

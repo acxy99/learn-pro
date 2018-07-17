@@ -1,8 +1,11 @@
 <template>
-    <div class="container col-md-6">
-        <div class="p-4">
-            <h4>{{ title }}</h4><hr>
+    <div class="container col-lg-6 col-md-8">
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">edit</i>
+            <span>{{ title }}</span>
+        </h4>
 
+        <div class="bg-light p-3 mb-5">
             <form @submit.prevent="onSubmit">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -16,16 +19,18 @@
                     <div class="invalid-feedback" v-if="errors['email']">{{ errors['email'][0] }}</div>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" v-model="user.password" class="form-control" :class="{'is-invalid': errors['password']}">
-                    <div class="invalid-feedback" v-if="errors['password']">{{ errors['password'][0] }}</div>
-                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" v-model="user.password" class="form-control" :class="{'is-invalid': errors['password']}">
+                        <div class="invalid-feedback" v-if="errors['password']">{{ errors['password'][0] }}</div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="password-confirmation">Confirm Password</label>
-                    <input type="password" id="password-confirmation" v-model="user.password_confirmation" class="form-control" :class="{'is-invalid': errors['password_confirmation']}">
-                    <div class="invalid-feedback" v-if="errors['password_confirmation']">{{ errors['password_confirmation'][0] }}</div>
+                    <div class="col-md-6 form-group">
+                        <label for="password-confirmation">Confirm Password</label>
+                        <input type="password" id="password-confirmation" v-model="user.password_confirmation" class="form-control" :class="{'is-invalid': errors['password_confirmation']}">
+                        <div class="invalid-feedback" v-if="errors['password_confirmation']">{{ errors['password_confirmation'][0] }}</div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -43,8 +48,10 @@
                     </multiselect>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block mt-4">{{ submitButtonText }}</button>
-                <button type="button" class="btn btn-light btn-block mt-2" @click="cancel()">Cancel</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-form br-0">{{ submitButtonText }}</button>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
+                </div>
             </form>
         </div>
     </div>

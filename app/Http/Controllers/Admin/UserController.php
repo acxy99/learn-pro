@@ -9,6 +9,9 @@ use Bouncer;
 use App\User;
 use App\Profile;
 
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserResourceCollection;
+
 use App\Http\Requests\StoreUser;
 use App\Http\Requests\UpdateUser;
 
@@ -18,6 +21,16 @@ class UserController extends Controller {
         $this->authorize('view', User::class);
         
         return view('admin.users.index');
+    }
+
+    public function apiIndex(Request $request) {
+        $users = User::
+            when($request->query('searchInput'), function($query) use ($request) {
+                return $query->where('username', 'like', '%'.$request->query('searchInput').'%');
+            })
+            ->paginate(10);
+
+        return new UserResourceCollection($users);
     }
 
     public function create() {
