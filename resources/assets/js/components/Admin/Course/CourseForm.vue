@@ -1,91 +1,98 @@
 <template>
-    <div class="container">
-        <h4>{{ title }}</h4><hr>
+    <div class="container col-lg-6 col-md-8">
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">edit</i>
+            <span>{{ title }}</span>
+        </h4>
 
-        <form enctype="multipart/form-data" @submit.prevent="onSubmit">
-            <div class="form-group invalid">
-                <label for="code">Code</label>
-                <input type="text" id="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
-                <div class="invalid-feedback" v-if="errors['code']">{{ errors['code'][0] }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="50">
-                <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" v-model="course.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
-                <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="owner">Primary instructor (owner)</label>
-                <multiselect 
-                    :class="{'is-danger': selectedOwner == null || errors['owner_id']}"
-                    v-model="selectedOwner"
-                    deselect-label="Selected"
-                    :options="ownerOptions"
-                    track-by="id"
-                    :custom-label="customInstructorLabel"
-                    :searchable="true"
-                    :allow-empty="false"
-                    placeholder="Select primary instructor"
-                    :disabled="$userIsInstructor() || course.id != null">
-                </multiselect>
-                <div class="invalid-feedback" style="display: block" v-if="errors['owner_id']">{{ errors['owner_id'][0] }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="co-instructors">Co-instructors</label>
-                <multiselect
-                    v-model="selectedCoInstructors"
-                    :options="coInstructorsOptions"
-                    :multiple="true"
-                    :hide-selected="true"
-                    track-by="id"
-                    :custom-label="customInstructorLabel"
-                    placeholder="Select co-instructors"
-                    :disabled="!$userIsAdmin() && (course.id != null && !userIsCourseOwner())">
-                </multiselect>
-            </div>
-
-            <div class="form-group">
-                <label for="image">Image</label>
-                
-                <div v-if="course.image" class="text-muted">
-                    <span class="align-middle">Current image: </span>
-                    <span class="align-middle mr-2">
-                        <a role="button" class="border-0 p-0" style="text-decoration: none" :href="course.image_path">{{ currentImage }}</a>
-                    </span>
-                    <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
-                        <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
-                    </button>
+        <div class="bg-light p-3 mb-5">
+            <form enctype="multipart/form-data" @submit.prevent="onSubmit">
+                <div class="form-group invalid">
+                    <label for="code">Code</label>
+                    <input type="text" id="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
+                    <div class="invalid-feedback" v-if="errors['code']">{{ errors['code'][0] }}</div>
                 </div>
-                <div v-else class="text-muted">Current image: none</div>
 
-                <input type="file" id="image" accept="image/*" class="form-control mt-2">
-            </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="50">
+                    <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
+                </div>
 
-            <div class="form-group">
-                <label for="categories">Categories</label>
-                <multiselect
-                    id="categories"
-                    v-model="selectedCategories"
-                    :options="categoryOptions"
-                    :multiple="true"
-                    :hide-selected="true"
-                    track-by="title"
-                    :custom-label="customCategoryLabel"
-                    placeholder="Select categories">
-                </multiselect>
-            </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" v-model="course.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
+                    <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-light" @click="cancel()">Cancel</button>
-        </form>
+                <div class="form-group">
+                    <label for="owner">Primary instructor (owner)</label>
+                    <multiselect 
+                        :class="{'is-danger': selectedOwner == null || errors['owner_id']}"
+                        v-model="selectedOwner"
+                        deselect-label="Selected"
+                        :options="ownerOptions"
+                        track-by="id"
+                        :custom-label="customInstructorLabel"
+                        :searchable="true"
+                        :allow-empty="false"
+                        placeholder="Select primary instructor"
+                        :disabled="$userIsInstructor() || course.id != null">
+                    </multiselect>
+                    <div class="invalid-feedback" style="display: block" v-if="errors['owner_id']">{{ errors['owner_id'][0] }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="co-instructors">Co-instructors</label>
+                    <multiselect
+                        v-model="selectedCoInstructors"
+                        :options="coInstructorsOptions"
+                        :multiple="true"
+                        :hide-selected="true"
+                        track-by="id"
+                        :custom-label="customInstructorLabel"
+                        placeholder="Select co-instructors"
+                        :disabled="!$userIsAdmin() && (course.id != null && !userIsCourseOwner())">
+                    </multiselect>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    
+                    <div v-if="course.image" class="text-muted">
+                        <span class="align-middle">Current image: </span>
+                        <span class="align-middle mr-2">
+                            <a role="button" class="border-0 p-0" style="text-decoration: none" :href="course.image_path">{{ currentImage }}</a>
+                        </span>
+                        <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
+                            <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
+                        </button>
+                    </div>
+                    <div v-else class="text-muted">Current image: none</div>
+
+                    <input type="file" id="image" accept="image/*" class="form-control mt-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="categories">Categories</label>
+                    <multiselect
+                        id="categories"
+                        v-model="selectedCategories"
+                        :options="categoryOptions"
+                        :multiple="true"
+                        :hide-selected="true"
+                        track-by="title"
+                        :custom-label="customCategoryLabel"
+                        placeholder="Select categories">
+                    </multiselect>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
