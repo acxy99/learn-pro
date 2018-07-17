@@ -1,68 +1,79 @@
 <template>
-    <div class="container col-md-6">
-        <h4>Update User Profile</h4><hr>
+    <div class="container col-lg-6 col-md-8">
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">edit</i>
+            <span>Update Profile</span>
+        </h4>
 
-        <form @submit.prevent="onSubmit" id="form" class="mb-4">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" v-model="profile.slug" class="form-control" disabled>
-            </div>
+        <div class="bg-light p-3 mb-5">
+            <form @submit.prevent="onSubmit" id="form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" v-model="profile.slug" class="form-control" disabled>
+                </div>
 
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" v-model="profile.first_name" class="form-control" :class="{'is-invalid': errors['first_name']}">
-                <div class="invalid-feedback" v-if="errors['first_name']">{{ errors['first_name'][0] }}</div>
-            </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" id="first_name" name="first_name" v-model="profile.first_name" class="form-control" :class="{'is-invalid': errors['first_name']}">
+                        <div class="invalid-feedback" v-if="errors['first_name']">{{ errors['first_name'][0] }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" v-model="profile.last_name" class="form-control" :class="{'is-invalid': errors['last_name']}">
-                <div class="invalid-feedback" v-if="errors['last_name']">{{ errors['last_name'][0] }}</div>
-            </div>
+                    <div class="col-md-6 form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" v-model="profile.last_name" class="form-control" :class="{'is-invalid': errors['last_name']}">
+                        <div class="invalid-feedback" v-if="errors['last_name']">{{ errors['last_name'][0] }}</div>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="gender">Gender</label>
-                <multiselect 
-                    v-model="gender"
-                    label="title"
-                    track-by="value"
-                    deselect-label="Selected gender"
-                    :options="genderOptions"
-                    :searchable="true"
-                    :allow-empty="false">
-                </multiselect>
-            </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="gender">Gender</label>
+                        <multiselect 
+                            v-model="gender"
+                            label="title"
+                            track-by="value"
+                            deselect-label="Selected gender"
+                            :options="genderOptions"
+                            :searchable="true"
+                            :allow-empty="false">
+                        </multiselect>
+                    </div>
 
-            <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <date-picker v-model="dob" lang="en" :not-after="new Date()" style="display: block"></date-picker>
-            </div>
+                    <div class="col-md-6 form-group">
+                        <label for="dob">Date of Birth</label>
+                        <date-picker v-model="dob" lang="en" :not-after="new Date()" style="width: 100%"></date-picker>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="phone">Phone number</label>
-                <input type="text" id="phone" name="phone" v-model="profile.phone" class="form-control">
-            </div>
+                <div class="form-group">
+                    <label for="phone">Phone number</label>
+                    <input type="text" id="phone" name="phone" v-model="profile.phone" class="form-control">
+                </div>
 
-            <div class="form-group">
-                <label for="country">Country</label>
-                <multiselect 
-                    id="country"
-                    v-model="country"
-                    deselect-label="Selected country"
-                    :options="countryOptions"
-                    :searchable="true"
-                    :allow-empty="false">
-                </multiselect>
-            </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <multiselect 
+                        id="country"
+                        v-model="country"
+                        deselect-label="Selected country"
+                        :options="countryOptions"
+                        :searchable="true"
+                        :allow-empty="false">
+                    </multiselect>
+                </div>
 
-            <div class="form-group">
-                <label for="picture">Picture</label>
-                <input type="file" id="picture" accept="image/*" class="form-control">
-            </div>
+                <div class="form-group">
+                    <label for="picture">Picture</label>
+                    <input type="file" id="picture" accept="image/*" class="form-control">
+                </div>
 
-            <button type="submit" class="btn btn-primary btn-block mt-4">Save</button>
-            <button type="button" class="btn btn-light btn-block mt-2" @click="cancel()">Cancel</button>
-        </form>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -146,3 +157,11 @@ export default {
     }
 }
 </script>
+
+<style>
+.mx-input {
+    height: 40px;
+    border: 1px solid #E8E8E8;
+    box-shadow: none;
+}
+</style>
