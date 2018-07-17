@@ -7,10 +7,25 @@
 
         <div class="bg-light p-3 mb-5">
             <div class="row mb-3">
-                <div class="col-md-9 align-self-center">
-                    <input class="form-control" style="border-radius: 0; width: 40%" type="search" placeholder="Search by username" v-model="searchInput" @keyup="searchInputChanged()">
+                <div class="col-md-3">
+                    <multiselect 
+                        id="role"
+                        v-model="role"
+                        deselect-label="Click to deselect"
+                        select-label="Click to select"
+                        track-by="name"
+                        label="title"
+                        :options="roleOptions"
+                        :searchable="true"
+                        :allow-empty="true"
+                        placeholder="All roles"
+                        @input="searchInputChanged()">
+                    </multiselect>
                 </div>
-                <div class="col-md-3 text-right">
+                <div class="col-md-3 align-self-center">
+                    <input class="form-control br-0" type="search" placeholder="Search by username" v-model="searchInput" @keyup="searchInputChanged()">
+                </div>
+                <div class="col-md-6 text-right">
                     <a class="btn btn-primary" style="border-radius: 0" :href="createUserUrl" role="button">Create User</a>
                 </div>
             </div>
@@ -58,7 +73,11 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect/src/Multiselect.vue';
+
 export default {
+    components: { Multiselect },
+    props: ['roles'],
     data() {
         return {
             createUserUrl: '/admin/users/create',
@@ -66,6 +85,8 @@ export default {
             pagination: {},
             active: '',
             searchInput: '',
+            role: '',
+            roleOptions: this.roles,
         }
     },
     created() {
@@ -75,7 +96,10 @@ export default {
         getUsers(url) {
             url = url || '/api/admin/users';
             axios.get(url, {
-                    params: { searchInput: this.searchInput }
+                    params: { 
+                        searchInput: this.searchInput,
+                        roleName: this.role ? this.role.name : '',
+                    }
                 })
                 .then(response => {
                     this.users = response.data.data;

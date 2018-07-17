@@ -19,14 +19,21 @@ class UserController extends Controller {
 
     public function index() {
         $this->authorize('view', User::class);
+
+        $roles = Bouncer::role()->all();
         
-        return view('admin.users.index');
+        return view('admin.users.index', ['roles' => $roles]);
     }
 
     public function apiIndex(Request $request) {
         $users = User::
             when($request->query('searchInput'), function($query) use ($request) {
                 return $query->where('username', 'like', '%'.$request->query('searchInput').'%');
+            })
+            ->when($request->query('roleName'), function($query) use ($request) {
+                return $query->whereHas('Roles', function($q) use ($request) {
+                    $q->where('name', $request->query('roleName'));
+                });
             })
             ->paginate(10);
 

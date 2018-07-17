@@ -3,5 +3,5 @@
 @section('title', '| Manage Users')
 
 @section('content')
-    <admin-users></admin-users>
+    <admin-users :roles="{{ $roles }}"></admin-users>
 @endsection
