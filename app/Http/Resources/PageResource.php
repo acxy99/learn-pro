@@ -14,7 +14,8 @@ class PageResource extends Resource
      */
     public function toArray($request)
     {
-        return [
+        return parent::toArray($request);
+        /*return [
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
@@ -22,6 +23,6 @@ class PageResource extends Resource
             'parent_id' => $this->parent_id,
             'children' => $this->children,
             'slug' => $this->slug,
-        ];
+        ];*/
     }
 }

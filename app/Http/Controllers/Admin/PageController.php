@@ -9,6 +9,9 @@ use App\Course;
 use App\Page;
 use App\File;
 
+use App\Http\Resources\PageResource;
+use App\Http\Resources\PageResourceCollection;
+
 use App\Http\Requests\StorePage;
 use App\Http\Requests\UpdatePage;
 
@@ -20,6 +23,18 @@ class PageController extends Controller {
         $this->authorize('index', [Page::class, $course]);
 
         return view('admin.pages.index', ['course' => $course]);
+    }
+
+    public function apiIndex(Request $request, $course_id) {
+        $course = Course::findOrFail($course_id);
+
+        $pages = Page::where('course_id', $course_id)
+            ->when($request->query('searchInput'), function($query) use ($request) {
+                return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
+            })
+            ->paginate(10);
+
+        return new PageResourceCollection($pages); 
     }
 
     public function create($course_slug) {

@@ -1,67 +1,81 @@
 <template>
     <div class="container">
-        <small>
-            <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
+        <small class="d-block mb-2">
+            <a :href="getCourseUrl()" class="anchor-custom">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h4>{{ title }}</h4><hr>
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">edit</i>
+            <span>{{ title }}</span>
+        </h4>
 
-        <form @submit.prevent="onSubmit">
-            <div class="form-group" hidden>
-                <label for="course_id">Course</label>
-                <input type="text" class="form-control" id="course_id" :value="course.id" readonly>
-            </div>
+        <div class="bg-light p-3 mb-5">
+            <form @submit.prevent="onSubmit">
+                <div class="form-group" hidden>
+                    <label for="course_id">Course</label>
+                    <input type="text" class="form-control" id="course_id" :value="course.id" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" v-model="page.title" v-on:change="pageTitleChanged()" :class="{'is-invalid': errors['title']}">
-                <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
-            </div>
+                <div class="row">
+                    <div class="col-md-7 form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" v-model="page.title" v-on:change="pageTitleChanged()" :class="{'is-invalid': errors['title']}">
+                        <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label for="parent_id">Parent</label>
+                        <multiselect 
+                            v-model="parent"
+                            select-label="Click to select"
+                            deselect-label="Click to deselect"
+                            :options="parentOptions"
+                            track-by="id"
+                            :custom-label="customParentLabel"
+                            :searchable="true"
+                            :allow-empty="true"
+                            placeholder="Select parent">
+                        </multiselect>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="body">Body</label>
-                <textarea class="form-control" id="body" :class="{'is-invalid': errors['body']}"></textarea>
-                <div class="invalid-feedback" v-if="errors['body']">{{ errors['body'][0] }}</div>
-            </div>
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <textarea class="form-control" id="body" :class="{'is-invalid': errors['body']}"></textarea>
+                    <div class="invalid-feedback" v-if="errors['body']">{{ errors['body'][0] }}</div>
+                </div>
 
-            <div class="form-group">
-                <label for="parent_id">Parent</label>
-                <select class="custom-select" v-model="page.parent_id">
-                    <option selected value="">None</option>
-                    <option v-for="parent in parents" v-bind:key="parent.id" :value="parent.id">{{ parent.title }}</option>
-                </select>
-            </div>
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content" style="border-radius: 0px">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modal-label">{{ pageTitle }}</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p v-html="pageBody"></p>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="border-radius: 0px">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-label">{{ pageTitle }}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p v-html="pageBody"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mb-5">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">Preview</button>
-                <a role="button" class="btn btn-light" @click="cancel">Cancel</a>
-            </div>
-        </form>
-
+                <div class="text-center">
+                    <button type="button" class="btn btn-dark btn-form br-0" data-toggle="modal" data-target="#exampleModal">Preview</button>
+                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect/src/Multiselect.vue';
 import tinymce from 'tinymce/tinymce.js';
 import 'tinymce/themes/modern/theme';
 
 export default {
+    components: { Multiselect },
     props: ['course', 'parents', 'files', 'page'],
     data() {
         return {
@@ -71,6 +85,8 @@ export default {
             cancelUrl: '',
             pageTitle: this.page.title,
             pageBody: this.page.body,
+            parent: this.parents.find(parent => parent.id === this.page.parent_id),
+            parentOptions: this.parents,
         }
     },
     created() {
@@ -92,6 +108,9 @@ export default {
                 this.fileList[i] = obj;
             }
         },
+        customParentLabel(parent) {
+            return parent.id + ': ' + parent.title;
+        },
         initEditor() {
             let vm = this;
 
@@ -99,7 +118,7 @@ export default {
                 selector: '#body',
                 plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools colorpicker textpattern editattributes help',
                 toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | codesample link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | editattributes | removeformat',
-                height: '400',
+                height: '450',
                 link_list: this.fileList,
                 init_instance_callback : function(editor) {
                     if (vm.page.id) {
@@ -124,7 +143,7 @@ export default {
             formData.append('title', this.page.title);
             formData.append('body', tinymce.get('body').getContent());
             formData.append('course_id', this.course.id);
-            this.page.parent_id ? formData.append('parent_id', this.page.parent_id) : formData.append('parent_id', '');
+            formData.append('parent_id', this.parent ? this.parent.id : '');
 
             if (this.page.id) {
                 this.updatePage(formData);
@@ -178,3 +197,9 @@ export default {
     },
 }
 </script>
+
+<style>
+.mce-tinymce {
+    box-shadow: none!important;
+}
+</style>
