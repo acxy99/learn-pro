@@ -1,44 +1,50 @@
 <template>
-    <div class="container">
-        <h4>{{ title }}</h4><hr>
+    <div class="container col-lg-6 col-md-8">
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">edit</i>
+            <span>{{ title }}</span>
+        </h4>
 
-        <form enctype="multipart/form-data" @submit.prevent="onSubmit">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" v-model="category.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="100">
-                <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <small class="text-muted">(maximum 500 characters)</small>
-                <textarea id="description" v-model="category.description" class="form-control" :class="{'is-invalid': errors['description']}" maxlength="500" rows="3"></textarea>
-                <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="image">Image</label>
-                
-                <div v-if="category.id">
-                    <div v-if="category.image" class="text-muted">
-                        <span class="align-middle">Current image: </span>
-                        <span class="align-middle mr-2">
-                            <a role="button" class="border-0 p-0" style="text-decoration: none" :href="category.image_path">{{ currentImage }}</a>
-                        </span>
-                        <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
-                            <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
-                        </button>
-                    </div>
-                    <div v-else class="text-muted">Current image: none</div>
+        <div class="bg-light p-3 mb-5">
+            <form enctype="multipart/form-data" @submit.prevent="onSubmit">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" v-model="category.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="100">
+                    <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
                 </div>
 
-                <input type="file" id="image" accept="image/*" class="form-control mt-1">
-            </div>
-            <br>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <small class="text-muted">(maximum 500 characters)</small>
+                    <textarea id="description" v-model="category.description" class="form-control" :class="{'is-invalid': errors['description']}" maxlength="500" rows="3"></textarea>
+                    <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
+                </div>
 
-            <button type="submit" class="btn btn-primary" style="border-radius: 0" >Save</button>
-            <button type="button" class="btn btn-light" style="border-radius: 0" @click="cancel()">Cancel</button>
-        </form>
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    
+                    <div v-if="category.id">
+                        <div v-if="category.image" class="text-muted">
+                            <span class="align-middle">Current image: </span>
+                            <span class="align-middle mr-2">
+                                <a role="button" class="border-0 p-0" style="text-decoration: none" :href="category.image_path">{{ currentImage }}</a>
+                            </span>
+                            <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
+                                <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
+                            </button>
+                        </div>
+                        <div v-else class="text-muted">Current image: none</div>
+                    </div>
+
+                    <input type="file" id="image" accept="image/*" class="form-control mt-1">
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 

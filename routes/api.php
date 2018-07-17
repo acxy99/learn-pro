@@ -43,7 +43,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/users/{id}', function($id) { return new UserResource(User::find($id)); });
     Route::apiResource('users', 'UserController')->only(['store', 'update']);
 
-    Route::get('/categories', function() { return new CategoryResourceCollection(Category::paginate(10)); });
+    Route::get('/categories', 'CategoryController@apiIndex');
     Route::get('/categories/{id}/courses', function($id) {
         $category = Category::findOrFail($id);
         return new CourseResourceCollection (

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 use App\Category;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CategoryResourceCollection;
 
 use App\Http\Requests\StoreCategory;
 use App\Http\Requests\UpdateCategory;
@@ -17,6 +19,16 @@ class CategoryController extends Controller {
         $this->authorize('index', Category::class);
 
         return view('admin.categories.index');
+    }
+
+    public function apiIndex(Request $request) {
+        $categories = Category::
+            when($request->query('searchInput'), function($query) use ($request) {
+                return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
+            })
+            ->paginate(10);
+
+        return new CategoryResourceCollection($categories);
     }
 
     public function create() {
