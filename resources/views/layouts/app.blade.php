@@ -21,6 +21,10 @@
             text-decoration: none;
         }
 
+        .br-0 {
+            border-radius: 0!important;
+        }
+
         .line-clamp {
             display: -webkit-box!important;
             -webkit-line-clamp: 2;
@@ -28,6 +32,10 @@
             overflow: hidden;
             text-overflow: ellipsis;
             min-height: 48px;
+        }
+
+        .btn-form {
+            width: 150px;
         }
         </style>
 
