@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Course;
 use App\File;
 
+use App\Http\Resources\FileResourceCollection;
+
 use App\Http\Requests\StoreFile;
 use App\Http\Requests\UpdateFile;
 
@@ -20,6 +22,16 @@ class FileController extends Controller {
         $this->authorize('index', [File::class, $course]);
 
         return view('admin.files.index', ['course' => $course]);
+    }
+
+    public function apiIndex(Request $request, $course_id) {
+        $files = File::where('course_id', $course_id)
+            ->when($request->query('searchInput'), function($query) use ($request) {
+                return $query->where('name', 'like', '%'.$request->query('searchInput').'%');
+            })
+            ->paginate(10);
+
+        return new FileResourceCollection($files); 
     }
 
     public function create($course_slug) {

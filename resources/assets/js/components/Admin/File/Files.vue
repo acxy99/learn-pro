@@ -1,50 +1,57 @@
 <template>
     <div class="container">
+        <small class="d-block mb-2">
+            <a :href="getCourseUrl()" class="anchor-custom">{{ course.code }} {{ course.title }}</a>
+        </small>
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">settings</i>
+            <span>Manage Files</span>
+        </h4>
 
-        <small class="text-muted">List of Files</small>
-        <div class="row mb-3">
-            <div class="col-md-9 align-self-center">
-                <h5 class="m-0">{{ course.code }} {{ course.title }}</h5>
+        <div class="bg-light p-3 mb-5">
+            <div class="row mb-3">
+                <div class="col-md-9 align-self-center">
+                    <input class="form-control br-0" style="width: 40%" type="search" placeholder="Search by file name" v-model="searchInput" @keyup="searchInputChanged()">
+                </div>
+                <div class="col-md-3 text-right">
+                    <a class="btn btn-primary btn-form br-0" :href="uploadFilesUrl" role="button">Upload Files</a>
+                </div>
             </div>
-            <div class="col-md-3 text-right">
-                <a class="btn btn-primary" style="border-radius: 0" :href="uploadFilesUrl" role="button">Upload Files</a>
-            </div>
+
+            <table class="bg-white table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 70%">File Name</th>
+                        <th style="width: 10%">ID</th>
+                        <th style="width: 20%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px">
+                        <td style="width: 70%">
+                            <a style="text-decoration: none" :href="getFileUrl(file)">{{ file.name }}</a>
+                        </td>
+                        <td style="width: 10%">{{ file.id }}</td>
+                        <td style="width: 20%">
+                            <div v-show="active == file.id">
+                                <a class="btn p-1" :href="getEditFileUrl(file)">
+                                    <i class="material-icons">create</i>
+                                </a>
+                                <button class="btn p-1" style="background-color: transparent" @click="deleteFile(file)">
+                                    <i class="material-icons" style="color: red;">delete</i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul class="pagination m-0" style="justify-content: center">
+                <li :class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="getFiles(pagination.prev_page_url)">Previous</a></li>
+                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+                <li :class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="getFiles(pagination.next_page_url)">Next</a></li>
+            </ul>
         </div>
-
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th style="width: 70%">File Name</th>
-                    <th style="width: 10%">ID</th>
-                    <th style="width: 20%">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px">
-                    <td style="width: 70%">
-                        <a style="text-decoration: none" :href="getFileUrl(file)">{{ file.name }}</a>
-                    </td>
-                    <td style="width: 10%">{{ file.id }}</td>
-                    <td style="width: 20%">
-                        <div v-show="active == file.id">
-                            <a class="btn p-1" :href="getEditFileUrl(file)">
-                                <i class="material-icons">create</i>
-                            </a>
-                            <button class="btn p-1" style="background-color: transparent" @click="deleteFile(file)">
-                                <i class="material-icons" style="color: red;">delete</i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <ul class="pagination mb-5">
-            <li :class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="getFiles(pagination.prev_page_url)">Previous</a></li>
-            <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-            <li :class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="getFiles(pagination.next_page_url)">Next</a></li>
-        </ul>
-
     </div>
 </template>
 
@@ -57,6 +64,7 @@ export default {
             uploadFilesUrl: '/admin/courses/' + this.course.slug + '/files/create',
             files: [],
             pagination: {},
+            searchInput: '',
         }
     },
     created() {
@@ -66,7 +74,11 @@ export default {
         getFiles(url) {
             url = url || '/api/admin/courses/' + this.course.id + '/files'
 
-            axios.get(url)
+            axios.get(url, {
+                    params: {
+                        searchInput: this.searchInput,
+                    }
+                })
                 .then(response => {
                     this.files = response.data.data;
                     this.makePagination(response.data.links, response.data.meta);
@@ -84,6 +96,9 @@ export default {
             };
             this.pagination = pagination;
         },
+        getCourseUrl() {
+            return '/admin/courses/' + this.course.slug;
+        },
         getFileUrl(file) {
             return file.file_path;
         },
@@ -100,6 +115,9 @@ export default {
                         console.log(error);
                     });
             }
+        },
+        searchInputChanged() {
+            this.getFiles();
         }
     },
 }

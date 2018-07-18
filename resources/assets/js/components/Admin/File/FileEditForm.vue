@@ -1,25 +1,32 @@
 <template>
-    <div class="container">
-        <small>
+    <div class="container col-lg-6 col-md-8">
+        <small class="d-block mb-2">
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>
-        <h5>Update File Details</h5><hr>
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
+            <i class="material-icons mr-2">edit</i>
+            <span>Edit File Name</span>
+        </h4>
 
-        <form @submit.prevent="onSubmit">
-            <div class="form-group">
-                <label for="course_id">Course ID</label>
-                <input type="text" id="course_id" v-model="file.course_id" class="form-control" readonly>
-            </div>
+        <div class="bg-light p-3 mb-5">
+            <form @submit.prevent="onSubmit">
+                <div class="form-group">
+                    <label for="ori_name">Original File Name</label>
+                    <input type="text" id="ori_name" v-model="file.name" class="form-control" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="name">File Name</label>
-                <input type="text" id="name" v-model="file.name" class="form-control" :class="{'is-invalid': errors['name']}">
-                <div class="invalid-feedback" v-if="errors['name']">{{ errors['name'][0] }}</div>
-            </div><br>
+                <div class="form-group">
+                    <label for="name">New File Name</label>
+                    <input type="text" id="name" v-model="file.name" class="form-control" :class="{'is-invalid': errors['name']}">
+                    <div class="invalid-feedback" v-if="errors['name']">{{ errors['name'][0] }}</div>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-light" @click="cancel()">Cancel</button>
-        </form>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 

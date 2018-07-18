@@ -59,14 +59,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/courses/{course_id}/pages', 'PageController@apiIndex');
     Route::apiResource('pages', 'PageController')->only(['store', 'update']);
 
-    Route::get('/courses/{course_id}/files', function($course_id) {
-        $course = Course::findOrFail($course_id);
-        return new FileResourceCollection(
-            File::where([
-                'course_id' => $course->id,
-            ])->paginate(10)
-        ); 
-    });
+    Route::get('/courses/{course_id}/files', 'FileController@apiIndex');
     Route::apiResource('files', 'FileController')->only(['store', 'update']);
 });
 
