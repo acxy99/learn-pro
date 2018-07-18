@@ -26,8 +26,6 @@ class PageController extends Controller {
     }
 
     public function apiIndex(Request $request, $course_id) {
-        $course = Course::findOrFail($course_id);
-
         $pages = Page::where('course_id', $course_id)
             ->when($request->query('searchInput'), function($query) use ($request) {
                 return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
