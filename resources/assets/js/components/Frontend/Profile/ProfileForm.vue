@@ -15,14 +15,12 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="first_name">First Name</label>
-                        <input type="text" id="first_name" name="first_name" v-model="profile.first_name" class="form-control" :class="{'is-invalid': errors['first_name']}">
-                        <div class="invalid-feedback" v-if="errors['first_name']">{{ errors['first_name'][0] }}</div>
+                        <input type="text" id="first_name" name="first_name" v-model="profile.first_name" class="form-control">
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label for="last_name">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" v-model="profile.last_name" class="form-control" :class="{'is-invalid': errors['last_name']}">
-                        <div class="invalid-feedback" v-if="errors['last_name']">{{ errors['last_name'][0] }}</div>
+                        <input type="text" id="last_name" name="last_name" v-model="profile.last_name" class="form-control">
                     </div>
                 </div>
 
@@ -33,7 +31,8 @@
                             v-model="gender"
                             label="title"
                             track-by="value"
-                            deselect-label="Selected gender"
+                            select-label="Click to select"
+                            deselect-label="Selected"
                             :options="genderOptions"
                             :searchable="true"
                             :allow-empty="false">
@@ -48,7 +47,8 @@
 
                 <div class="form-group">
                     <label for="phone">Phone number</label>
-                    <input type="text" id="phone" name="phone" v-model="profile.phone" class="form-control">
+                    <input type="text" id="phone" name="phone" v-model="profile.phone" class="form-control" :class="{'is-invalid': errors['phone']}">
+                    <div class="invalid-feedback" v-if="errors['phone']">{{ errors['phone'][0] }}</div>
                 </div>
 
                 <div class="form-group">
