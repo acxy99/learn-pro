@@ -38,11 +38,11 @@ class LoginController extends Controller {
     }
 
     protected function authenticated(Request $request, $user) {
-        $request->session()->flash('success', 'You are logged in!');
+        $request->session()->flash('success', 'Login successful.');
     }
 
     public function logout(Request $request) {
         Auth::logout();
-        $request->session()->flash('success', 'You are logged out!');
+        $request->session()->flash('success', 'Logout successful.');
     }
 }
