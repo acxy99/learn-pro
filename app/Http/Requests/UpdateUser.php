@@ -13,7 +13,7 @@ class UpdateUser extends FormRequest {
     public function rules() {
         $id = $this->request->get('id');
         return [
-            'username' => 'required|unique:users,username,' . $id .'|regex:/^[a-z0-9_]*$/',
+            'username' => 'required|unique:users,username,' . $id .'|min:3|regex:/^[a-z0-9_]*$/',
             'email' => 'required|unique:users,email,' . $id .'|email',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
@@ -22,7 +22,7 @@ class UpdateUser extends FormRequest {
 
     public function messages() {
         return [
-            'username.regex' => 'The username must contain only lowercase letters, numbers, and underscores.',
+            'username.regex' => 'The username must contain only lowercase letters, numbers, periods, and underscores.',
         ];
     }
 }
