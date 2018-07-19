@@ -1,11 +1,14 @@
 <template>
-    <div class="container">
+    <div class="container col-md-10 col-lg-8">
+        <h4 class="d-inline-flex align-items-center font-weight-light mb-0">
+            <i class="material-icons mr-2">dashboard</i>
+            <span>Dashboard</span>
+        </h4>
+        <hr>
 
-        <h4>Dashboard</h4><hr>
-
-        <div class="card-deck">
+        <div class="card-deck mt-4 mb-4">
             <div class="card bg-light border-0">
-                <a href="/admin/courses" style="text-decoration: none; color: #000;">
+                <a href="/admin/courses" class="anchor-custom" style="color: #000;">
                     <div class="card-body">
                         <div class="row m-0 p-3">
                             <div class="col-md-4 align-self-center text-center">
@@ -22,7 +25,7 @@
             </div>
 
             <div class="card bg-light border-0">
-                <a href="/admin/categories" style="text-decoration: none; color: #000;">
+                <a href="/admin/categories" class="anchor-custom" style="color: #000;">
                     <div class="card-body">
                         <div class="row m-0 p-3">
                             <div class="col-md-4 align-self-center text-center">
@@ -38,14 +41,13 @@
                 </a>
             </div>
         </div>
-        <br>
 
         <div class="card-deck">
             <div class="card bg-light border-0">
                 <div class="card-body">
                     <div class="row m-0 p-3">
                         <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons" style="font-size: 80px; color: #4DB6AC;">people</i><br>
+                            <i class="material-icons" style="font-size: 80px; color: #4DB6AC;">local_library</i><br>
                         </div>
                         <div class="col-md-8 align-self-center text-right">
                             <h6>Instructors</h6>
@@ -57,37 +59,21 @@
             </div>
 
             <div class="card bg-light border-0">
-                <div class="card-body">
-                    <div class="row m-0 p-3">
-                        <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons" style="font-size: 80px; color: #9C5B7B;">local_library</i><br>
-                        </div>
-                        <div class="col-md-8 align-self-center text-right">
-                            <h6>Learners</h6>
-                            <h3>{{ learnersCount }}</h3>
+                <a href="/admin/users" class="anchor-custom" style="color: #000;">
+                    <div class="card-body">
+                        <div class="row m-0 p-3">
+                            <div class="col-md-4 align-self-center text-center">
+                                <i class="material-icons" style="font-size: 80px; color: #9C5B7B;">person</i><br>
+                            </div>
+                            <div class="col-md-8 align-self-center text-right">
+                                <h6>Users</h6>
+                                <h3>{{ usersCount }}</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="height: 10px; background-color: #9C5B7B;"></div>
+                    <div style="height: 10px; background-color: #9C5B7B;"></div>
+                </a>
             </div>
-        </div>
-        <br>
-
-        <div class="card bg-light border-0">
-            <a href="/admin/users" style="text-decoration: none; color: #000;">
-                <div class="card-body">
-                    <div class="row m-0 p-3">
-                        <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons" style="font-size: 80px; color: #0277BD;">person</i><br>
-                        </div>
-                        <div class="col-md-8 align-self-center text-right">
-                            <h6>Users</h6>
-                            <h3>{{ usersCount }}</h3>
-                        </div>
-                    </div>
-                </div>
-                <div style="height: 10px; background-color: #0277BD;"></div>
-            </a>
         </div>
 
     </div>

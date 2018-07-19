@@ -4,20 +4,23 @@
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li v-if="$userIsAdmin() || $userIsInstructor()">
-                    <a class="nav-link" :class="{ active: isCurrentPath('/admin') }" href="/admin">Admin Dashboard</a>
-                </li>
                 <li><a class="nav-link" :class="{ active: isCurrentPath('/categories') }" href="/categories">Categories</a></li>
                 <li><a class="nav-link" :class="{ active: isCurrentPath('/courses') }" href="/courses">Courses</a></li>
             </ul>
 
+            <ul class="navbar-nav mr-2">
+                <li class="" v-if="$userIsAdmin() || $userIsInstructor()">
+                    <a class="nav-link" :class="{ active: isCurrentPath('/admin') }" href="/admin">Dashboard</a>
+                </li>
+            </ul>
+
             <ul v-if="$user" class="navbar-nav">
-                <li class="nav-item mr-2">
+                <li class="mr-2">
                     <span class="d-flex rounded-circle" style="width: 30px; height:30px; overflow: hidden; display: inline-block">
                         <img :src="$user.profile.picture_path" style="object-fit: cover; max-width: 100%;">
                     </span>
                 </li>
-                <li class="nav-item dropdown align-self-center">
+                <li class="dropdown align-self-center">
                     <a class="nav-link dropdown-toggle p-0 align-middle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ $user.username }}
                     </a>
