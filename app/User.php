@@ -61,6 +61,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::deleting(function($user) {
+            $user->roles()->detach();
             $user->teachingCourses()->detach();
             $user->learningCourses()->detach();
             $user->owningCourses()->delete();
