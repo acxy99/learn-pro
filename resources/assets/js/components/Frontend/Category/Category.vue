@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="jumbotron" :style="jumbotronStyle">
+        <div class="jumbotron mb-0" :style="jumbotronStyle">
             <div class="m-5">
                 <h1 class="text-center">{{ category.title }}</h1>
                 <hr style="border-color: #CCC">
@@ -19,9 +19,9 @@
                         <div class="card-body">
                             <a :href="getCourseUrl(course)" style="text-decoration: none">
                                 <small>{{ course.code }}</small>
-                                <h5 class="card-title text-truncate">{{ course.title }}</h5>
+                                <h5 class="card-title line-clamp">{{ course.title }}</h5>
                             </a>
-                            <p class="card-text">{{ course.description }}</p>
+                            <p class="card-text line-clamp">{{ course.description }}</p>
                         </div>
                     </div>
                 </div>
