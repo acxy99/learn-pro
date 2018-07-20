@@ -63,10 +63,11 @@ class UserController extends Controller {
         return response()->json(['user' => $user, 'roles' => $request->role]);
     }
 
-    // public function show($id) {
-    //     $user = User::findOrFail($id);
-    //     return view('admin.users.show', ['user' => $user]);
-    // }
+    public function apiShow($id) {
+        $user = User::find($id);
+
+        return new UserResource($user);
+    }
 
     public function edit($id) {
         $user = User::findOrFail($id);

@@ -40,7 +40,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/users', 'UserController@apiIndex');
-    Route::get('/users/{id}', function($id) { return new UserResource(User::find($id)); });
+    Route::get('/users/{id}', 'UserController@apiShow');
     Route::apiResource('users', 'UserController')->only(['store', 'update']);
 
     Route::get('/categories', 'CategoryController@apiIndex');
