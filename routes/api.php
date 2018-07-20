@@ -44,6 +44,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::apiResource('users', 'UserController')->only(['store', 'update']);
 
     Route::get('/categories', 'CategoryController@apiIndex');
+    Route::get('/categories/{id}', 'CategoryController@apiShow');
     Route::get('/categories/{id}/courses', function($id) {
         $category = Category::findOrFail($id);
         return new CourseResourceCollection (

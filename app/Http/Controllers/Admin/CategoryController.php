@@ -62,6 +62,12 @@ class CategoryController extends Controller {
         return view('admin.categories.show', ['category' => $category]);
     }
 
+    public function apiShow($id) {
+        $category = Category::find($id);
+
+        return new CategoryResource($category);
+    }
+
     public function edit($slug) {
         $category = Category::findBySlugOrFail($slug);
 
