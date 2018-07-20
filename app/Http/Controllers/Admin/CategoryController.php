@@ -40,6 +40,8 @@ class CategoryController extends Controller {
     }
 
     public function store(StoreCategory $request) {
+        $this->authorize('create', Category::class);
+
         $category = new Category();
         $category->fill($request->except('image'));
 
@@ -80,6 +82,8 @@ class CategoryController extends Controller {
         $category = Category::findOrFail($id);
         $category->slug = null;
         $category->fill($request->except('image'));
+
+        $this->authorize('update', $category);
 
         if ($request->hasImage == 'true') {
             if ($request->hasFile('image')) {
