@@ -90,13 +90,13 @@ class FileController extends Controller {
 
         $includesExtension = pathinfo($request->name, PATHINFO_EXTENSION) ? true : false;
 
-        $newFileName = $includesExtension ? $request->name : $request->name . '.' . $extension;
+        $newFileName = $includesExtension ? $request->name : $request->name . '.' . $originalExtension;
         $newFilePath = 'public/courses/' . $course->slug . '/' . $newFileName;
 
         if ($originalFilePath != $newFilePath)
             Storage::move($originalFilePath, $newFilePath);
 
-        $file->fill($request->all());
+        $file->name = $newFileName;
         $file->save();
 
         return response()->json(['file' => $file]);
