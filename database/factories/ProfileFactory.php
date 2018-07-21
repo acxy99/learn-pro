@@ -7,5 +7,6 @@ $factory->define(App\Profile::class, function (Faker $faker) {
         'user_id' => 1,
         'first_name' => $faker->firstName, 
         'last_name' => $faker->lastName,
+        'slug' => $faker->word,
     ];
 });
