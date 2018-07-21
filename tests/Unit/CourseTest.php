@@ -13,7 +13,7 @@ class CourseTest extends TestCase {
     use WithFaker;
     use RefreshDatabase;
 
-    protected $admin, $createRequest;
+    protected $admin, $courseTitle;
     
     public function setUp() {
         parent::setUp();
@@ -22,27 +22,27 @@ class CourseTest extends TestCase {
         $this->admin->assign(1);
 
         $sentence = $this->faker->sentence;
-        $title = substr($sentence, 0, strlen($sentence) - 1);
-
-        $this->createRequest = [
-            'code' => $this->faker->bothify('????####'),
-            'title' => $title,
-            'description' => $this->faker->text,
-            'owner_id' => factory(User::class)->create()->id,
-        ];
+        $this->courseTitle = substr($sentence, 0, strlen($sentence) - 1);
     }
 
     /** @test */
     public function can_create_course() {
-        $response = $this->actingAs($this->admin)->json('POST', '/api/admin/courses', $this->createRequest);
+        $createRequest = [
+            'code' => $this->faker->bothify('????####'),
+            'title' => $this->courseTitle,
+            'description' => $this->faker->text,
+            'owner_id' => factory(User::class)->create()->id,
+        ];
+
+        $response = $this->actingAs($this->admin)->json('POST', '/api/admin/courses', $createRequest);
         $data = $response->getData();
 
         $course = Course::find($data->course->id);
 
-        $this->assertEquals($this->createRequest['code'], $course->code);
-        $this->assertEquals($this->createRequest['title'], $course->title);
-        $this->assertEquals($this->createRequest['description'], $course->description);
-        $this->assertEquals($this->createRequest['owner_id'], $course->owner_id);
+        $this->assertEquals($createRequest['code'], $course->code);
+        $this->assertEquals($createRequest['title'], $course->title);
+        $this->assertEquals($createRequest['description'], $course->description);
+        $this->assertEquals($createRequest['owner_id'], $course->owner_id);
     }
 
     /** @test */
@@ -64,8 +64,8 @@ class CourseTest extends TestCase {
         $updateRequest = [
             'id' => $originalCourse->id,
             'code' => $originalCourse->code,
-            'title' => 'new title',
-            'description' => 'new description',
+            'title' => $this->courseTitle,
+            'description' => $this->faker->text,
         ];
 
         $this->actingAs($this->admin)->json('PUT', '/api/admin/courses/' . $originalCourse->id, $updateRequest);
