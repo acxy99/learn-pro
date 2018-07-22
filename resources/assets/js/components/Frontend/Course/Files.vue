@@ -1,12 +1,12 @@
 <template>
-    <div class="container p-3">
-        <h5 class="mb-4">All files</h5>
+    <div class="container col-md-10">
+        <input class="form-control br-0 mb-3" style="width: 40%" type="search" placeholder="Search" v-model="searchInput" @keyup="searchInputChanged()">
 
         <div v-if="files.length">
-            <div v-for="file in files" :key="file.id" class="m-2">
-                <a :href="getFileUrl(file)" style="text-decoration: none;">
+            <div class="list-group mb-3">
+                <a class="list-group-item list-group-item-action br-0" v-for="file in files" :key="file.id" :href="getFileUrl(file)">
                     <div class="d-inline-flex align-items-center">                 
-		                <i class="mdi mr-2" :class="getFileIconName(file.name)" style="font-size: 1.5rem"></i>
+                        <i class="mdi mr-2" :class="getFileIconName(file.name)" style="font-size: 1.5rem"></i>
                         <span>{{ file.name }}</span>
                     </div>
                 </a>
@@ -32,6 +32,7 @@ export default {
         return {
             files: [],
             pagination: {},
+            searchInput: '',
         }
     },
     created() {
@@ -40,7 +41,11 @@ export default {
     methods: {
         getFiles(url) {
             url = url || '/api/courses/' + this.course.id + '/files';
-            axios.get(url)
+            axios.get(url, {
+                    params: {
+                        searchInput: this.searchInput,
+                    }
+                })
                 .then(response => {
                     this.files = response.data.data;
                     this.makePagination(response.data.links, response.data.meta);
@@ -92,7 +97,10 @@ export default {
             }
 
             return 'mdi-' + typeClass;
-        }
+        },
+        searchInputChanged() {
+            this.getFiles();
+        },
     }
 }
 </script>

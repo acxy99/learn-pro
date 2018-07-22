@@ -34,7 +34,7 @@
             </li>
         </ul>
 
-        <div class="tab-content" id="myTabContent">
+        <div class="tab-content mt-4" id="myTabContent">
             <div class="tab-pane show active" id="overview" role="tabpanel">
                 <overview :course="course"></overview>
             </div>

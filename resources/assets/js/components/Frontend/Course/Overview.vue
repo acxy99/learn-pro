@@ -1,5 +1,5 @@
 <template>
-    <div class="container p-3">
+    <div class="container col-md-10">
         <h5 class="mb-4">About this course</h5>
         
         <div class="row">

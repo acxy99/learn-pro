@@ -1,17 +1,17 @@
 <template>
-	<ul class='tree-menu list-unstyled' :class='ulClass'>
-		<li :class='liClass' :style='liStyle'>
-			<a :href='getPageUrl()' style='text-decoration: none; color: #222;'>{{ title }}</a>
+	<ul class="tree-menu list-unstyled" :class="ulClass">
+		<li :class="liClass" :style="liStyle">
+			<a :href="getPageUrl()" class="anchor-custom" style="color: #444">{{ title }}</a>
 		</li>
 
 		<tree
-			v-for='child in children'
-			:key='child.id'
-			:courseSlug='courseSlug'
-			:pageSlug='child.slug'
-			:title='child.title'
-			:children='child.children'
-			:depth='depth + 1'
+			v-for="child in children"
+			:key="child.id"
+			:courseSlug="courseSlug"
+			:pageSlug="child.slug"
+			:title="child.title"
+			:children="child.children"
+			:depth="depth + 1"
 		></tree>
 	</ul>
 </template>
@@ -30,12 +30,12 @@ export default {
 	},
 	created() {
 		if (this.depth == 0) {
-			this.ulClass['bg-light mb-2 p-3'] = true;
+			this.ulClass['list-group-item list-group-item-action p-4'] = true;
 			this.liClass['font-weight-bold'] = true;
 		}
 
 		if (this.depth == -1) {
-			this.ulClass['list-unstyled'] = true;
+			this.ulClass['list-group'] = true;
 		}
 	},
 	methods: {
