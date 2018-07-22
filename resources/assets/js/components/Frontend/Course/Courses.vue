@@ -8,7 +8,7 @@
                 </h3>
             </div>
             <div class="col-md-4 align-self-center">
-                <input class="form-control" type="search" placeholder="Search by title" v-model="searchInput" @keyup="searchInputChanged()">
+                <input class="form-control" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
             </div>
         </div>
         <hr>

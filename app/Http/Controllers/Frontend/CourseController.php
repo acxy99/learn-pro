@@ -20,11 +20,9 @@ class CourseController extends Controller {
     }
 
     public function apiIndex(Request $request) {
-        $courses = Course::
-            when($request->query('searchInput'), function($query) use ($request) {
-                return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
-            })
-            ->paginate(9);
+        $searchKeyword = $request->query('searchInput');
+
+        $courses = Course::searchByCode($searchKeyword)->searchByTitle($searchKeyword)->paginate(9);
 
         return new CourseResourceCollection($courses);
     }

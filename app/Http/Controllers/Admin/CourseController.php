@@ -27,19 +27,14 @@ class CourseController extends Controller {
 
     public function apiIndex(Request $request) {
         $user = User::find($request->get('user_id'));
+        $searchKeyword = $request->query('searchInput');
+
         if ($user->isAn('admin')) {
-            $courses = Course::
-                when($request->query('searchInput'), function($query) use ($request) {
-                    return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
-                })
-                ->paginate(10);
+            $courses = Course::searchByCode($searchKeyword)->searchByTitle($searchKeyword)->paginate(10);
         } else {
-            $courses = $user->teachingCourses()
-                ->when($request->query('searchInput'), function($query) use ($request) {
-                    return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
-                })
-                ->paginate(10);;
+            $courses = $user->teachingCourses()->searchByCode($searchKeyword)->searchByTitle($searchKeyword)->paginate(10);
         }
+
         return new CourseResourceCollection($courses); 
     }
 

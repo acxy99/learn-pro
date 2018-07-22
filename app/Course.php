@@ -101,4 +101,16 @@ class Course extends Model
             return '/storage/courses/placeholder-image.png';
         }
     }
+
+    public function scopeSearchByCode($query, $code) {
+        return $query->when($code, function($query) use ($code) {
+            return $query->orWhere('code', 'like', '%' . $code . '%');
+        });
+    }
+
+    public function scopeSearchByTitle($query, $title) {
+        return $query->when($title, function($query) use ($title) {
+            return $query->orWhere('title', 'like', '%' . $title . '%');
+        });
+    }
 }

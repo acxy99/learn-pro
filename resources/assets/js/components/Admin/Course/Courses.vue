@@ -8,7 +8,7 @@
         <div class="bg-light p-3 mb-5">
             <div class="row mb-3">
                 <div class="col-md-9 align-self-center">
-                    <input class="form-control" style="border-radius: 0; width: 40%" type="search" placeholder="Search" v-model="searchInput" @keyup="searchInputChanged()">
+                    <input class="form-control" style="border-radius: 0; width: 40%" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
                 <div class="col-md-3 text-right">
                     <a class="btn btn-primary" style="border-radius: 0" :href="createCourseUrl" role="button">Create Course</a>
