@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Course;
-use App\Http\Resources\CourseResource;
+use App\Page;
+use App\File;
+
 use App\Http\Resources\CourseResourceCollection;
+use App\Http\Resources\PageResourceCollection;
+use App\Http\Resources\FileResourceCollection;
 
 class CourseController extends Controller {
 
@@ -29,5 +33,22 @@ class CourseController extends Controller {
         $course = Course::findBySlugOrFail($slug);
 
         return view('frontend.courses.show', ['course' => $course]);
+    }
+
+    public function apiPages($course_id) {
+        return new PageResourceCollection(
+            Page::where([
+                'course_id' => $course_id,
+                'parent_id' => null,
+            ])->paginate(10)
+        ); 
+    }
+
+    public function apiFiles($course_id) {
+        return new FileResourceCollection(
+            File::where([
+                'course_id' => $course_id,
+            ])->paginate(10)
+        ); 
     }
 }

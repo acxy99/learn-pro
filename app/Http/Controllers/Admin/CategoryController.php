@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Category;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryResourceCollection;
+use App\Http\Resources\CourseResourceCollection;
 
 use App\Http\Requests\StoreCategory;
 use App\Http\Requests\UpdateCategory;
@@ -68,6 +69,14 @@ class CategoryController extends Controller {
         $category = Category::find($id);
 
         return new CategoryResource($category);
+    }
+
+    public function apiCourses($id) {
+        $category = Category::findOrFail($id);
+
+        return new CourseResourceCollection (
+            $category->courses()->paginate(5)
+        );
     }
 
     public function edit($slug) {

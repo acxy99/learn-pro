@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Category;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryResourceCollection;
+use App\Http\Resources\CourseResourceCollection;
 
 class CategoryController extends Controller {
     
@@ -20,7 +21,7 @@ class CategoryController extends Controller {
             when($request->query('searchInput'), function($query) use ($request) {
                 return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
             })
-            ->paginate(10);
+            ->paginate(9);
 
         return new CategoryResourceCollection($categories);
     }
@@ -31,4 +32,11 @@ class CategoryController extends Controller {
         return view('frontend.categories.show', ['category' => $category]);
     }
 
+    public function apiCourses($category_id) {
+        $category = Category::findOrFail($category_id);
+        
+        return new CourseResourceCollection (
+            $category->courses()->paginate(9)
+        );
+    }
 }
