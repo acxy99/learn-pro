@@ -28,7 +28,7 @@ class ProfileTest extends TestCase {
         $profile = $this->user->profile()->save(
             factory(Profile::class)->create([
                 'user_id' => $this->user->id, 
-                'picture' => UploadedFile::fake()->image('picture.pdf')->name,
+                'picture' => UploadedFile::fake()->image('picture.jpg')->name,
             ])
         );
         
