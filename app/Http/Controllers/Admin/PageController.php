@@ -26,11 +26,10 @@ class PageController extends Controller {
     }
 
     public function apiIndex(Request $request, $course_id) {
-        $pages = Page::where('course_id', $course_id)
-            ->when($request->query('searchInput'), function($query) use ($request) {
-                return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
-            })
-            ->paginate(10);
+        $course = Course::find($course_id);
+        $searchKeyword = $request->query('searchInput');
+
+        $pages = $course->pages()->searchByTitle($searchKeyword)->paginate(10);
 
         return new PageResourceCollection($pages); 
     }

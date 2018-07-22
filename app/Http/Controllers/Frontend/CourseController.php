@@ -33,20 +33,21 @@ class CourseController extends Controller {
         return view('frontend.courses.show', ['course' => $course]);
     }
 
-    public function apiPages($course_id) {
-        return new PageResourceCollection(
-            Page::where([
-                'course_id' => $course_id,
-                'parent_id' => null,
-            ])->paginate(10)
-        ); 
+    public function apiPages(Request $request, $course_id) {
+        $course = Course::find($course_id);
+        $searchKeyword = $request->query('searchInput');
+
+        $pages = $course->pages()->roots()->searchByTitle($searchKeyword)->paginate(10);
+
+        return new PageResourceCollection($pages); 
     }
 
-    public function apiFiles($course_id) {
-        return new FileResourceCollection(
-            File::where([
-                'course_id' => $course_id,
-            ])->paginate(10)
-        ); 
+    public function apiFiles(Request $request, $course_id) {
+        $course = Course::find($course_id);
+        $searchKeyword = $request->query('searchInput');
+
+        $files = $course->files()->searchByName($searchKeyword)->paginate(10);
+
+        return new FileResourceCollection($files); 
     }
 }

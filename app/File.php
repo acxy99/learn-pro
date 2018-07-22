@@ -23,4 +23,10 @@ class File extends Model
         $course = $this->course;
         return '/storage/courses/' . $course['slug'] . '/' . $this->name;
     }
+
+    public function scopeSearchByName($query, $name) {
+        return $query->when($name, function($query) use ($name) {
+            return $query->where('name', 'like', '%' . $name . '%');
+        });
+    }
 }

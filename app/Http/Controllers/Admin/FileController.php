@@ -25,11 +25,10 @@ class FileController extends Controller {
     }
 
     public function apiIndex(Request $request, $course_id) {
-        $files = File::where('course_id', $course_id)
-            ->when($request->query('searchInput'), function($query) use ($request) {
-                return $query->where('name', 'like', '%'.$request->query('searchInput').'%');
-            })
-            ->paginate(10);
+        $course = Course::find($course_id);
+        $searchKeyword = $request->query('searchInput');
+
+        $files = $course->files()->searchByName($searchKeyword)->paginate(10);
 
         return new FileResourceCollection($files); 
     }
