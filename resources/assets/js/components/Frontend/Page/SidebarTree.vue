@@ -1,7 +1,7 @@
 <template>
 	<ul class="tree-menu list-unstyled">
 		<li :class="liClass" :style="liStyle">
-			<a :href="getPageUrl()" style="text-decoration: none" :style="checkCurrentPage()">{{ title }}</a>
+			<a :href="getPageUrl()" class="anchor-custom" :style="checkCurrentPage()">{{ title }}</a>
 		</li>
 
 		<sidebar-tree 
@@ -40,7 +40,8 @@ export default {
 		checkCurrentPage() {
 			if (this.currentPage == this.title) {
 				return {
-                    color: '#007bff',
+					color: '#333',
+					fontWeight: 'bold',
                 }
 			} else {
 				return {

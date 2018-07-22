@@ -1,6 +1,5 @@
 <template>
-    <div class="pt-3">
-        <h5>Contents</h5><hr>
+    <div>
         <sidebar-tree :courseSlug="course.slug" :children="pages" :depth="(-1)" :currentPage="currentPage"></sidebar-tree>
     </div>
 </template>
@@ -28,33 +27,6 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
-        },
-        getPageUrl(page) {
-            return '/courses/' + this.course.slug + '/pages/' + page.slug;
-        },
-        hasChildren(page) {
-            return page.children.length;
-        },
-        getChildUrl(child) {
-            return '/courses/' + this.course.slug + '/pages/' + child.slug;
-        },
-        isCurrentPage(page) {
-            return page.title == this.currentPage;
-        },
-        getStyle(page) {
-            if (this.isCurrentPage(page)) {
-                return {
-                    color: '#222',
-                    fontWeight: 'bold',
-                    disabled: 'disabled',
-                    textDecoration: 'none',
-                }
-            } else {
-                return {
-                    color: '#333',
-                    textDecoration: 'none',
-                }
-            }
         },
     },
 }

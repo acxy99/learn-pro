@@ -1,26 +1,30 @@
 <template>
-    <div class="container">
-        <div class="row m-0">
-            <!-- Sidebar -->
-            <div class="col-md-3 bg-light mb-3">
-                <sidebar :course="course" :currentPage="page.title"></sidebar>
-            </div>
-
-            <!-- Page Content -->
-            <div class="col-md-9">
-                <small>
-                    <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
-                </small>
-                <h3>{{ page.title }}</h3>
+    <div class="container-fluid" style="height: 100%;">
+        <div class="row" style="height: 100%">
+            <nav class="col-sm-2 col-md-3 p-4" style="background-color: #F7F7F7; height: calc(100vh - 56px)">
+                <h6>COURSE CONTENT</h6>
                 <hr>
-      
-                <p v-html="page.body"></p><hr>
+                <sidebar :course="course" :currentPage="page.title"></sidebar>
+            </nav>
 
-                <small v-if="page.children.length"><em>Related sections</em></small>
-                <div class="m-2">
-                    <li v-for="child in page.children" v-bind:key="child.id">
-                        <a :href="getChildUrl(child)">{{ child.title }}</a>
-                    </li>
+            <div class="col-sm-10 col-md-9 d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 pt-5">
+                     <div class="row">
+                        <div class="col-md-8 align-self-center">
+                            <h4 class="d-inline-flex align-items-center m-0">
+                                <span>{{ page.title }}</span>
+                            </h4>
+                        </div>
+                        <div class="col-md-4 align-self-center text-right">
+                            <a :href="getCourseUrl()" class="anchor-custom">
+                                <i class="material-icons align-middle">keyboard_arrow_left</i>
+                                <span class="align-middle">Back to course</span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+        
+                    <p v-html="page.body"></p><hr>
                 </div>
             </div>
         </div>
