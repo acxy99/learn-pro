@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand navbar-dark bg-dark sticky-top mb-4">
+    <nav class="navbar navbar-expand navbar-dark bg-dark sticky-top">
         <a class="navbar-brand" href="/">LEARN<b>PRO</b></a>
 
         <div class="collapse navbar-collapse">

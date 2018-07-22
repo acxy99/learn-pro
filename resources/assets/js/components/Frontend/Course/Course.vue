@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container pt-4">
         <div class="jumbotron" :style="jumbotronStyle">
             <div class="m-5">
                 <div class="text-center"><small>{{ course.code }}</small></div>

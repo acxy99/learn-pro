@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container pt-4">
         <h4 class="d-inline-flex align-items-center font-weight-light mb-0">
             <i class="material-icons mr-2">dashboard</i>
             <span>Dashboard</span>

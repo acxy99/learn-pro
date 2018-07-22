@@ -1,5 +1,5 @@
 <template>
-    <div class="container col-lg-6 col-md-8">
+    <div class="container pt-4 col-lg-6 col-md-8">
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">edit</i>
             <span>{{ title }}</span>

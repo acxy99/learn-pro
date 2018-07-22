@@ -1,6 +1,5 @@
 <template>
-    <div class="container">
-
+    <div class="container pt-4">
         <small class="text-muted">Page Details</small>
         <div class="row">
             <div class="col-md-7 align-self-center">

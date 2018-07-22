@@ -1,5 +1,5 @@
 <template>
-    <div class="container col-md-6">
+    <div class="container pt-4 col-md-6">
         <small class="text-muted">User Profile</small>
         <div class="row">
             <div class="col-md-7 align-self-center">

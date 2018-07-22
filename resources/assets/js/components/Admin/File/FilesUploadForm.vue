@@ -1,5 +1,5 @@
 <template>
-    <div class="container col-lg-7 col-md-9">
+    <div class="container pt-4 col-lg-7 col-md-9">
         <small class="d-block mb-2">
             <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
         </small>

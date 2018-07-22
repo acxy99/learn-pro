@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container pt-4">
         <div class="jumbotron mb-0" :style="jumbotronStyle">
             <div class="m-5">
                 <h1 class="text-center">{{ category.title }}</h1>

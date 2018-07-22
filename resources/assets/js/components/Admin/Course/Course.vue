@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container pt-4">
 
         <small class="text-muted">Course Details</small>
         <div class="row">
