@@ -33,8 +33,6 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
             'courses_count' => Course::count(),
             'categories_count' => Category::count(),
             'users_count' => User::count(),
-            'instructors_count' => User::whereIs('instructor')->count(),
-            'learners_count' => User::whereIs('learner')->count(),
         ]);
     })->middleware('can:view-dashboard')->name('dashboard');
 
