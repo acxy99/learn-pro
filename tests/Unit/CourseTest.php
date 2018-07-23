@@ -45,7 +45,7 @@ class CourseTest extends TestCase {
         $course4 = factory(Course::class)->create(['code' => 'UECS1203']);
         $course5 = factory(Course::class)->create(['code' => 'UECM1633']);
 
-        $courses = Course::searchByCode('UECS', Course::count())->get();
+        $courses = Course::searchByCode('UECS')->get();
 
         $this->assertEquals(2, $courses->count());
     }
@@ -58,7 +58,7 @@ class CourseTest extends TestCase {
         $course4 = factory(Course::class)->create(['title' => 'Web Application Development']);
         $course5 = factory(Course::class)->create(['title' => 'Software Construction and Configuration']);
 
-        $courses = Course::searchByTitle('Software', Course::count())->get();
+        $courses = Course::searchByTitle('Software')->get();
 
         $this->assertEquals(3, $courses->count());
     }
