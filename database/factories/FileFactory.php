@@ -1,10 +1,11 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Http\UploadedFile;
 
 $factory->define(App\File::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
-        'course_id' => 1,
+        'name' => UploadedFile::fake()->create('file.pdf')->name,
+        'course_id' => factory('App\Course')->create(),
     ];
 });
