@@ -52,7 +52,10 @@
             @yield('content')
         </div>
 
-        <script>window.user = {!! Auth::user() !!}</script>
+        @if(Auth::user())
+            <script>window.user = {!! Auth::user() !!}</script>
+        @endif
+        
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
