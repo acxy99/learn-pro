@@ -29,10 +29,22 @@ Route::get('/', function () { return view('welcome'); });
 */
 Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', function() {
+        $user = Auth::user();
+
+        if ($user->isAn('admin')) {
+            $courses_count = Course::count();
+            $categories_count = Category::count();
+            $users_count = User::count();
+        } else {
+            $courses_count = $user->teachingCourses()->count();
+            $categories_count = 0;
+            $users_count = 0;
+        }
+
         return view('admin.dashboard', [
-            'courses_count' => Course::count(),
-            'categories_count' => Category::count(),
-            'users_count' => User::count(),
+            'courses_count' => $courses_count,
+            'categories_count' => $categories_count,
+            'users_count' => $users_count,
         ]);
     })->middleware('can:view-dashboard')->name('dashboard');
 

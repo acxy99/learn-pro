@@ -6,8 +6,9 @@
         </h4>
         <hr>
 
-        <div class="card-deck mt-4 mb-4">
+        <div class="row mt-4">
             <dashboard-card 
+                class="col-md-4 mb-4"
                 :url="course.url" 
                 :color="course.color" 
                 :icon="course.icon" 
@@ -15,6 +16,8 @@
                 :count="course.count"
             ></dashboard-card>
             <dashboard-card 
+                class="col-md-4 mb-4"
+                v-if="$userIsAdmin()"
                 :url="category.url" 
                 :color="category.color" 
                 :icon="category.icon" 
@@ -22,6 +25,8 @@
                 :count="category.count"
             ></dashboard-card>
             <dashboard-card 
+                class="col-md-4 mb-4"
+                v-if="$userIsAdmin()"
                 :url="user.url" 
                 :color="user.color" 
                 :icon="user.icon" 
@@ -37,7 +42,7 @@ import DashboardCard from './DashboardCard'
 
 export default {
     components: { DashboardCard },
-    props: ['coursesCount', 'categoriesCount', 'usersCount', 'learnersCount'],
+    props: ['coursesCount', 'categoriesCount', 'usersCount'],
     data() {
         return {
             course: {

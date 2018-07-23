@@ -1,7 +1,7 @@
 <template>
-    <div class="card bg-light border-0">
+    <div class="card border-0">
         <a :href="url" class="anchor-custom" style="color: #000;">
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <div class="text-center p-4">
                     <i class="material-icons" style="font-size: 100px;" :style="{ color: color }">{{ icon }}</i><br>
                 </div>
