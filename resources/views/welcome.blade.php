@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container pt-4">
     <div class="jumbotron">
         <div class="m-5">
             <h3 class="text-center">Welcome to LEARN<b>PRO</b></h3>
