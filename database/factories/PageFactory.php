@@ -9,6 +9,6 @@ $factory->define(App\Page::class, function (Faker $faker) {
     return [
         'title' => $title,
         'body' => $faker->paragraphs($nb = 3, $asText = true) ,
-        'course_id' => 1,
+        'course_id' => factory('App\Course')->create(),
     ];
 });
