@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top" dusk="navbar">
         <a class="navbar-brand" href="/">LEARN<b>PRO</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
 
             <ul v-if="$user" class="navbar-nav">
                 <li class="dropdown"> 
-                    <a class="nav-link dropdown-toggle p-0 d-flex align-items-center" href="#" style="height: 40px;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle p-0 d-flex align-items-center" href="#" style="height: 40px;" dusk="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-inline-flex rounded-circle mr-2" style="width: 30px; height: 30px; overflow: hidden;">
                             <img :src="$user.profile.picture_path" style="object-fit: cover; max-width: 100%;">
                         </span>
@@ -31,12 +31,12 @@
                         <a class="dropdown-item" :href="viewProfileUrl">View profile</a>
                         <!-- <a v-if="!$userIsAdmin()" class="dropdown-item" :href="getMyCoursesUrl()">My courses</a> -->
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item btn btn-link border-0" @click="logout()">Logout</button>
+                        <button class="dropdown-item btn btn-link border-0" @click="logout()" type="button" dusk="logout-button">Logout</button>
                     </div>
                 </li>
             </ul>
             <ul v-else class="navbar-nav">
-                <li><a class="nav-link" :class="{ active: isCurrentPath('/login') }" href="/login">Login</a></li>
+                <li><a class="nav-link" :class="{ active: isCurrentPath('/login') }" href="/login" dusk="login-button">Login</a></li>
                 <!-- <li><a class="nav-link" :class="{ active: isCurrentPath('/register') }" href="/register">Register</a></li> -->
             </ul>
         </div>
