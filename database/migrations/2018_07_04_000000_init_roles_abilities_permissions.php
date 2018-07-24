@@ -15,6 +15,7 @@ class InitRolesAbilitiesPermissions extends Migration
      */
     public function up()
     {
+        // roles
         $admin = Bouncer::role()->create([
             'name' => 'admin',
             'title' => 'Administrator',
@@ -30,7 +31,7 @@ class InitRolesAbilitiesPermissions extends Migration
             'title' => 'Learner',
         ]);
 
-        // abilities
+        // abilities and permissions
         Bouncer::allow('admin')->to('view-dashboard');
         Bouncer::allow('instructor')->to('view-dashboard');
 
@@ -63,15 +64,6 @@ class InitRolesAbilitiesPermissions extends Migration
         Bouncer::allow('admin')->to('create-file');
         Bouncer::allow('admin')->to('update-file');
         Bouncer::allow('admin')->to('delete-file');
-
-        $admin = User::find(1);
-        Bouncer::assign('admin')->to($admin);
-
-        $instructor = User::find(2);
-        Bouncer::assign('instructor')->to($instructor);
-
-        $learner = User::find(3);
-        Bouncer::assign('learner')->to($learner);
     }
 
     /**

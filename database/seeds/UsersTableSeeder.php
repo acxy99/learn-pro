@@ -1,40 +1,29 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Seeder;
 
-class CreateInitialUsers extends Migration
+use App\User;
+use App\Profile;
+
+class UsersTableSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
         DB::table('users')->insert([
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
             'username' => 'admin',
         ]);
-
-        DB::table('profiles')->insert([
-            'user_id' => 1,
-            'slug' => 'admin',
-        ]);
-
         DB::table('users')->insert([
             'email' => 'instructor@instructor.com',
             'password' => bcrypt('instructor'),
             'username' => 'instructor',
         ]);
-
-        DB::table('profiles')->insert([
-            'user_id' => 2,
-            'slug' => 'instructor',
-        ]);
-
         DB::table('users')->insert([
             'email' => 'learner@learner.com',
             'password' => bcrypt('learner'),
@@ -42,18 +31,25 @@ class CreateInitialUsers extends Migration
         ]);
 
         DB::table('profiles')->insert([
+            'user_id' => 1,
+            'slug' => 'admin',
+        ]);
+        DB::table('profiles')->insert([
+            'user_id' => 2,
+            'slug' => 'instructor',
+        ]);
+        DB::table('profiles')->insert([
             'user_id' => 3,
             'slug' => 'learner',
         ]);
-    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
+        $admin = User::find(1);
+        Bouncer::assign('admin')->to($admin);
+
+        $instructor = User::find(2);
+        Bouncer::assign('instructor')->to($instructor);
+
+        $learner = User::find(3);
+        Bouncer::assign('learner')->to($learner);
     }
 }
