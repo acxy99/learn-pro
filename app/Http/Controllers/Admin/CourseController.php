@@ -49,8 +49,6 @@ class CourseController extends Controller {
     }
 
     public function store(StoreCourse $request) {
-        $this->authorize('create', Course::class);
-
         $course = new Course();
         $course->fill($request->except('image'));
 
@@ -113,8 +111,6 @@ class CourseController extends Controller {
     public function update(UpdateCourse $request, $id) {
         $course = Course::find($id);
         $course->fill($request->except('image'));
-
-        $this->authorize('update', $course);
 
         if ($request->hasImage == 'true') {
             if ($request->hasFile('image')) {
