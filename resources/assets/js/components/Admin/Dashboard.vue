@@ -9,6 +9,7 @@
         <div class="row mt-4">
             <dashboard-card 
                 class="col-md-4 mb-4"
+                dusk="course-card"
                 :url="course.url" 
                 :color="course.color" 
                 :icon="course.icon" 
@@ -17,6 +18,7 @@
             ></dashboard-card>
             <dashboard-card 
                 class="col-md-4 mb-4"
+                dusk="category-card"
                 v-if="$userIsAdmin()"
                 :url="category.url" 
                 :color="category.color" 
@@ -26,6 +28,7 @@
             ></dashboard-card>
             <dashboard-card 
                 class="col-md-4 mb-4"
+                dusk="user-card"
                 v-if="$userIsAdmin()"
                 :url="user.url" 
                 :color="user.color" 
