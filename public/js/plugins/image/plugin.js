@@ -471,6 +471,7 @@ var image = (function () {
     var image = document.createElement('img');
     write(normalizeCss, $_kivhlcqjh8lz08x.merge(data, { caption: false }), image);
     setAttrib(image, 'alt', data.alt);
+    setAttrib(image, 'class', 'img-fluid');
     if (data.caption) {
       var figure = DOM.create('figure', { class: 'image' });
       figure.appendChild(image);
