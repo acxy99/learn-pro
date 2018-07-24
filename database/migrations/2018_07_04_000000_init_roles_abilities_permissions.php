@@ -64,8 +64,14 @@ class InitRolesAbilitiesPermissions extends Migration
         Bouncer::allow('admin')->to('update-file');
         Bouncer::allow('admin')->to('delete-file');
 
-        $user = User::find(1);
-        Bouncer::assign('admin')->to($user);
+        $admin = User::find(1);
+        Bouncer::assign('admin')->to($admin);
+
+        $instructor = User::find(2);
+        Bouncer::assign('instructor')->to($instructor);
+
+        $learner = User::find(3);
+        Bouncer::assign('learner')->to($learner);
     }
 
     /**
