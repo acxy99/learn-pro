@@ -105,4 +105,18 @@ class PageController extends Controller {
 
         return response()->json(['page' => $page]);
     }
+
+    public function uploadImage(Request $request) {
+        $file = $request->file('file');
+        $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $originalExtension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+        $courseSlug = $request->course_slug;
+
+        $request->file('file')->storeAs('public/courses/' . $courseSlug . '/resources', $originalFileName . '.' . $originalExtension);
+
+        $path = '/storage/courses/' . $courseSlug . '/resources/' . $originalFileName . '.' . $originalExtension;
+
+        return response()->json(['path' => $path]);
+    }
 }

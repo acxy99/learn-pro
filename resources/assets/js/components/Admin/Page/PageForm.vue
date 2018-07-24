@@ -43,9 +43,9 @@
                     <div class="invalid-feedback" v-if="errors['body']">{{ errors['body'][0] }}</div>
                 </div>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+                <div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content" style="border-radius: 0px">
+                        <div class="modal-content br-0">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="modal-label">{{ pageTitle }}</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="button" class="btn btn-dark btn-form br-0" data-toggle="modal" data-target="#exampleModal">Preview</button>
+                    <button type="button" class="btn btn-dark btn-form br-0" data-toggle="modal" data-target="#preview">Preview</button>
                     <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
                     <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
                 </div>
@@ -130,6 +130,24 @@ export default {
                     editor.on('Change', function (e) {
                         vm.pageBodyChanged();
                     })
+                },
+                file_browser_callback_types: 'file image media',
+                images_upload_base_path: window.location.origin,
+                images_upload_handler: function (blobInfo, success, failure) {
+                    var formData = new FormData();
+                    formData.append('course_slug', vm.course.slug);
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    axios.post('/admin/courses/' + vm.course.slug + '/pages/uploadImage', formData)
+                        .then(response => {
+                            success(response.data.path);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            if (error.response.status == 422) {
+                                console.log(error.response.data.errors);
+                            }
+                        });
                 }
             });
         },
@@ -201,5 +219,9 @@ export default {
 <style>
 .mce-tinymce {
     box-shadow: none!important;
+}
+
+.modal-lg {
+    max-width: 65%;
 }
 </style>

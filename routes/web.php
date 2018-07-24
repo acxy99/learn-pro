@@ -58,6 +58,7 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
     Route::get('/courses/{course_slug}/pages/create', 'PageController@create');
     Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
     Route::get('/courses/{course_slug}/pages/{page_slug}/edit', 'PageController@edit');
+    Route::post('/courses/{course_slug}/pages/uploadImage', 'PageController@uploadImage');
     Route::resource('/pages', 'PageController')->only(['destroy']);
 
     Route::get('/courses/{course_slug}/files', 'FileController@index');
