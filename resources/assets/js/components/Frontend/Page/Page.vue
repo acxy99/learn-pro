@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid" style="height: 100%;">
         <div class="row" style="height: 100%">
-            <nav class="col-sm-2 col-md-3 p-4" style="background-color: #F7F7F7; height: calc(100vh - 56px)">
+            <nav class="col-sm-2 col-md-3 p-4" style="background-color: #F7F7F7; min-height: calc(100vh - 56px)">
                 <h6>COURSE CONTENT</h6>
                 <hr>
                 <sidebar :course="course" :currentPage="page.title"></sidebar>
