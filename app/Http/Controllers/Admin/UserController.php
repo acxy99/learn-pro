@@ -50,8 +50,6 @@ class UserController extends Controller {
     }
 
     public function store(StoreUser $request) {
-        $this->authorize('create', User::class);
-
         $user = new User;
 
         $user->username = $request->username;
@@ -82,8 +80,6 @@ class UserController extends Controller {
 
     public function update(UpdateUser $request, $id) {
         $user = User::findOrFail($id);
-
-        $this->authorize('update', $user);
 
         $user->username = $request->username;
         $user->email = $request->email;
