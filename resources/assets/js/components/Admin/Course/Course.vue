@@ -3,10 +3,14 @@
 
         <small class="text-muted">Course Details</small>
         <div class="row">
-            <div class="col-md-7 align-self-center">
+            <div class="col-md-6 col-xl-7 align-self-center">
                 <h5 class="m-0">{{ course.code }} {{ course.title }}</h5>
             </div>
-            <div class="col-md-5 align-self-center text-right">
+            <div class="col-md-6 col-xl-5 align-self-center text-right">
+                <a :href="indexUrl" class="anchor-custom mr-2">
+                    <i class="material-icons align-middle">keyboard_arrow_left</i>
+                    <span class="align-middle">Back</span>
+                </a>
                 <a v-if="userCanEditCourse()" class="btn btn-primary" style="border-radius: 0;" :href="editCourseUrl" role="button">Edit Course</a>
                 <button v-if="userCanDeleteCourse()" class="btn btn-danger" style="border-radius: 0;" @click="deleteCourse()">Delete Course</button>
             </div>
@@ -116,6 +120,7 @@ export default {
     props: ['course', 'lastUpdatedPage', 'lastUpdatedFile'],
     data() {
         return {
+            indexUrl: '/admin/courses',
             editCourseUrl: '/admin/courses/' + this.course.slug + '/edit',
             managePagesUrl: '/admin/courses/' + this.course.slug + '/pages',
             manageFilesUrl: '/admin/courses/' + this.course.slug + '/files',

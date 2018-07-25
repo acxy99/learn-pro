@@ -2,12 +2,16 @@
     <div class="container pt-4">
         <small class="text-muted">Page Details</small>
         <div class="row">
-            <div class="col-md-7 align-self-center">
-                <h5 class="m-0">{{ page.title }}</h5>
+            <div class="col-md-6 align-self-center">
+                <h4 class="font-weight-light m-0">{{ page.title }}</h4>
             </div>
-            <div class="col-md-5 align-self-center text-right">
-                <a class="btn btn-primary" style="border-radius: 0;" :href="editPageUrl" role="button">Edit Page</a>
-                <button class="btn btn-danger" style="border-radius: 0;" @click="deletePage()">Delete Page</button>
+            <div class="col-md-6 align-self-center text-right">
+                <a :href="indexUrl" class="anchor-custom mr-2">
+                    <i class="material-icons align-middle">keyboard_arrow_left</i>
+                    <span class="align-middle">Back</span>
+                </a>
+                <a class="btn btn-primary br-0" :href="editPageUrl" role="button">Edit Page</a>
+                <button class="btn btn-danger br-0" @click="deletePage()">Delete Page</button>
             </div>
         </div>
         <hr>
@@ -58,6 +62,7 @@ export default {
     data() {
         return {
             editPageUrl: '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
+            indexUrl: '/admin/courses/' + this.course.slug + '/pages',
         }
     },
     methods: {
