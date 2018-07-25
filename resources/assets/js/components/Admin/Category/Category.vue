@@ -2,10 +2,14 @@
     <div class="container pt-4">
         <small class="text-muted">Category Details</small>
         <div class="row">
-            <div class="col-md-7 align-self-center">
+            <div class="col-md-6 col-xl-7 align-self-center">
                 <h5 class="m-0">{{ category.title }}</h5>
             </div>
-            <div class="col-md-5 align-self-center text-right">
+            <div class="col-md-6 col-xl-5  align-self-center text-right">
+                <a :href="indexUrl" class="anchor-custom mr-2">
+                    <i class="material-icons align-middle">keyboard_arrow_left</i>
+                    <span class="align-middle">Back</span>
+                </a>
                 <a class="btn btn-outline-primary d-inline-flex align-items-center" style="border-radius: 0;" :href="editCategoryUrl" role="button">
                     <i class="material-icons mr-1">create</i>
                     <span>Edit Category</span>
@@ -70,6 +74,7 @@ export default {
     props: ['category'],
     data() {
         return {
+            indexUrl: '/admin/categories',
             editCategoryUrl: '/admin/categories/' + this.category.slug + '/edit',
             courses: [],
             pagination: {},
