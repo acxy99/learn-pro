@@ -15,7 +15,7 @@
 
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="50">
+                    <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="100">
                     <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
                 </div>
 
