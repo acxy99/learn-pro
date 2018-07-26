@@ -37,6 +37,14 @@
         .btn-form {
             width: 150px;
         }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            display: inline-block;
+            padding-right: 0.5rem;
+            color: #6c757d;
+            font-family: "Material Icons";
+            content: "navigate_next"!important;
+        }
         </style>
 
         <!-- Icons -->
