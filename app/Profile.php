@@ -42,11 +42,10 @@ class Profile extends Model
     }
 
     public function getPicturePathAttribute() {
-        // if ($this->picture) {
-        //     return Storage::url('profiles/' . $this->picture);
-        // } else {
-        //     return Storage::url('profiles/default-profile-picture.jpg');
-        // }
-        return 'testing';
+        if ($this->picture) {
+            return Storage::url('profiles/' . $this->picture);
+        } else {
+            return Storage::url('profiles/default-profile-picture.jpg');
+        }
     }
 }
