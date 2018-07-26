@@ -48,7 +48,7 @@ class CategoryController extends Controller {
         
         if($request->hasFile('image')) {
             $category->image = 'category-' . $category->id . '.jpg';
-            $request->file('image')->storeAs('public/categories', $category->image);
+            Storage::putFileAs('categories', $request->file('image'), $category->image);
             $category->save();
         }
 
@@ -93,7 +93,7 @@ class CategoryController extends Controller {
         if ($request->hasImage == 'true') {
             if ($request->hasFile('image')) {
                 $category->image = 'category-' . $category->id . '.jpg';
-                $request->file('image')->storeAs('public/categories', $category->image);
+                Storage::putFileAs('categories', $request->file('image'), $category->image);
             }
         } else {
             if ($category->image)

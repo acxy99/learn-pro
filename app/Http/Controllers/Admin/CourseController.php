@@ -54,7 +54,7 @@ class CourseController extends Controller {
 
         if($request->hasFile('image')) {
             $course->image = str_slug($course->code) . '.jpg';
-            $request->file('image')->storeAs('public/courses', $course->image);
+            Storage::putFileAs('courses', $request->file('image'), $course->image);
         }
         
         $course->save();
@@ -115,7 +115,7 @@ class CourseController extends Controller {
         if ($request->hasImage == 'true') {
             if ($request->hasFile('image')) {
                 $course->image = str_slug($course->code) . '.jpg';
-                $request->file('image')->storeAs('public/courses', $course->image);
+                Storage::putFileAs('courses', $request->file('image'), $course->image);
             }
         } else {
             if ($course->image)

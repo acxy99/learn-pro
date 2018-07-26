@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 use App\Course;
 use App\Page;
@@ -113,10 +114,12 @@ class PageController extends Controller {
 
         $courseSlug = $request->course_slug;
 
-        $request->file('file')->storeAs('public/courses/' . $courseSlug . '/resources', $originalFileName . '.' . $originalExtension);
+        $folderPath = 'courses/' . $courseSlug . '/resources';
+        $fileName = $originalFileName . '.' . $originalExtension;
+        Storage::putFileAs($folderPath, $file,  $fileName);
 
-        $path = '/storage/courses/' . $courseSlug . '/resources/' . $originalFileName . '.' . $originalExtension;
+        $fullPath = Storage::url($folderPath . '/' . $fileName);
 
-        return response()->json(['path' => $path]);
+        return response()->json(['path' => $fullPath]);
     }
 }

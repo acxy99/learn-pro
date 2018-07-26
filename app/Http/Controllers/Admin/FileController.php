@@ -58,7 +58,7 @@ class FileController extends Controller {
                 $fileModel->course_id = $request->course_id;
                 $fileModel->save();
 
-                $file->storeAs('public/courses/' . $request->course_slug, $fileModel->name);
+                Storage::putFileAs('courses/' . $request->course_slug, $file,  $fileModel->name);
 
                 $files->push($fileModel);
             }
