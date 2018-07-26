@@ -14,42 +14,40 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        $admin = factory(User::class)->create([
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
             'username' => 'admin',
         ]);
-        DB::table('users')->insert([
+        $instructor = factory(User::class)->create([
             'email' => 'instructor@instructor.com',
             'password' => bcrypt('instructor'),
             'username' => 'instructor',
         ]);
-        DB::table('users')->insert([
+        $learner = factory(User::class)->create([
             'email' => 'learner@learner.com',
             'password' => bcrypt('learner'),
             'username' => 'learner',
         ]);
 
-        DB::table('profiles')->insert([
-            'user_id' => 1,
-            'slug' => 'admin',
-        ]);
-        DB::table('profiles')->insert([
-            'user_id' => 2,
-            'slug' => 'instructor',
-        ]);
-        DB::table('profiles')->insert([
-            'user_id' => 3,
-            'slug' => 'learner',
-        ]);
+        $admin->profile()->save(
+            factory(Profile::class)->create([
+                'user_id' => $admin->id,
+            ])
+        );
+        $instructor->profile()->save(
+            factory(Profile::class)->create([
+                'user_id' => $instructor->id,
+            ])
+        );
+        $learner->profile()->save(
+            factory(Profile::class)->create([
+                'user_id' => $learner->id,
+            ])
+        );
 
-        $admin = User::find(1);
         Bouncer::assign('admin')->to($admin);
-
-        $instructor = User::find(2);
         Bouncer::assign('instructor')->to($instructor);
-
-        $learner = User::find(3);
         Bouncer::assign('learner')->to($learner);
     }
 }
