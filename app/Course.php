@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
@@ -96,9 +97,9 @@ class Course extends Model
 
     public function getImagePathAttribute() {
         if ($this->image) {
-            return '/storage/courses/' . $this->image;
+            return Storage::url('courses/' . $this->image);
         } else {
-            return '/storage/courses/placeholder-image.png';
+            return Storage::url('courses/placeholder-image.png');
         }
     }
 

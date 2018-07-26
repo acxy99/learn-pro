@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -35,9 +36,9 @@ class Category extends Model
 
     public function getImagePathAttribute() {
         if ($this->image) {
-            return '/storage/categories/' . $this->image;
+            return Storage::url('categories/' . $this->image);
         } else {
-            return '/storage/categories/placeholder-image.png';
+            return Storage::url('categories/placeholder-image.png');
         }
     }
 }

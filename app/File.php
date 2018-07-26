@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -21,7 +22,7 @@ class File extends Model
 
     public function getFilePathAttribute() {
         $course = $this->course;
-        return '/storage/courses/' . $course['slug'] . '/' . $this->name;
+        return Storage::url('courses/' . $course['slug'] . '/' . $this->name);
     }
 
     public function scopeSearchByName($query, $name) {
