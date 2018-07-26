@@ -1,15 +1,20 @@
 <template>
     <div class="container pt-4">
-        <small class="text-muted">Page Details</small>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="pagesUrl">Pages</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Page Details</li>
+            </ol>
+        </nav>
+
         <div class="row">
             <div class="col-md-6 align-self-center">
                 <h4 class="font-weight-light m-0">{{ page.title }}</h4>
             </div>
             <div class="col-md-6 align-self-center text-right">
-                <a :href="indexUrl" class="anchor-custom mr-2">
-                    <i class="material-icons align-middle">keyboard_arrow_left</i>
-                    <span class="align-middle">Back</span>
-                </a>
                 <a class="btn btn-primary br-0" :href="editPageUrl" role="button">Edit Page</a>
                 <button class="btn btn-danger br-0" @click="deletePage()">Delete Page</button>
             </div>
@@ -61,6 +66,8 @@ export default {
     props: ['course', 'page'],
     data() {
         return {
+            courseUrl: '/admin/courses/' + this.course.slug,
+            pagesUrl: '/admin/courses/' + this.course.slug + '/pages',
             editPageUrl: '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
             indexUrl: '/admin/courses/' + this.course.slug + '/pages',
         }

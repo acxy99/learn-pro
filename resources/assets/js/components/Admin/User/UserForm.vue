@@ -1,5 +1,13 @@
 <template>
     <div class="container pt-4 col-lg-6 col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/users">Users</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">{{ title }}</li>
+            </ol>
+        </nav>
+
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">edit</i>
             <span>{{ title }}</span>

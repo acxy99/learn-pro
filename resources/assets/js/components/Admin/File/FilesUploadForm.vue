@@ -1,8 +1,15 @@
 <template>
     <div class="container pt-4 col-lg-7 col-md-9">
-        <small class="d-block mb-2">
-            <a :href="getCourseUrl()" style="text-decoration: none">{{ course.code }} {{ course.title }}</a>
-        </small>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="filesUrl">Files</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Upload Files</li>
+            </ol>
+        </nav>
+        
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">cloud_upload</i>
             <span>Upload Files</span>
@@ -37,7 +44,7 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-form br-0">Upload</button>
-                    <a class="btn btn-secondary btn-form br-0" :href="cancelUrl" role="button">Cancel</a>
+                    <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
                 </div>
             </form>
         </div>
@@ -53,13 +60,11 @@ export default {
             fileNames: [],
             files: [],
             errors: {},
-            cancelUrl: this.getCourseUrl() + '/files',
+            courseUrl: '/admin/courses/' + this.course.slug,
+            filesUrl: '/admin/courses/' + this.course.slug + '/files',
         }
     },
     methods: {
-        getCourseUrl() {
-            return '/admin/courses/' + this.course.slug;
-        },
         handleFiles() {
             this.errors = [];
 
@@ -102,6 +107,9 @@ export default {
                     this.errors = error.response.data.errors;
                 }
             });
+        },
+        cancel() {
+            window.history.back();
         },
     },
 }

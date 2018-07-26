@@ -1,5 +1,12 @@
 <template>
     <div class="container pt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Courses</li>
+            </ol>
+        </nav>
+
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">settings</i>
             <span>Manage Courses</span>
@@ -8,10 +15,10 @@
         <div class="bg-light p-3 mb-5">
             <div class="row mb-3">
                 <div class="col-md-9 align-self-center">
-                    <input class="form-control" style="border-radius: 0; width: 40%" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
+                    <input class="form-control br-0" style="width: 40%" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
                 <div class="col-md-3 text-right">
-                    <a class="btn btn-primary" style="border-radius: 0" :href="createCourseUrl" role="button">Create Course</a>
+                    <a class="btn btn-primary br-0" :href="createCourseUrl" role="button">Create Course</a>
                 </div>
             </div>
 
@@ -30,12 +37,12 @@
                     <tr v-for="course in courses" :key="course.id" @mouseover="active = course.id" @mouseout="active = ''" style="height: 75px">
                         <td style="width: 10%">{{ course.code }}</td>
                         <td style="width: 20%">
-                            <a style="text-decoration: none" :href="getManageCourseUrl(course)">{{ course.title }}</a>
+                            <a class="anchor-custom" :href="getManageCourseUrl(course)">{{ course.title }}</a>
                         </td>
                         <td style="width: 40%">{{ course.description }}</td>
                         <td style="width: 10%">
                             <div v-if="course.image">
-                                <a style="text-decoration: none;" :href="course.image_path">{{ course.image }}</a>
+                                <a class="anchor-custom" :href="course.image_path">{{ course.image }}</a>
                             </div>
                             <div v-else class="text-muted">none</div>
                         </td>

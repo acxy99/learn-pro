@@ -1,18 +1,20 @@
 <template>
     <div class="container pt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Course Details</li>
+            </ol>
+        </nav>
 
-        <small class="text-muted">Course Details</small>
         <div class="row">
             <div class="col-md-6 col-xl-7 align-self-center">
                 <h5 class="m-0">{{ course.code }} {{ course.title }}</h5>
             </div>
             <div class="col-md-6 col-xl-5 align-self-center text-right">
-                <a :href="indexUrl" class="anchor-custom mr-2">
-                    <i class="material-icons align-middle">keyboard_arrow_left</i>
-                    <span class="align-middle">Back</span>
-                </a>
-                <a v-if="userCanEditCourse()" class="btn btn-primary" style="border-radius: 0;" :href="editCourseUrl" role="button">Edit Course</a>
-                <button v-if="userCanDeleteCourse()" class="btn btn-danger" style="border-radius: 0;" @click="deleteCourse()">Delete Course</button>
+                <a v-if="userCanEditCourse()" class="btn btn-primary br-0" :href="editCourseUrl" role="button">Edit Course</a>
+                <button v-if="userCanDeleteCourse()" class="btn btn-danger br-0" @click="deleteCourse()">Delete Course</button>
             </div>
         </div>
         <hr>
@@ -46,7 +48,7 @@
 
         <small class="text-muted">Categories</small>
         <p v-if="course.categories.length" class="mt-2">
-            <a role="button" v-for="category in course.categories" :key="category.id" :href="getCategoryUrl(category)" style="text-decoration: none; color: #000;">
+            <a role="button" v-for="category in course.categories" :key="category.id" :href="getCategoryUrl(category)" class="anchor-custom" style="color: #000;">
                 <span class="p-2 mr-1" style="background-color: #EEE">{{ category.title }}</span>
             </a>
         </p>
@@ -54,7 +56,7 @@
 
         <small class="text-muted">Instructors</small>
         <p v-if="course.instructors.length" class="mt-2">
-            <a role="button" v-for="instructor in course.instructors" :key="instructor.id" :href="getInstructorProfileUrl(instructor)" style="text-decoration: none; color: #000;">
+            <a role="button" v-for="instructor in course.instructors" :key="instructor.id" :href="getInstructorProfileUrl(instructor)" class="anchor-custom" style="color: #000;">
                 <span class="p-2 mr-1" style="background-color: #EEE">{{ instructor.username }}</span>
             </a>
         </p>
@@ -89,7 +91,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light" style="border-radius: 0" :href="managePagesUrl" role="button">Manage Pages</a>
+                    <a class="btn bg-light br-0" :href="managePagesUrl" role="button">Manage Pages</a>
                 </div>
             </div>
             <div class="card bg-light border-0 m-1">
@@ -107,7 +109,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light" style="border-radius: 0" :href="manageFilesUrl" role="button">Manage Files</a>
+                    <a class="btn bg-light br-0" :href="manageFilesUrl" role="button">Manage Files</a>
                 </div>
             </div>
         </div>

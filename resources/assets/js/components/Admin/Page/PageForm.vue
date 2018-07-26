@@ -1,8 +1,16 @@
 <template>
     <div class="container pt-4">
-        <small class="d-block mb-2">
-            <a :href="getCourseUrl()" class="anchor-custom">{{ course.code }} {{ course.title }}</a>
-        </small>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="pagesUrl">Pages</a></li>
+                <li v-if="page.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="pageUrl">{{ page.title }}</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">{{ title }}</li>
+            </ol>
+        </nav>
+        
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">edit</i>
             <span>{{ title }}</span>
@@ -80,6 +88,9 @@ export default {
     data() {
         return {
             title: '',
+            courseUrl: '/admin/courses/' + this.course.slug,
+            pagesUrl: '/admin/courses/' + this.course.slug + '/pages',
+            pageUrl: '',
             fileList: [],
             errors: [],
             cancelUrl: '',
@@ -98,6 +109,7 @@ export default {
         setTitle() {
             if (this.page.id) { 
                 this.title = 'Update Page';
+                this.pageUrl = '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug;
             } else {
                 this.title = 'Create Page';
             }
@@ -150,9 +162,6 @@ export default {
                         });
                 }
             });
-        },
-        getCourseUrl() {
-            return '/admin/courses/' + this.course.slug;
         },
         onSubmit() {
             this.errors = [];

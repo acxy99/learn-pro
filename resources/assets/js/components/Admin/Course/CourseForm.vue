@@ -1,5 +1,14 @@
 <template>
     <div class="container pt-4 col-lg-6 col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li v-if="course.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">{{ title }}</li>
+            </ol>
+        </nav>
+
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">edit</i>
             <span>{{ title }}</span>
@@ -62,7 +71,7 @@
                     <div v-if="course.image" class="text-muted">
                         <span class="align-middle">Current image: </span>
                         <span class="align-middle mr-2">
-                            <a role="button" class="border-0 p-0" style="text-decoration: none" :href="course.image_path">{{ currentImage }}</a>
+                            <a role="button" class="anchor-custom border-0 p-0" :href="course.image_path">{{ currentImage }}</a>
                         </span>
                         <button type="button" class="btn border-0 p-0" @click="removeCurrentImage()" data-toggle="tooltip" data-placement="bottom" title="Remove">
                             <i class="material-icons align-middle" style="font-size: 1.2rem; color: #d82020;">cancel</i>
@@ -106,6 +115,7 @@ export default {
     data() {
         return {
             title: '',
+            courseUrl: '',
             currentImage: this.course.image,
             selectedOwner: [],
             ownerOptions: this.instructors,
@@ -119,6 +129,7 @@ export default {
     created() {
         if (this.course.id) {
             this.title = 'Edit Course';
+            this.courseUrl = '/admin/courses/' + this.course.slug;
             this.selectedOwner = this.course.owner;
             this.selectedCategories = this.course.categories;
             this.selectedCoInstructors = this.course.co_instructors;

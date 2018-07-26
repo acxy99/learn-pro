@@ -1,8 +1,14 @@
 <template>
     <div class="container pt-4">
-        <small class="d-block mb-2">
-            <a :href="getCourseUrl()" class="anchor-custom">{{ course.code }} {{ course.title }}</a>
-        </small>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Pages</li>
+            </ol>
+        </nav>
+
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">settings</i>
             <span>Manage Pages</span>
@@ -31,7 +37,7 @@
                 <tbody>
                     <tr v-for="page in pages" :key="page.id" @mouseover="active = page.id" @mouseout="active = ''" style="height: 65px">
                         <td style="width: 40%">
-                            <a style="text-decoration: none" :href="getManagePageUrl(page)">{{ page.title }}</a>
+                            <a class="anchor-custom" :href="getManagePageUrl(page)">{{ page.title }}</a>
                         </td>
                         <td style="width: 10%">{{ page.id }}</td>
                         <td style="width: 10%">{{ page.parent_id || 'none' }}</td>
@@ -67,6 +73,7 @@ export default {
     props: ['course'],
     data() {
         return {
+            courseUrl: '/admin/courses/' + this.course.slug,
             active: '',
             createPageUrl: '/admin/courses/' + this.course.slug + '/pages/create',
             pages: [],
@@ -102,9 +109,6 @@ export default {
                 next_page_url: links.next,
             };
             this.pagination = pagination;
-        },
-        getCourseUrl() {
-            return '/admin/courses/' + this.course.slug;
         },
         getManagePageUrl(page) {
             return '/admin/courses/' + this.course.slug + '/pages/' + page.slug;

@@ -1,11 +1,18 @@
 <template>
     <div class="container pt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Users</li>
+            </ol>
+        </nav>
+
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">settings</i>
             <span>Manage Users</span>
         </h4>
 
-        <div class="bg-light p-3 mb-5">
+        <div class="bg-light p-3 mb-5">         
             <div class="row mb-3">
                 <div class="col-md-3">
                     <multiselect 
@@ -26,7 +33,7 @@
                     <input class="form-control br-0" type="search" placeholder="Search by username" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
                 <div class="col-md-6 text-right">
-                    <a class="btn btn-primary" style="border-radius: 0" :href="createUserUrl" role="button">Create User</a>
+                    <a class="btn btn-primary br-0" :href="createUserUrl" role="button">Create User</a>
                 </div>
             </div>
 

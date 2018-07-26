@@ -1,8 +1,14 @@
 <template>
     <div class="container pt-4">
-        <small class="d-block mb-2">
-            <a :href="getCourseUrl()" class="anchor-custom">{{ course.code }} {{ course.title }}</a>
-        </small>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mb-4">
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
+                <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Files</li>
+            </ol>
+        </nav>
+
         <h4 class="d-inline-flex align-items-center font-weight-light mb-3">
             <i class="material-icons mr-2">settings</i>
             <span>Manage Files</span>
@@ -29,7 +35,7 @@
                 <tbody>
                     <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px">
                         <td style="width: 70%">
-                            <a style="text-decoration: none" :href="getFileUrl(file)">{{ file.name }}</a>
+                            <a class="anchor-custom" :href="getFileUrl(file)">{{ file.name }}</a>
                         </td>
                         <td style="width: 10%">{{ file.id }}</td>
                         <td style="width: 20%">
@@ -37,7 +43,7 @@
                                 <a class="btn p-1" :href="getEditFileUrl(file)">
                                     <i class="material-icons">create</i>
                                 </a>
-                                <button class="btn p-1" style="background-color: transparent" @click="deleteFile(file)">
+                                <button class="btn p-1 bg-transparent" @click="deleteFile(file)">
                                     <i class="material-icons" style="color: red;">delete</i>
                                 </button>
                             </div>
@@ -60,6 +66,7 @@ export default {
     props: ['course'],
     data() {
         return {
+            courseUrl: '/admin/courses/' + this.course.slug,
             active: '',
             uploadFilesUrl: '/admin/courses/' + this.course.slug + '/files/create',
             files: [],
@@ -95,9 +102,6 @@ export default {
                 next_page_url: links.next,
             };
             this.pagination = pagination;
-        },
-        getCourseUrl() {
-            return '/admin/courses/' + this.course.slug;
         },
         getFileUrl(file) {
             return file.file_path;
