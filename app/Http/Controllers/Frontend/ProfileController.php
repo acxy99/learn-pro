@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 use App\User;
@@ -39,7 +40,8 @@ class ProfileController extends Controller {
 
         if ($request->hasFile('picture')) {
             $profile->picture = 'user-' . $profile->user_id . '.jpg';
-            $request->file('picture')->storeAs('public/profiles', $profile->picture);
+
+            Storage::putFileAs('profiles', $request->file('picture'), $profile->picture);
         }
 
         $profile->save();
