@@ -6,7 +6,7 @@
                 <h4 class="m-0">{{ profile.slug }}</h4>
             </div>
             <div v-if="userCanEditProfile()" class="col-md-5 align-self-center text-right">
-                <a class="btn btn-outline-primary d-inline-flex align-items-center" style="border-radius: 0;" :href="editProfileUrl" role="button">
+                <a class="btn btn-outline-primary d-inline-flex align-items-center br-0" :href="editProfileUrl" role="button">
                     <i class="material-icons mr-1">create</i>
                     <span>Edit Profile</span>
                 </a>

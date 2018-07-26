@@ -12,12 +12,12 @@
         <div v-if="courses.length">
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-3" v-for="course in courses" v-bind:key="course.id">
-                    <div class="card" style="border-radius: 0">
+                    <div class="card br-0">
                         <div class="wrapper">
                             <img class="card-img-top img" :src="course.image_path">
                         </div>
                         <div class="card-body">
-                            <a :href="getCourseUrl(course)" style="text-decoration: none">
+                            <a :href="getCourseUrl(course)" class="anchor-custom">
                                 <small>{{ course.code }}</small>
                                 <h5 class="card-title line-clamp">{{ course.title }}</h5>
                             </a>
@@ -36,7 +36,7 @@
         
         <div v-else class="p-5 bg-light text-center">
             <h5 class="text-muted">Sorry, we could not find any matching courses under this category.</h5><br>
-            <a :href="categoriesIndexUrl" role="button" class="btn btn-dark" style="border-radius: 0">Back to categories</a>
+            <a :href="categoriesIndexUrl" role="button" class="btn btn-dark br-0">Back to categories</a>
         </div>
 
     </div>

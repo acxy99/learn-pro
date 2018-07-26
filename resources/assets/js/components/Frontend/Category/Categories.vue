@@ -16,12 +16,12 @@
         <div v-if="categories.length">
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-3" v-for="category in categories" v-bind:key="category.id">
-                    <div class="card" style="border-radius: 0">
+                    <div class="card br-0">
                         <div class="wrapper">
                             <img class="card-img-top img" :src="category.image_path">
                         </div>
                         <div class="card-body">
-                            <a :href="getCategoryUrl(category)" style="text-decoration: none">
+                            <a :href="getCategoryUrl(category)" class="anchor-custom">
                                 <h5 class="card-title line-clamp">{{ category.title }}</h5>
                             </a>
                             <p class="card-text line-clamp">{{ category.description }}</p>

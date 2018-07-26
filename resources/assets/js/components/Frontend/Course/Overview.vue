@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-10">
                 <div v-if="course.categories.length">
-                    <a role="button" v-for="category in course.categories" :key="category.id" :href="getCategoryUrl(category)" style="text-decoration: none; color: #000;">
+                    <a role="button" v-for="category in course.categories" :key="category.id" :href="getCategoryUrl(category)" class="anchor-custom" style="color: #000;">
                         <div class="d-inline-block p-2 mb-1 mr-1" style="background-color: #EEE">
                             <span>{{ category.title }}</span>
                         </div>

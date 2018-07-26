@@ -16,12 +16,12 @@
         <div v-if="courses.length">
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-3" v-for="course in courses" v-bind:key="course.id">
-                    <div class="card" style="border-radius: 0">
+                    <div class="card br-0Z">
                         <div class="wrapper">
                             <img class="card-img-top img" :src="course.image_path">
                         </div>
                         <div class="card-body">
-                            <a :href="getCourseUrl(course)" style="text-decoration: none">
+                            <a :href="getCourseUrl(course)" class="anchor-custom">
                                 <small>{{ course.code }}</small>
                                 <h5 class="card-title line-clamp">{{ course.title }}</h5>
                             </a>
