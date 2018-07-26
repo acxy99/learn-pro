@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Support\Facades\Storage;
 
 class Profile extends Model
 {
@@ -42,9 +43,9 @@ class Profile extends Model
 
     public function getPicturePathAttribute() {
         if ($this->picture) {
-            return '/storage/profiles/' . $this->picture;
+            return Storage::url('profiles/' . $this->picture);
         } else {
-            return '/storage/profiles/default-profile-picture.jpg';
+            return Storage::url('profiles/default-profile-picture.jpg');
         }
     }
 }
