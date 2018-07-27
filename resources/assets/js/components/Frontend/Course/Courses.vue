@@ -16,18 +16,7 @@
         <div v-if="courses.length">
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-3" v-for="course in courses" v-bind:key="course.id">
-                    <div class="card br-0Z">
-                        <div class="wrapper">
-                            <img class="card-img-top img" :src="course.image_path">
-                        </div>
-                        <div class="card-body">
-                            <a :href="getCourseUrl(course)" class="anchor-custom">
-                                <small>{{ course.code }}</small>
-                                <h5 class="card-title line-clamp">{{ course.title }}</h5>
-                            </a>
-                            <p class="card-text line-clamp">{{ course.description }}</p>
-                        </div>
-                    </div>
+                    <course-card :course="course"></course-card>
                 </div>
             </div>
 
@@ -45,7 +34,10 @@
 </template>
 
 <script>
+import CourseCard from '../CourseCard'
+
 export default {
+    components: { CourseCard },
     data() {
         return {
             courses: [],
@@ -80,9 +72,6 @@ export default {
                 next_page_url: links.next,
             };
             this.pagination = pagination;
-        },
-        getCourseUrl(course) {
-            return '/courses/' + course.slug;
         },
         searchInputChanged() {
             this.getCourses();

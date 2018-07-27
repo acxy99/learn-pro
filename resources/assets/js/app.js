@@ -20,6 +20,7 @@ import 'prismjs/themes/prism.css';
  */
 
 import LayoutHeader from './components/Layout/Header.vue';
+import HomePage from './components/Frontend/HomePage.vue';
 
 import Dashboard from './components/Admin/Dashboard.vue';
 
@@ -78,6 +79,7 @@ const app = new Vue({
     router,
     components: {
         LayoutHeader,
+        HomePage,
         Dashboard,
         AdminUsers, AdminUserForm,
         AdminCategories, AdminCategory, AdminCategoryForm,
