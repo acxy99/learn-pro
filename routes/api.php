@@ -48,8 +48,10 @@ Route::namespace('Frontend')->group(function() {
 
     Route::get('/categories', 'CategoryController@apiIndex');
     Route::get('/categories/{category_id}/courses', 'CategoryController@apiCourses');
+    Route::get('/categories/popular', 'CategoryController@apiPopular');
 
     Route::get('/courses', 'CourseController@apiIndex');
     Route::get('/courses/{course_id}/pages', 'CourseController@apiPages');
     Route::get('/courses/{course_id}/files', 'CourseController@apiFiles');
+    Route::get('/courses/new', 'CourseController@apiNew');
 });

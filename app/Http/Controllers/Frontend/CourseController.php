@@ -50,4 +50,10 @@ class CourseController extends Controller {
 
         return new FileResourceCollection($files); 
     }
+
+    public function apiNew() {
+        $courses = Course::orderBy('created_at', 'desc')->take(4)->get();
+
+        return new CourseResourceCollection($courses);
+    }
 }

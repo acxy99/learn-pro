@@ -36,4 +36,10 @@ class CategoryController extends Controller {
             $category->courses()->paginate(9)
         );
     }
+
+    public function apiPopular() {
+        $categories = Category::withCount('courses')->orderBy('courses_count', 'desc')->take(4)->get();
+
+        return new CategoryResourceCollection($categories);
+    }
 }
