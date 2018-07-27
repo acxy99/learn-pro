@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 // Prism - syntax highlighting
 import 'prismjs/prism';
 import 'prismjs/themes/prism.css';

@@ -11,6 +11,7 @@
         <title>LearnPro @yield('title')</title>
 
         @yield('stylesheets')
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <style>
         .anchor-custom {
             opacity: 1;
