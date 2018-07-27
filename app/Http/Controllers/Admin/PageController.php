@@ -114,7 +114,7 @@ class PageController extends Controller {
 
         $courseSlug = $request->course_slug;
 
-        $folderPath = 'courses/' . $courseSlug . '/resources';
+        $folderPath = 'courses/' . $courseSlug . '/page-resources';
         $fileName = $originalFileName . '.' . $originalExtension;
         Storage::putFileAs($folderPath, $file,  $fileName);
 

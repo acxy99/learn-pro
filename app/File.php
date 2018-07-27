@@ -22,7 +22,7 @@ class File extends Model
 
     public function getFilePathAttribute() {
         $course = $this->course;
-        return Storage::url('courses/' . $course['slug'] . '/' . $this->name);
+        return Storage::url('courses/' . $course['slug'] . '/files/' . $this->name);
     }
 
     public function scopeSearchByName($query, $name) {

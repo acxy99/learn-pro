@@ -54,7 +54,7 @@ class CourseController extends Controller {
 
         if($request->hasFile('image')) {
             $course->image = str_slug($course->code) . '.jpg';
-            Storage::putFileAs('courses', $request->file('image'), $course->image);
+            Storage::putFileAs('courses/' . $course->code, $request->file('image'), $course->image);
         }
         
         $course->save();
@@ -115,11 +115,11 @@ class CourseController extends Controller {
         if ($request->hasImage == 'true') {
             if ($request->hasFile('image')) {
                 $course->image = str_slug($course->code) . '.jpg';
-                Storage::putFileAs('courses', $request->file('image'), $course->image);
+                Storage::putFileAs('courses/' . $course->slug, $request->file('image'), $course->image);
             }
         } else {
             if ($course->image)
-                Storage::delete('courses/' . $course->image);
+                Storage::delete('courses/' . $course->slug . '/' . $course->image);
             $course->image = null;
         }
          
@@ -145,7 +145,7 @@ class CourseController extends Controller {
         $this->authorize('delete', $course);
 
         if ($course->image)
-            Storage::delete('courses/' . $course->image);
+            Storage::delete('courses/' . $course->slug . '/' . $course->image);
         
         $course->delete();
 

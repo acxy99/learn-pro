@@ -58,7 +58,7 @@ class FileController extends Controller {
                 $fileModel->course_id = $request->course_id;
                 $fileModel->save();
 
-                Storage::putFileAs('courses/' . $request->course_slug, $file,  $fileModel->name);
+                Storage::putFileAs('courses/' . $request->course_slug . '/files', $file,  $fileModel->name);
 
                 $files->push($fileModel);
             }
@@ -84,13 +84,13 @@ class FileController extends Controller {
         $file = File::findOrFail($id);
         $course = Course::findOrFail($file->course_id);
 
-        $originalFilePath = 'courses/' . $course->slug . '/' . $file->name;
+        $originalFilePath = 'courses/' . $course->slug . '/files/' . $file->name;
         $originalExtension = pathinfo($originalFilePath, PATHINFO_EXTENSION);
 
         $includesExtension = pathinfo($request->name, PATHINFO_EXTENSION) ? true : false;
 
         $newFileName = $includesExtension ? $request->name : $request->name . '.' . $originalExtension;
-        $newFilePath = 'courses/' . $course->slug . '/' . $newFileName;
+        $newFilePath = 'courses/' . $course->slug . '/files/' . $newFileName;
 
         if ($originalFilePath != $newFilePath)
             Storage::move($originalFilePath, $newFilePath);
@@ -107,7 +107,7 @@ class FileController extends Controller {
 
         $this->authorize('delete', $file);
 
-        Storage::delete('courses/' . $course->slug . '/' . $file->name);
+        Storage::delete('courses/' . $course->slug . '/files/' . $file->name);
         $file->delete();
 
         return response()->json(['file' => $file]);
