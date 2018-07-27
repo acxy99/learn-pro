@@ -97,7 +97,7 @@ class CategoryController extends Controller {
             }
         } else {
             if ($category->image)
-                Storage::delete('public/categories/' . $category->image);
+                Storage::delete('categories/' . $category->image);
             $category->image = null;
         }
 
@@ -112,7 +112,7 @@ class CategoryController extends Controller {
         $this->authorize('delete', $category);
 
         if ($category->image)
-            Storage::delete('public/categories/' . $category->image);
+            Storage::delete('categories/' . $category->image);
         $category->courses()->detach();
 
         $category->delete();

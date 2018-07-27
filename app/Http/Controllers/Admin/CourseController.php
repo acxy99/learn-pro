@@ -119,7 +119,7 @@ class CourseController extends Controller {
             }
         } else {
             if ($course->image)
-                Storage::delete('public/courses/' . $course->image);
+                Storage::delete('courses/' . $course->image);
             $course->image = null;
         }
          
@@ -145,7 +145,7 @@ class CourseController extends Controller {
         $this->authorize('delete', $course);
 
         if ($course->image)
-            Storage::delete('public/courses/' . $course->image);
+            Storage::delete('courses/' . $course->image);
         
         $course->delete();
 
