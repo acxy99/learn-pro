@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 use App\Course;
 use App\File;
@@ -17,7 +18,9 @@ class FileTest extends TestCase {
     public function get_file_path() {
         $file = factory(File::class)->create();
 
-        $this->assertEquals('/storage/courses/' . $file->course->slug . '/' . $file->name, $file->file_path);
+        $expected = Storage::url('courses/' . $file->course->slug . '/files/' . $file->name);
+        
+        $this->assertEquals($expected, $file->file_path);
     }
 
     /** @test */

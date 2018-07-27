@@ -35,14 +35,14 @@ class FileTest extends TestCase {
             'course_slug' => $this->course->slug,
         ];
 
-        Storage::fake('local');
+        Storage::fake('public');
     }
 
     /** @test */
     public function can_upload_file() {
         $this->actingAs($this->admin)->json('POST', '/api/admin/files', $this->createRequest);
 
-        Storage::disk('local')->assertExists('public/courses/' . $this->course->slug . '/' . $this->file->name);
+        Storage::assertExists('courses/' . $this->course->slug . '/files/' . $this->file->name);
     }
 
     /** @test */
@@ -64,7 +64,7 @@ class FileTest extends TestCase {
 
         $this->assertEquals($originalFile->id, $updatedFile->id);
         $this->assertEquals($updateRequest['name'] . '.' . $fileExtension, $updatedFile->name);
-        Storage::disk('local')->assertExists('public/courses/' . $this->course->slug . '/' . $updatedFile->name);
+        Storage::assertExists('courses/' . $this->course->slug . '/files/' . $updatedFile->name);
     }
 
     /** @test */
@@ -76,12 +76,12 @@ class FileTest extends TestCase {
 
         $this->assertNotNull($file);
         $this->assertCount(1, $this->course->files()->get());
-        Storage::disk('local')->assertExists('public/courses/' . $this->course->slug . '/' . $file->name);
+        Storage::assertExists('courses/' . $this->course->slug . '/files/' . $file->name);
 
         $this->actingAs($this->admin)->json('DELETE', '/admin/files/' . $file->id);
 
         $this->assertNull(File::find($file->id));
         $this->assertCount(0, $this->course->files()->get());
-        Storage::disk('local')->assertMissing('public/courses/' . $this->course->slug . '/' . $file->name);
+        Storage::assertMissing('courses/' . $this->course->slug . '/files/' . $file->name);
     }
 }

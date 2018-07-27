@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 use App\Course;
 
@@ -27,14 +28,18 @@ class CourseTest extends TestCase {
             'image' => UploadedFile::fake()->image('image.jpg')->name
         ]);
 
-        $this->assertEquals('/storage/courses/' . $course->image, $course->image_path);
+        $expected = Storage::url('courses/' . $course->slug . '/' . $course->image);
+
+        $this->assertEquals($expected, $course->image_path);
     }
 
     /** @test */
     public function get_default_course_image_path() {
         $course = factory(Course::class)->create();
 
-        $this->assertEquals('/storage/courses/placeholder-image.png', $course->image_path);
+        $expected = Storage::url('courses/placeholder-image.png');
+        
+        $this->assertEquals($expected, $course->image_path);
     }
 
     /** @test */

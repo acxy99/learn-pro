@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 use App\Category;
 
@@ -27,13 +28,13 @@ class CategoryTest extends TestCase {
             'image' => UploadedFile::fake()->image('image.jpg')->name
         ]);
 
-        $this->assertEquals('/storage/categories/' . $category->image, $category->image_path);
+        $this->assertEquals(Storage::url('categories/' . $category->image), $category->image_path);
     }
 
     /** @test */
     public function get_default_category_image_path() {
         $category = factory(Category::class)->create();
 
-        $this->assertEquals('/storage/categories/placeholder-image.png', $category->image_path);
+        $this->assertEquals(Storage::url('categories/placeholder-image.png'), $category->image_path);
     }
 }

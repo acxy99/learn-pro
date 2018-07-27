@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 use App\User;
 use App\Profile;
@@ -32,7 +33,7 @@ class ProfileTest extends TestCase {
             ])
         );
         
-        $this->assertEquals('/storage/profiles/' . $profile->picture, $profile->picture_path);
+        $this->assertEquals(Storage::url('profiles/' . $profile->picture), $profile->picture_path);
     }
 
     /** @test */
@@ -43,7 +44,7 @@ class ProfileTest extends TestCase {
             ])
         );
 
-        $this->assertEquals('/storage/profiles/default-profile-picture.jpg', $profile->picture_path);
+        $this->assertEquals(Storage::url('profiles/default-profile-picture.jpg'), $profile->picture_path);
     }
 
     /** @test */
