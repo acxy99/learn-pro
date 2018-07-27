@@ -64,7 +64,7 @@ export default {
                 }
             })
             .then(response => {
-                window.location.href = this.getCourseUrl() + '/files';
+                window.location.href = this.courseUrl + '/files';
             })
             .catch(error => {
                 console.log(error);
