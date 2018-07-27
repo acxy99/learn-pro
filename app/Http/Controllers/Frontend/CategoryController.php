@@ -17,11 +17,8 @@ class CategoryController extends Controller {
     }
 
     public function apiIndex(Request $request) {
-        $categories = Category::
-            when($request->query('searchInput'), function($query) use ($request) {
-                return $query->where('title', 'like', '%'.$request->query('searchInput').'%');
-            })
-            ->paginate(9);
+        $searchKeyword = $request->query('searchInput');
+        $categories = Category::searchByTitle($searchKeyword)->paginate(9);
 
         return new CategoryResourceCollection($categories);
     }

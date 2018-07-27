@@ -41,4 +41,10 @@ class Category extends Model
             return Storage::url('categories/placeholder-image.png');
         }
     }
+
+    public function scopeSearchByTitle($query, $title) {
+        return $query->when($title, function($query) use ($title) {
+            return $query->orWhere('title', 'like', '%' . $title . '%');
+        });
+    }
 }
