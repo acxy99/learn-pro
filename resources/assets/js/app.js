@@ -21,6 +21,7 @@ import 'prismjs/themes/prism.css';
 
 import LayoutHeader from './components/Layout/Header.vue';
 import HomePage from './components/Frontend/HomePage.vue';
+import SuccessAlert from './components/Layout/SuccessAlert';
 
 import Dashboard from './components/Admin/Dashboard.vue';
 
@@ -80,6 +81,7 @@ const app = new Vue({
     components: {
         LayoutHeader,
         HomePage,
+        SuccessAlert,
         Dashboard,
         AdminUsers, AdminUserForm,
         AdminCategories, AdminCategory, AdminCategoryForm,
