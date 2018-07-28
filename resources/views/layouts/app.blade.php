@@ -25,16 +25,7 @@
         .br-0 {
             border-radius: 0!important;
         }
-
-        .line-clamp {
-            display: -webkit-box!important;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-height: 48px;
-        }
-
+        
         .btn-form {
             width: 150px;
         }
