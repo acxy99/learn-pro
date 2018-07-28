@@ -14,55 +14,57 @@
 
         <div class="bg-light p-3 mb-5">
             <div class="row mb-3">
-                <div class="col-md-9 align-self-center">
-                    <input class="form-control br-0" style="width: 40%" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
+                <div class="col-7 align-self-center">
+                    <input class="form-control br-0" style="max-width: 320px" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
-                <div class="col-md-3 text-right">
+                <div class="col-5 text-right">
                     <a class="btn btn-primary br-0" :href="createCourseUrl" role="button">Create Course</a>
                 </div>
             </div>
 
-            <table class="bg-white table table-hover table-bordered mb-3">
-                <thead>
-                    <tr>
-                        <th style="width: 10%">Code</th>
-                        <th style="width: 20%">Title</th>
-                        <th style="width: 40%">Description</th>
-                        <th style="width: 10%">Image</th>
-                        <th style="width: 5%">ID</th>
-                        <th style="width: 15%">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="course in courses" :key="course.id" @mouseover="active = course.id" @mouseout="active = ''" style="height: 75px">
-                        <td style="width: 10%">{{ course.code }}</td>
-                        <td style="width: 20%">
-                            <a class="anchor-custom" :href="getManageCourseUrl(course)">{{ course.title }}</a>
-                        </td>
-                        <td style="width: 40%">{{ course.description }}</td>
-                        <td style="width: 10%">
-                            <div v-if="course.image">
-                                <a class="anchor-custom" :href="course.image_path">{{ course.image }}</a>
-                            </div>
-                            <div v-else class="text-muted">none</div>
-                        </td>
-                        <td style="width: 5%">{{ course.id }}</td>
-                        <td style="width: 15%">
-                            <div v-show="active == course.id">
-                                <a class="btn p-1" :href="getViewCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="View">
-                                    <i class="material-icons">visibility</i>
-                                </a>
-                                <a class="btn p-1" :href="getEditCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="Edit">
-                                    <i class="material-icons">create</i>
-                                </a>
-                                <button v-if="userCanDeleteCourse(course)" class="btn p-1" style="background-color: transparent" @click="deleteCourse(course)" data-toggle="tooltip" data-placement="bottom" title="Delete">
-                                    <i class="material-icons" style="color: red;">delete</i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div style="overflow-x:auto">
+                <table class="bg-white table table-hover table-bordered mb-3">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">Code</th>
+                            <th style="width: 20%">Title</th>
+                            <th style="width: 40%">Description</th>
+                            <th style="width: 10%">Image</th>
+                            <th style="width: 5%">ID</th>
+                            <th style="width: 15%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="course in courses" :key="course.id" @mouseover="active = course.id" @mouseout="active = ''" style="height: 75px">
+                            <td style="width: 10%">{{ course.code }}</td>
+                            <td style="width: 20%">
+                                <a class="anchor-custom" :href="getManageCourseUrl(course)">{{ course.title }}</a>
+                            </td>
+                            <td style="width: 40%">{{ course.description }}</td>
+                            <td style="width: 10%">
+                                <div v-if="course.image">
+                                    <a class="anchor-custom" :href="course.image_path">{{ course.image }}</a>
+                                </div>
+                                <div v-else class="text-muted">none</div>
+                            </td>
+                            <td style="width: 5%">{{ course.id }}</td>
+                            <td style="width: 15%">
+                                <div v-show="active == course.id">
+                                    <a class="btn p-1" :href="getViewCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="View">
+                                        <i class="material-icons">visibility</i>
+                                    </a>
+                                    <a class="btn p-1" :href="getEditCourseUrl(course)" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                                        <i class="material-icons">create</i>
+                                    </a>
+                                    <button v-if="userCanDeleteCourse(course)" class="btn p-1" style="background-color: transparent" @click="deleteCourse(course)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                        <i class="material-icons" style="color: red;">delete</i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <ul class="pagination m-0" style="justify-content: center;">
                 <li :class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="getCourses(pagination.prev_page_url)">Previous</a></li>

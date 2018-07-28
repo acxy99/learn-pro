@@ -67135,6 +67135,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -69001,7 +69003,7 @@ var render = function() {
       _c("div", { staticClass: "row mb-3" }, [
         _c(
           "div",
-          { staticClass: "col-md-3" },
+          { staticClass: "col-12 col-md-4 mb-1" },
           [
             _c("multiselect", {
               attrs: {
@@ -69032,7 +69034,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 align-self-center" }, [
+        _c("div", { staticClass: "col-12 col-md-4 mb-1 align-self-center" }, [
           _c("input", {
             directives: [
               {
@@ -69059,7 +69061,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6 text-right" }, [
+        _c("div", { staticClass: "col-12 col-md-4 mb-1 text-right" }, [
           _c(
             "a",
             {
@@ -69071,136 +69073,138 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "bg-white table table-hover table-bordered mb-3" },
-        [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.users, function(user) {
-              return _c(
-                "tr",
-                {
-                  key: user.id,
-                  staticStyle: { height: "65px" },
-                  on: {
-                    mouseover: function($event) {
-                      _vm.active = user.id
-                    },
-                    mouseout: function($event) {
-                      _vm.active = ""
-                    }
-                  }
-                },
-                [
-                  _c("td", { staticStyle: { width: "20%" } }, [
-                    _vm._v(_vm._s(user.username))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "20%" } }, [
-                    _vm._v(_vm._s(user.role.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "30%" } }, [
-                    _vm._v(_vm._s(user.email))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "10%" } }, [
-                    _vm._v(_vm._s(user.id))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "20%" } }, [
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.active == user.id,
-                            expression: "active == user.id"
-                          }
-                        ]
+      _c("div", { staticStyle: { "overflow-x": "auto" } }, [
+        _c(
+          "table",
+          { staticClass: "bg-white table table-hover table-bordered mb-3" },
+          [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.users, function(user) {
+                return _c(
+                  "tr",
+                  {
+                    key: user.id,
+                    staticStyle: { height: "65px" },
+                    on: {
+                      mouseover: function($event) {
+                        _vm.active = user.id
                       },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn p-1",
-                            attrs: {
-                              href: _vm.getEditUserUrl(user),
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "Edit"
+                      mouseout: function($event) {
+                        _vm.active = ""
+                      }
+                    }
+                  },
+                  [
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _vm._v(_vm._s(user.username))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _vm._v(_vm._s(user.role.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "30%" } }, [
+                      _vm._v(_vm._s(user.email))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "10%" } }, [
+                      _vm._v(_vm._s(user.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.active == user.id,
+                              expression: "active == user.id"
                             }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("create")
-                            ])
                           ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn p-1",
-                            attrs: {
-                              href: _vm.getProfileUrl(user),
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "User profile"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("account_circle")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        user.id != _vm.$user.id
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn p-1",
-                                staticStyle: {
-                                  "background-color": "transparent"
-                                },
-                                attrs: {
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "bottom",
-                                  title: "Delete"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    _vm.deleteUser(user)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "i",
-                                  {
-                                    staticClass: "material-icons",
-                                    staticStyle: { color: "red" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn p-1",
+                              attrs: {
+                                href: _vm.getEditUserUrl(user),
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "Edit"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("create")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn p-1",
+                              attrs: {
+                                href: _vm.getProfileUrl(user),
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "User profile"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("account_circle")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          user.id != _vm.$user.id
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn p-1",
+                                  staticStyle: {
+                                    "background-color": "transparent"
                                   },
-                                  [_vm._v("delete")]
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ]
-                    )
-                  ])
-                ]
-              )
-            })
-          )
-        ]
-      ),
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "bottom",
+                                    title: "Delete"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteUser(user)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass: "material-icons",
+                                      staticStyle: { color: "red" }
+                                    },
+                                    [_vm._v("delete")]
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              })
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "ul",
@@ -69975,6 +69979,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -70057,7 +70063,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "bg-light p-3 mb-5" }, [
       _c("div", { staticClass: "row mb-3" }, [
-        _c("div", { staticClass: "col-md-9 align-self-center" }, [
+        _c("div", { staticClass: "col-7 align-self-center" }, [
           _c("input", {
             directives: [
               {
@@ -70068,8 +70074,8 @@ var render = function() {
               }
             ],
             staticClass: "form-control br-0",
-            staticStyle: { width: "40%" },
-            attrs: { type: "search", placeholder: "Search" },
+            staticStyle: { "max-width": "320px" },
+            attrs: { type: "search", placeholder: "Search by title" },
             domProps: { value: _vm.searchInput },
             on: {
               keyup: function($event) {
@@ -70085,7 +70091,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 text-right" }, [
+        _c("div", { staticClass: "col-5 text-right" }, [
           _c(
             "a",
             {
@@ -70097,152 +70103,156 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "table table-hover table-bordered bg-white mb-3" },
-        [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.categories, function(category) {
-              return _c(
-                "tr",
-                {
-                  key: category.id,
-                  staticStyle: { height: "75px" },
-                  on: {
-                    mouseover: function($event) {
-                      _vm.active = category.id
-                    },
-                    mouseout: function($event) {
-                      _vm.active = ""
-                    }
-                  }
-                },
-                [
-                  _c("td", { staticStyle: { width: "20%" } }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "anchor-custom",
-                        attrs: { href: _vm.getManageCategoryUrl(category) }
+      _c("div", { staticStyle: { "overflow-x": "auto" } }, [
+        _c(
+          "table",
+          { staticClass: "table table-hover table-bordered bg-white mb-3" },
+          [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.categories, function(category) {
+                return _c(
+                  "tr",
+                  {
+                    key: category.id,
+                    staticStyle: { height: "75px" },
+                    on: {
+                      mouseover: function($event) {
+                        _vm.active = category.id
                       },
-                      [_vm._v(_vm._s(category.title))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "40%" } }, [
-                    _vm._v(_vm._s(category.description))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "15%" } }, [
-                    category.image
-                      ? _c("div", [
+                      mouseout: function($event) {
+                        _vm.active = ""
+                      }
+                    }
+                  },
+                  [
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "anchor-custom",
+                          attrs: { href: _vm.getManageCategoryUrl(category) }
+                        },
+                        [_vm._v(_vm._s(category.title))]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "40%" } }, [
+                      _vm._v(_vm._s(category.description))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "15%" } }, [
+                      category.image
+                        ? _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "anchor-custom",
+                                attrs: { href: category.image_path }
+                              },
+                              [_vm._v(_vm._s(category.image))]
+                            )
+                          ])
+                        : _c("div", { staticClass: "text-muted" }, [
+                            _vm._v("none")
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "8%" } }, [
+                      _vm._v(_vm._s(category.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "17%" } }, [
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.active == category.id,
+                              expression: "active == category.id"
+                            }
+                          ]
+                        },
+                        [
                           _c(
                             "a",
                             {
-                              staticClass: "anchor-custom",
-                              attrs: { href: category.image_path }
-                            },
-                            [_vm._v(_vm._s(category.image))]
-                          )
-                        ])
-                      : _c("div", { staticClass: "text-muted" }, [
-                          _vm._v("none")
-                        ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "8%" } }, [
-                    _vm._v(_vm._s(category.id))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "17%" } }, [
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.active == category.id,
-                            expression: "active == category.id"
-                          }
-                        ]
-                      },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn p-1",
-                            attrs: {
-                              href: _vm.getViewCategoryUrl(category),
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "View"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("visibility")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn p-1",
-                            attrs: {
-                              href: _vm.getEditCategoryUrl(category),
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "Edit"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("create")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn p-1",
-                            staticStyle: { "background-color": "transparent" },
-                            attrs: {
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "Delete"
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.deleteCategory(category)
+                              staticClass: "btn p-1",
+                              attrs: {
+                                href: _vm.getViewCategoryUrl(category),
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "View"
                               }
-                            }
-                          },
-                          [
-                            _c(
-                              "i",
-                              {
-                                staticClass: "material-icons",
-                                staticStyle: { color: "red" }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("visibility")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn p-1",
+                              attrs: {
+                                href: _vm.getEditCategoryUrl(category),
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "Edit"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("create")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn p-1",
+                              staticStyle: {
+                                "background-color": "transparent"
                               },
-                              [_vm._v("delete")]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ]
-              )
-            })
-          )
-        ]
-      ),
+                              attrs: {
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "Delete"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteCategory(category)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons",
+                                  staticStyle: { color: "red" }
+                                },
+                                [_vm._v("delete")]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              })
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "ul",
@@ -71476,6 +71486,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -71562,7 +71574,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "bg-light p-3 mb-5" }, [
       _c("div", { staticClass: "row mb-3" }, [
-        _c("div", { staticClass: "col-md-9 align-self-center" }, [
+        _c("div", { staticClass: "col-7 align-self-center" }, [
           _c("input", {
             directives: [
               {
@@ -71573,7 +71585,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control br-0",
-            staticStyle: { width: "40%" },
+            staticStyle: { "max-width": "320px" },
             attrs: { type: "search", placeholder: "Search by code or title" },
             domProps: { value: _vm.searchInput },
             on: {
@@ -71590,7 +71602,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 text-right" }, [
+        _c("div", { staticClass: "col-5 text-right" }, [
           _c(
             "a",
             {
@@ -71602,160 +71614,162 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "bg-white table table-hover table-bordered mb-3" },
-        [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.courses, function(course) {
-              return _c(
-                "tr",
-                {
-                  key: course.id,
-                  staticStyle: { height: "75px" },
-                  on: {
-                    mouseover: function($event) {
-                      _vm.active = course.id
-                    },
-                    mouseout: function($event) {
-                      _vm.active = ""
-                    }
-                  }
-                },
-                [
-                  _c("td", { staticStyle: { width: "10%" } }, [
-                    _vm._v(_vm._s(course.code))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "20%" } }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "anchor-custom",
-                        attrs: { href: _vm.getManageCourseUrl(course) }
+      _c("div", { staticStyle: { "overflow-x": "auto" } }, [
+        _c(
+          "table",
+          { staticClass: "bg-white table table-hover table-bordered mb-3" },
+          [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.courses, function(course) {
+                return _c(
+                  "tr",
+                  {
+                    key: course.id,
+                    staticStyle: { height: "75px" },
+                    on: {
+                      mouseover: function($event) {
+                        _vm.active = course.id
                       },
-                      [_vm._v(_vm._s(course.title))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "40%" } }, [
-                    _vm._v(_vm._s(course.description))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "10%" } }, [
-                    course.image
-                      ? _c("div", [
+                      mouseout: function($event) {
+                        _vm.active = ""
+                      }
+                    }
+                  },
+                  [
+                    _c("td", { staticStyle: { width: "10%" } }, [
+                      _vm._v(_vm._s(course.code))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "anchor-custom",
+                          attrs: { href: _vm.getManageCourseUrl(course) }
+                        },
+                        [_vm._v(_vm._s(course.title))]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "40%" } }, [
+                      _vm._v(_vm._s(course.description))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "10%" } }, [
+                      course.image
+                        ? _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "anchor-custom",
+                                attrs: { href: course.image_path }
+                              },
+                              [_vm._v(_vm._s(course.image))]
+                            )
+                          ])
+                        : _c("div", { staticClass: "text-muted" }, [
+                            _vm._v("none")
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "5%" } }, [
+                      _vm._v(_vm._s(course.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "15%" } }, [
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.active == course.id,
+                              expression: "active == course.id"
+                            }
+                          ]
+                        },
+                        [
                           _c(
                             "a",
                             {
-                              staticClass: "anchor-custom",
-                              attrs: { href: course.image_path }
+                              staticClass: "btn p-1",
+                              attrs: {
+                                href: _vm.getViewCourseUrl(course),
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "View"
+                              }
                             },
-                            [_vm._v(_vm._s(course.image))]
-                          )
-                        ])
-                      : _c("div", { staticClass: "text-muted" }, [
-                          _vm._v("none")
-                        ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "5%" } }, [
-                    _vm._v(_vm._s(course.id))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { width: "15%" } }, [
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.active == course.id,
-                            expression: "active == course.id"
-                          }
-                        ]
-                      },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn p-1",
-                            attrs: {
-                              href: _vm.getViewCourseUrl(course),
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "View"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("visibility")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn p-1",
-                            attrs: {
-                              href: _vm.getEditCourseUrl(course),
-                              "data-toggle": "tooltip",
-                              "data-placement": "bottom",
-                              title: "Edit"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("create")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm.userCanDeleteCourse(course)
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn p-1",
-                                staticStyle: {
-                                  "background-color": "transparent"
-                                },
-                                attrs: {
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "bottom",
-                                  title: "Delete"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    _vm.deleteCourse(course)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "i",
-                                  {
-                                    staticClass: "material-icons",
-                                    staticStyle: { color: "red" }
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("visibility")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn p-1",
+                              attrs: {
+                                href: _vm.getEditCourseUrl(course),
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom",
+                                title: "Edit"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("create")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.userCanDeleteCourse(course)
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn p-1",
+                                  staticStyle: {
+                                    "background-color": "transparent"
                                   },
-                                  [_vm._v("delete")]
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ]
-                    )
-                  ])
-                ]
-              )
-            })
-          )
-        ]
-      ),
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "bottom",
+                                    title: "Delete"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteCourse(course)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass: "material-icons",
+                                      staticStyle: { color: "red" }
+                                    },
+                                    [_vm._v("delete")]
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              })
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "ul",

@@ -14,7 +14,7 @@
 
         <div class="bg-light p-3 mb-5">         
             <div class="row mb-3">
-                <div class="col-md-3">
+                <div class="col-12 col-md-4 mb-1">
                     <multiselect 
                         id="role"
                         v-model="role"
@@ -29,46 +29,48 @@
                         @input="searchInputChanged()">
                     </multiselect>
                 </div>
-                <div class="col-md-3 align-self-center">
+                <div class="col-12 col-md-4 mb-1 align-self-center">
                     <input class="form-control br-0" type="search" placeholder="Search by username" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-12 col-md-4 mb-1 text-right">
                     <a class="btn btn-primary br-0" :href="createUserUrl" role="button">Create User</a>
                 </div>
             </div>
 
-            <table class="bg-white table table-hover table-bordered mb-3">
-                <thead>
-                    <tr>
-                        <th style="width: 20%">Username</th>
-                        <th style="width: 20%">Role</th>
-                        <th style="width: 30%">Email</th>
-                        <th style="width: 10%">ID</th>
-                        <th style="width: 20%">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="user in users" :key="user.id" @mouseover="active = user.id" @mouseout="active = ''" style="height: 65px">
-                        <td style="width: 20%">{{ user.username }}</td>
-                        <td style="width: 20%">{{ user.role.name }}</td>
-                        <td style="width: 30%">{{ user.email }}</td>
-                        <td style="width: 10%">{{ user.id }}</td>
-                        <td style="width: 20%">
-                            <div v-show="active == user.id">
-                                <a class="btn p-1" :href="getEditUserUrl(user)" data-toggle="tooltip" data-placement="bottom" title="Edit">
-                                    <i class="material-icons">create</i>
-                                </a>
-                                <a class="btn p-1" :href="getProfileUrl(user)" data-toggle="tooltip" data-placement="bottom" title="User profile">
-                                    <i class="material-icons">account_circle</i>
-                                </a>
-                                <button v-if="user.id != $user.id" class="btn p-1" style="background-color: transparent" @click="deleteUser(user)" data-toggle="tooltip" data-placement="bottom" title="Delete">
-                                    <i class="material-icons" style="color: red;">delete</i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div style="overflow-x:auto">
+                <table class="bg-white table table-hover table-bordered mb-3">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Username</th>
+                            <th style="width: 20%">Role</th>
+                            <th style="width: 30%">Email</th>
+                            <th style="width: 10%">ID</th>
+                            <th style="width: 20%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="user in users" :key="user.id" @mouseover="active = user.id" @mouseout="active = ''" style="height: 65px">
+                            <td style="width: 20%">{{ user.username }}</td>
+                            <td style="width: 20%">{{ user.role.name }}</td>
+                            <td style="width: 30%">{{ user.email }}</td>
+                            <td style="width: 10%">{{ user.id }}</td>
+                            <td style="width: 20%">
+                                <div v-show="active == user.id">
+                                    <a class="btn p-1" :href="getEditUserUrl(user)" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                                        <i class="material-icons">create</i>
+                                    </a>
+                                    <a class="btn p-1" :href="getProfileUrl(user)" data-toggle="tooltip" data-placement="bottom" title="User profile">
+                                        <i class="material-icons">account_circle</i>
+                                    </a>
+                                    <button v-if="user.id != $user.id" class="btn p-1" style="background-color: transparent" @click="deleteUser(user)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                        <i class="material-icons" style="color: red;">delete</i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <ul class="pagination m-0" style="justify-content: center;">
                 <li :class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="getUsers(pagination.prev_page_url)">Previous</a></li>
