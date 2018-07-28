@@ -34,7 +34,7 @@ class CourseTest extends TestCase {
             'owner_id' => factory(User::class)->create()->id,
         ];
 
-        $response = $this->actingAs($this->admin)->json('POST', '/api/admin/courses', $createRequest);
+        $response = $this->json('POST', '/api/admin/courses', $createRequest);
         $data = $response->getData();
 
         $course = Course::find($data->course->id);
@@ -49,7 +49,7 @@ class CourseTest extends TestCase {
     public function can_retrieve_course() {
         $course = factory(Course::class)->create();
 
-        $response = $this->actingAs($this->admin)->json('GET', '/api/admin/courses/' . $course->id);
+        $response = $this->json('GET', '/api/admin/courses/' . $course->id);
         $data = $response->getData();
 
         $retrievedCourse = $data->data;
@@ -68,7 +68,7 @@ class CourseTest extends TestCase {
             'description' => $this->faker->text,
         ];
 
-        $this->actingAs($this->admin)->json('PUT', '/api/admin/courses/' . $originalCourse->id, $updateRequest);
+        $this->json('PUT', '/api/admin/courses/' . $originalCourse->id, $updateRequest);
 
         $updatedCourse = Course::find($originalCourse->id);
 
