@@ -1,38 +1,39 @@
 <template>
-    <div class="container pt-5 pb-5">
-        <div class="jumbotron">
-            <div class="m-5">
+    <div>
+        <div class="jumbotron br-0 text-white" style="background: linear-gradient(20deg, #5B247A, #1BCEDF)">
+            <div class="container p-5">
                 <h3 class="text-center">Welcome to LEARN<b>PRO</b></h3>
                 <p class="text-center font-weight-light">A web based learning content management system for programming</p>
             </div>
         </div>
-        <hr>
 
-        <h5 class="mt-4 mb-3">Popular Categories</h5>
-        <div v-if="categories.length">
-            <div class="row">
-                <div class="col-md-6 col-lg-3 mb-3" v-for="category in categories" v-bind:key="category.id">
-                    <category-card :category="category" :homepage="true"></category-card>
+        <div class="container pb-5">
+            <h5 class="mt-4 mb-3">Popular Categories</h5>
+            <div v-if="categories.length">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 mb-3" v-for="category in categories" v-bind:key="category.id">
+                        <category-card :category="category" :homepage="true"></category-card>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div v-else class="p-5 bg-light text-center text-muted">
-            <i class="material-icons" style="font-size: 5rem">apps</i>
-            <h5 class="font-weight-light">No categories found.</h5>
-        </div>
-        <hr>
+            <div v-else class="p-5 bg-light text-center text-muted" style="margin-bottom: 2rem">
+                <i class="material-icons" style="font-size: 5rem">apps</i>
+                <h5 class="font-weight-light">No categories found.</h5>
+            </div>
+            <hr>
 
-        <h5 class="mt-4 mb-3">New Courses</h5>
-        <div v-if="courses.length">
-            <div class="row">
-                <div class="col-md-6 col-lg-3 mb-3" v-for="course in courses" v-bind:key="course.id">
-                    <course-card :course="course" :homepage="true"></course-card>
+            <h5 class="mt-4 mb-3">New Courses</h5>
+            <div v-if="courses.length">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 mb-3" v-for="course in courses" v-bind:key="course.id">
+                        <course-card :course="course" :homepage="true"></course-card>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div v-else class="p-5 bg-light text-center text-muted">
-            <i class="material-icons" style="font-size: 5rem">school</i>
-            <h5 class="font-weight-light">No courses found.</h5>
+            <div v-else class="p-5 bg-light text-center text-muted" style="margin-bottom: 2rem">
+                <i class="material-icons" style="font-size: 5rem">school</i>
+                <h5 class="font-weight-light">No courses found.</h5>
+            </div>
         </div>
     </div>
 </template>
