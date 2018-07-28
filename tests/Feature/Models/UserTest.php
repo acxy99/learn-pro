@@ -6,8 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\Profile;
 use App\User;
+use App\Profile;
 
 use App\Http\Controllers\Admin\UserController;
 
@@ -40,26 +40,6 @@ class UserTest extends TestCase {
         $user = User::find($data->user->id);
 
         $this->assertEquals($this->createRequest['username'], $user->username);
-    }
-
-    /** @test */
-    public function created_user_has_role() {
-        $response = $this->actingAs($this->admin)->json('POST', '/api/admin/users', $this->createRequest);
-        $data = $response->getData();
-
-        $user = User::find($data->user->id);
-
-        $this->assertEquals('instructor', $user->role->name);
-    }
-
-    /** @test */
-    public function created_user_has_profile() {
-        $response = $this->actingAs($this->admin)->json('POST', '/api/admin/users', $this->createRequest);
-        $data = $response->getData();
-
-        $user = User::find($data->user->id);
-
-        $this->assertNotNull($user->profile);
     }
 
     /** @test */
