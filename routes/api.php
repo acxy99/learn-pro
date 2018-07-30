@@ -44,7 +44,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Frontend
 */
 Route::namespace('Frontend')->group(function() {
-    Route::resource('profiles', 'ProfileController')->only(['update', 'destroy']);
+    Route::resource('profiles', 'ProfileController')->only(['update']);
 
     Route::get('/categories', 'CategoryController@apiIndex');
     Route::get('/categories/{category_id}/courses', 'CategoryController@apiCourses');
