@@ -10,8 +10,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 // Prism - syntax highlighting
-import 'prismjs/prism';
-import 'prismjs/themes/prism.css';
+import './prismjs/prism.js';
+import './prismjs/prism.css';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
