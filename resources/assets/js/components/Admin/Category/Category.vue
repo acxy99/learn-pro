@@ -56,7 +56,9 @@
                 <tbody>
                     <tr v-if="courses.length > 0" v-for="course in courses" :key="course.id" @mouseover="active = course.id" @mouseout="active = ''">
                         <td style="width: 20%">{{ course.code }}</td>
-                        <td style="width: 60%">{{ course.title }}</td>
+                        <td style="width: 60%">
+                            <a class="anchor-custom" :href="getManageCourseUrl(course)">{{ course.title }}</a>
+                        </td>
                         <td style="width: 20%">{{ course.id }}</td>
                     </tr>
                     <tr>
@@ -120,6 +122,9 @@ export default {
                     });
             }
         },
+        getManageCourseUrl(course) {
+            return '/admin/courses/' + course.slug;
+        }
     },
 }
 </script>

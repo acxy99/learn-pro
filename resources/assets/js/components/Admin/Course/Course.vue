@@ -147,7 +147,7 @@ export default {
             }
         },
         getCategoryUrl(category) {
-            return '/categories/' + category.slug;
+            return '/admin/categories/' + category.slug;
         },
         getInstructorProfileUrl(instructor) {
             return '/profiles/' + instructor.profile.slug;
