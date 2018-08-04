@@ -59,4 +59,15 @@ class UserHttpTest extends TestCase {
         $response = $this->json('PUT', '/api/admin/users/' . $user->id, $request);
         $response->assertOk();
     }
+
+    /** @test */
+    public function admin_web_destroy() {
+        $user = factory(User::class)->create();
+
+        $admin = factory(User::class)->create();
+        $admin->assign(1);
+
+        $response = $this->actingAs($admin)->json('DELETE', '/admin/users/' . $user->id);
+        $response->assertOk();
+    }
 }

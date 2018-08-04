@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Course;
 use App\Page;
+use App\User;
 
 class PageHttpTest extends TestCase {
     use WithFaker;
@@ -27,7 +28,7 @@ class PageHttpTest extends TestCase {
         $course = factory(Course::class)->create();
         factory(Page::class, 2)->create(['course_id' => $course->id]);
 
-        $response = $this->json('GET', '/api/courses/' . $course->id . '/pages');
+        $response = $this->json('GET', '/api/admin/courses/' . $course->id . '/pages');
         $response->assertOk()->assertJsonCount(2, 'data');
     }
 
@@ -57,6 +58,18 @@ class PageHttpTest extends TestCase {
         ];
 
         $response = $this->json('PUT', '/api/admin/pages/' . $page->id, $request);
+        $response->assertOK();
+    }
+
+    /** @test */
+    public function admin_web_destroy() {
+        $course = factory(Course::class)->create();
+        $page = factory(Page::class)->create(['course_id' => $course->id]);
+
+        $admin = factory(User::class)->create();
+        $admin->assign(1);
+
+        $response = $this->actingAs($admin)->json('DELETE', '/admin/pages/' . $page->id);
         $response->assertOK();
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Category;
 use App\Course;
+use App\User;
 
 class CategoryHttpTest extends TestCase {
     use WithFaker;
@@ -100,5 +101,16 @@ class CategoryHttpTest extends TestCase {
 
         $response = $this->json('GET', '/api/categories/popular');
         $response->assertOk()->assertJsonCount(4, 'data');
+    }
+
+    /** @test */
+    public function admin_web_destroy() {
+        $category = factory(Category::class)->create();
+
+        $admin = factory(User::class)->create();
+        $admin->assign(1);
+
+        $response = $this->actingAs($admin)->json('DELETE', '/admin/categories/' . $category->id);
+        $response->assertOk();
     }
 }

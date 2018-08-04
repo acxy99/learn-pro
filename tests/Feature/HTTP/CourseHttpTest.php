@@ -107,4 +107,15 @@ class CourseHttpTest extends TestCase {
         $response = $this->json('GET', '/api/courses/new');
         $response->assertOk()->assertJsonCount(4, 'data');
     }
+
+    /** @test */
+    public function admin_web_destroy() {
+        $course = factory(Course::class)->create();
+
+        $admin = factory(User::class)->create();
+        $admin->assign(1);
+        
+        $response = $this->actingAs($admin)->json('DELETE', '/admin/courses/' . $course->id);
+        $response->assertOk();
+    }
 }
