@@ -97,7 +97,7 @@ class Course extends Model
 
     public function getImagePathAttribute() {
         if ($this->image) {
-            return Storage::url('courses/' . $this->slug . '/' . $this->image);
+            return Storage::url('courses/' . $this->code . '/' . $this->image);
         } else {
             return Storage::url('courses/placeholder-image.png');
         }
