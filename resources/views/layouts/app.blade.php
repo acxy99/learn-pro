@@ -22,6 +22,15 @@
             text-decoration: none;
         }
 
+        .anchor-section::before {
+            display: block;
+            content: " ";
+            height: 56px;
+            margin-top: -56px;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
         .br-0 {
             border-radius: 0!important;
         }
