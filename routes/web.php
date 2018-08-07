@@ -18,7 +18,12 @@ use App\User;
 /*
     Authentication (login, logout, user registration, password reset)
 */
-Auth::routes();
+// Auth::routes();
+
+// Authentication Routes
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/', function () { return view('home'); });
 
