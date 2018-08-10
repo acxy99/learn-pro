@@ -72011,7 +72011,11 @@ var render = function() {
             "a",
             {
               staticClass: "btn btn-primary br-0",
-              attrs: { href: _vm.createCourseUrl, role: "button" }
+              attrs: {
+                href: _vm.createCourseUrl,
+                role: "button",
+                dusk: "create-course-button"
+              }
             },
             [_vm._v("Create Course")]
           )
@@ -72560,7 +72564,11 @@ var render = function() {
                 "a",
                 {
                   staticClass: "btn btn-primary br-0",
-                  attrs: { href: _vm.editCourseUrl, role: "button" }
+                  attrs: {
+                    href: _vm.editCourseUrl,
+                    role: "button",
+                    dusk: "edit-button"
+                  }
                 },
                 [_vm._v("Edit Course")]
               )
@@ -72571,6 +72579,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-danger br-0",
+                  attrs: { dusk: "delete-button" },
                   on: {
                     click: function($event) {
                       _vm.deleteCourse()
@@ -73108,6 +73117,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 // import 'vue-multiselect/dist/vue-multiselect.min.css';
@@ -73338,6 +73348,7 @@ var render = function() {
               attrs: {
                 type: "text",
                 id: "code",
+                name: "code",
                 maxlength: "8",
                 readonly: _vm.course.id
               },
@@ -73373,7 +73384,12 @@ var render = function() {
               ],
               staticClass: "form-control",
               class: { "is-invalid": _vm.errors["title"] },
-              attrs: { type: "text", id: "title", maxlength: "100" },
+              attrs: {
+                type: "text",
+                id: "title",
+                name: "title",
+                maxlength: "100"
+              },
               domProps: { value: _vm.course.title },
               on: {
                 input: function($event) {
@@ -73408,7 +73424,7 @@ var render = function() {
               ],
               staticClass: "form-control",
               class: { "is-invalid": _vm.errors["description"] },
-              attrs: { id: "description" },
+              attrs: { id: "description", name: "description" },
               domProps: { value: _vm.course.description },
               on: {
                 input: function($event) {
@@ -73441,6 +73457,7 @@ var render = function() {
                     _vm.selectedOwner == null || _vm.errors["owner_id"]
                 },
                 attrs: {
+                  dusk: "primary-instructor-multiselect",
                   "deselect-label": "Selected",
                   options: _vm.ownerOptions,
                   "track-by": "id",
@@ -73601,7 +73618,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary btn-form br-0",
-                attrs: { type: "submit" }
+                attrs: { type: "submit", dusk: "save-button" }
               },
               [_vm._v("Save")]
             ),

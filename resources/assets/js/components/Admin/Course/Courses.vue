@@ -18,7 +18,7 @@
                     <input class="form-control br-0" style="max-width: 320px" type="search" placeholder="Search by code or title" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
                 <div class="col-5 text-right">
-                    <a class="btn btn-primary br-0" :href="createCourseUrl" role="button">Create Course</a>
+                    <a class="btn btn-primary br-0" :href="createCourseUrl" role="button" dusk="create-course-button">Create Course</a>
                 </div>
             </div>
 

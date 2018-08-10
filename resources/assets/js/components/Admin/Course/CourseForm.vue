@@ -18,25 +18,26 @@
             <form enctype="multipart/form-data" @submit.prevent="onSubmit">
                 <div class="form-group">
                     <label for="code">Code</label>
-                    <input type="text" id="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
+                    <input type="text" id="code" name="code" v-model="course.code" class="form-control" :class="{'is-invalid': errors['code']}" maxlength="8" :readonly="course.id">
                     <div class="invalid-feedback" v-if="errors['code']">{{ errors['code'][0] }}</div>
                 </div>
 
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" id="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="100">
+                    <input type="text" id="title" name="title" v-model="course.title" class="form-control" :class="{'is-invalid': errors['title']}" maxlength="100">
                     <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" v-model="course.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
+                    <textarea id="description" name="description" v-model="course.description" class="form-control" :class="{'is-invalid': errors['description']}"></textarea>
                     <div class="invalid-feedback" v-if="errors['description']">{{ errors['description'][0] }}</div>
                 </div>
 
                 <div class="form-group">
                     <label for="owner">Primary instructor (owner)</label>
                     <multiselect 
+                        dusk="primary-instructor-multiselect"
                         :class="{'is-danger': selectedOwner == null || errors['owner_id']}"
                         v-model="selectedOwner"
                         deselect-label="Selected"
@@ -97,7 +98,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="submit" class="btn btn-primary btn-form br-0" dusk="save-button">Save</button>
                     <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
                 </div>
             </form>

@@ -13,8 +13,8 @@
                 <h5 class="m-0">{{ course.code }} {{ course.title }}</h5>
             </div>
             <div class="col-md-6 col-xl-5 align-self-center text-right">
-                <a v-if="userCanEditCourse()" class="btn btn-primary br-0" :href="editCourseUrl" role="button">Edit Course</a>
-                <button v-if="userCanDeleteCourse()" class="btn btn-danger br-0" @click="deleteCourse()">Delete Course</button>
+                <a v-if="userCanEditCourse()" class="btn btn-primary br-0" :href="editCourseUrl" role="button" dusk="edit-button">Edit Course</a>
+                <button v-if="userCanDeleteCourse()" class="btn btn-danger br-0" @click="deleteCourse()" dusk="delete-button">Delete Course</button>
             </div>
         </div>
         <hr>
