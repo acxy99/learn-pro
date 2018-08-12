@@ -54,15 +54,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-if="courses.length > 0" v-for="course in courses" :key="course.id" @mouseover="active = course.id" @mouseout="active = ''">
+                    <tr v-if="courses.length" v-for="course in courses" :key="course.id" @mouseover="active = course.id" @mouseout="active = ''">
                         <td style="width: 20%">{{ course.code }}</td>
                         <td style="width: 60%">
                             <a class="anchor-custom" :href="getManageCourseUrl(course)">{{ course.title }}</a>
                         </td>
                         <td style="width: 20%">{{ course.id }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="text-center">No courses found.</td>
                     </tr>
                 </tbody>
             </table>
