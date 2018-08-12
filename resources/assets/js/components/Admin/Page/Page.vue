@@ -15,8 +15,8 @@
                 <h4 class="font-weight-light m-0">{{ page.title }}</h4>
             </div>
             <div class="col-md-6 align-self-center text-right">
-                <a class="btn btn-primary br-0" :href="editPageUrl" role="button">Edit Page</a>
-                <button class="btn btn-danger br-0" @click="deletePage()">Delete Page</button>
+                <a class="btn btn-primary br-0" :href="editPageUrl" role="button" dusk="edit-button">Edit Page</a>
+                <button class="btn btn-danger br-0" @click="deletePage()" dusk="delete-button">Delete Page</button>
             </div>
         </div>
         <hr>

@@ -1,7 +1,7 @@
 <template>
 	<ul class="tree-menu list-unstyled" :class="ulClass">
 		<li :class="liClass" :style="liStyle">
-			<a :href="getPageUrl()" class="anchor-custom" style="color: #444">{{ title }}</a>
+			<a :href="getPageUrl()" class="anchor-custom" style="color: #444" :dusk="pageSlug">{{ title }}</a>
 		</li>
 
 		<tree

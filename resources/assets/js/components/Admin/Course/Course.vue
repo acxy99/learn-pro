@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light br-0" :href="managePagesUrl" role="button">Manage Pages</a>
+                    <a class="btn bg-light br-0" :href="managePagesUrl" role="button" dusk="manage-pages-button">Manage Pages</a>
                 </div>
             </div>
             <div class="card bg-light border-0 m-1">
@@ -109,7 +109,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light br-0" :href="manageFilesUrl" role="button">Manage Files</a>
+                    <a class="btn bg-light br-0" :href="manageFilesUrl" role="button" dusk="manage-files_button">Manage Files</a>
                 </div>
             </div>
         </div>

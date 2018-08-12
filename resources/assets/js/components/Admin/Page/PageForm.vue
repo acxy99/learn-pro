@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-7 form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" v-model="page.title" v-on:change="pageTitleChanged()" :class="{'is-invalid': errors['title']}">
+                        <input type="text" class="form-control" id="title" name="title" v-model="page.title" v-on:change="pageTitleChanged()" :class="{'is-invalid': errors['title']}">
                         <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
                     </div>
                     <div class="col-md-5 form-group">
@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label for="body">Body</label>
-                    <textarea class="form-control" id="body" :class="{'is-invalid': errors['body']}"></textarea>
+                    <textarea class="form-control" id="body" name="body" :class="{'is-invalid': errors['body']}"></textarea>
                     <div class="invalid-feedback" v-if="errors['body']">{{ errors['body'][0] }}</div>
                 </div>
 
@@ -68,8 +68,8 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="button" class="btn btn-dark btn-form br-0" data-toggle="modal" data-target="#preview">Preview</button>
-                    <button type="submit" class="btn btn-primary btn-form br-0">Save</button>
+                    <button type="button" class="btn btn-dark btn-form br-0" data-toggle="modal" data-target="#preview" dusk="preview-button">Preview</button>
+                    <button type="submit" class="btn btn-primary btn-form br-0" dusk="save-button">Save</button>
                     <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
                 </div>
             </form>

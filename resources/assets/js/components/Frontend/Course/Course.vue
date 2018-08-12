@@ -10,7 +10,7 @@
         <div class="container pb-5">
             <ul class="nav nav-tabs mb-3 nav-justified" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" style="color: #495057" id="overview-tab" data-toggle="tab" href="#overview" role="tab">
+                    <a class="nav-link active" style="color: #495057" id="overview-tab" data-toggle="tab" href="#overview" role="tab" dusk="overview-tab">
                         <div class="d-inline-flex align-middle">
                             <i class="material-icons mr-3">info</i>
                             <span>Overview</span>
@@ -18,7 +18,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #495057" id="pages-tab" data-toggle="tab" href="#pages" role="tab">
+                    <a class="nav-link" style="color: #495057" id="pages-tab" data-toggle="tab" href="#pages" role="tab" dusk="pages-tab">
                         <div class="d-inline-flex align-middle">
                             <i class="material-icons mr-3">notes</i>
                             <span>Pages</span>
@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #495057" id="files-tab" data-toggle="tab" href="#files" role="tab">
+                    <a class="nav-link" style="color: #495057" id="files-tab" data-toggle="tab" href="#files" role="tab" dusk="files-tab">
                         <div class="d-inline-flex align-middle">
                             <i class="material-icons mr-3">folder</i>
                             <span>Files</span>
@@ -37,13 +37,13 @@
 
             <div class="tab-content mt-4" id="myTabContent">
                 <div class="tab-pane show active" id="overview" role="tabpanel">
-                    <overview :course="course"></overview>
+                    <overview :course="course" dusk="overview-tab-content"></overview>
                 </div>
                 <div class="tab-pane" id="pages" role="tabpanel">
-                    <pages :course="course"></pages>
+                    <pages :course="course" dusk="pages-tab-content"></pages>
                 </div>
                 <div class="tab-pane" id="files" role="tabpanel">
-                    <files :course="course"></files>
+                    <files :course="course" dusk="files-tab-content"></files>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@
                     <input class="form-control br-0" style="width: 40%" type="search" placeholder="Search by title" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
                 <div class="col-md-3 text-right">
-                    <a class="btn btn-primary btn-form br-0" :href="createPageUrl" role="button">Create Page</a>
+                    <a class="btn btn-primary btn-form br-0" :href="createPageUrl" role="button" dusk="create-page-button">Create Page</a>
                 </div>
             </div>
 

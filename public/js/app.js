@@ -70921,9 +70921,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['category'],
@@ -71090,49 +71087,44 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          [
-            _vm._l(_vm.courses, function(course) {
-              return _vm.courses.length > 0
-                ? _c(
-                    "tr",
-                    {
-                      key: course.id,
-                      on: {
-                        mouseover: function($event) {
-                          _vm.active = course.id
-                        },
-                        mouseout: function($event) {
-                          _vm.active = ""
-                        }
+          _vm._l(_vm.courses, function(course) {
+            return _vm.courses.length
+              ? _c(
+                  "tr",
+                  {
+                    key: course.id,
+                    on: {
+                      mouseover: function($event) {
+                        _vm.active = course.id
+                      },
+                      mouseout: function($event) {
+                        _vm.active = ""
                       }
-                    },
-                    [
-                      _c("td", { staticStyle: { width: "20%" } }, [
-                        _vm._v(_vm._s(course.code))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { width: "60%" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "anchor-custom",
-                            attrs: { href: _vm.getManageCourseUrl(course) }
-                          },
-                          [_vm._v(_vm._s(course.title))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { width: "20%" } }, [
-                        _vm._v(_vm._s(course.id))
-                      ])
-                    ]
-                  )
-                : _vm._e()
-            }),
-            _vm._v(" "),
-            _vm._m(2)
-          ],
-          2
+                    }
+                  },
+                  [
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _vm._v(_vm._s(course.code))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "60%" } }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "anchor-custom",
+                          attrs: { href: _vm.getManageCourseUrl(course) }
+                        },
+                        [_vm._v(_vm._s(course.title))]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _vm._v(_vm._s(course.id))
+                    ])
+                  ]
+                )
+              : _vm._e()
+          })
         )
       ]),
       _vm._v(" "),
@@ -71258,16 +71250,6 @@ var staticRenderFns = [
         _c("th", { staticStyle: { width: "60%" } }, [_vm._v("Course Title")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "20%" } }, [_vm._v("Course ID")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "text-center", attrs: { colspan: "3" } }, [
-        _vm._v("No courses found.")
       ])
     ])
   }
@@ -72765,7 +72747,11 @@ var render = function() {
             "a",
             {
               staticClass: "btn bg-light br-0",
-              attrs: { href: _vm.managePagesUrl, role: "button" }
+              attrs: {
+                href: _vm.managePagesUrl,
+                role: "button",
+                dusk: "manage-pages-button"
+              }
             },
             [_vm._v("Manage Pages")]
           )
@@ -72806,7 +72792,11 @@ var render = function() {
             "a",
             {
               staticClass: "btn bg-light br-0",
-              attrs: { href: _vm.manageFilesUrl, role: "button" }
+              attrs: {
+                href: _vm.manageFilesUrl,
+                role: "button",
+                dusk: "manage-files_button"
+              }
             },
             [_vm._v("Manage Files")]
           )
@@ -73951,7 +73941,11 @@ var render = function() {
             "a",
             {
               staticClass: "btn btn-primary btn-form br-0",
-              attrs: { href: _vm.createPageUrl, role: "button" }
+              attrs: {
+                href: _vm.createPageUrl,
+                role: "button",
+                dusk: "create-page-button"
+              }
             },
             [_vm._v("Create Page")]
           )
@@ -74430,7 +74424,11 @@ var render = function() {
           "a",
           {
             staticClass: "btn btn-primary br-0",
-            attrs: { href: _vm.editPageUrl, role: "button" }
+            attrs: {
+              href: _vm.editPageUrl,
+              role: "button",
+              dusk: "edit-button"
+            }
           },
           [_vm._v("Edit Page")]
         ),
@@ -74439,6 +74437,7 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-danger br-0",
+            attrs: { dusk: "delete-button" },
             on: {
               click: function($event) {
                 _vm.deletePage()
@@ -111826,7 +111825,7 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": _vm.errors["title"] },
-                attrs: { type: "text", id: "title" },
+                attrs: { type: "text", id: "title", name: "title" },
                 domProps: { value: _vm.page.title },
                 on: {
                   change: function($event) {
@@ -111886,7 +111885,7 @@ var render = function() {
             _c("textarea", {
               staticClass: "form-control",
               class: { "is-invalid": _vm.errors["body"] },
-              attrs: { id: "body" }
+              attrs: { id: "body", name: "body" }
             }),
             _vm._v(" "),
             _vm.errors["body"]
@@ -111947,7 +111946,8 @@ var render = function() {
                 attrs: {
                   type: "button",
                   "data-toggle": "modal",
-                  "data-target": "#preview"
+                  "data-target": "#preview",
+                  dusk: "preview-button"
                 }
               },
               [_vm._v("Preview")]
@@ -111957,7 +111957,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary btn-form br-0",
-                attrs: { type: "submit" }
+                attrs: { type: "submit", dusk: "save-button" }
               },
               [_vm._v("Save")]
             ),
@@ -114121,7 +114121,7 @@ var render = function() {
     _c("hr"),
     _vm._v(" "),
     _vm.courses.length
-      ? _c("div", [
+      ? _c("div", { attrs: { dusk: "courses" } }, [
           _c(
             "div",
             { staticClass: "row" },
@@ -114129,7 +114129,11 @@ var render = function() {
               return _c(
                 "div",
                 { key: course.id, staticClass: "col-md-6 col-lg-4 mb-3" },
-                [_c("course-card", { attrs: { course: course } })],
+                [
+                  _c("course-card", {
+                    attrs: { course: course, dusk: course.slug }
+                  })
+                ],
                 1
               )
             })
@@ -115021,7 +115025,7 @@ var render = function() {
           {
             staticClass: "anchor-custom",
             staticStyle: { color: "#444" },
-            attrs: { href: _vm.getPageUrl() }
+            attrs: { href: _vm.getPageUrl(), dusk: _vm.pageSlug }
           },
           [_vm._v(_vm._s(_vm.title))]
         )
@@ -115561,7 +115565,11 @@ var render = function() {
               staticClass: "tab-pane show active",
               attrs: { id: "overview", role: "tabpanel" }
             },
-            [_c("overview", { attrs: { course: _vm.course } })],
+            [
+              _c("overview", {
+                attrs: { course: _vm.course, dusk: "overview-tab-content" }
+              })
+            ],
             1
           ),
           _vm._v(" "),
@@ -115571,7 +115579,11 @@ var render = function() {
               staticClass: "tab-pane",
               attrs: { id: "pages", role: "tabpanel" }
             },
-            [_c("pages", { attrs: { course: _vm.course } })],
+            [
+              _c("pages", {
+                attrs: { course: _vm.course, dusk: "pages-tab-content" }
+              })
+            ],
             1
           ),
           _vm._v(" "),
@@ -115581,7 +115593,11 @@ var render = function() {
               staticClass: "tab-pane",
               attrs: { id: "files", role: "tabpanel" }
             },
-            [_c("files", { attrs: { course: _vm.course } })],
+            [
+              _c("files", {
+                attrs: { course: _vm.course, dusk: "files-tab-content" }
+              })
+            ],
             1
           )
         ]
@@ -115611,7 +115627,8 @@ var staticRenderFns = [
                 id: "overview-tab",
                 "data-toggle": "tab",
                 href: "#overview",
-                role: "tab"
+                role: "tab",
+                dusk: "overview-tab"
               }
             },
             [
@@ -115636,7 +115653,8 @@ var staticRenderFns = [
                 id: "pages-tab",
                 "data-toggle": "tab",
                 href: "#pages",
-                role: "tab"
+                role: "tab",
+                dusk: "pages-tab"
               }
             },
             [
@@ -115661,7 +115679,8 @@ var staticRenderFns = [
                 id: "files-tab",
                 "data-toggle": "tab",
                 href: "#files",
-                role: "tab"
+                role: "tab",
+                dusk: "files-tab"
               }
             },
             [

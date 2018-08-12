@@ -13,10 +13,10 @@
         </div>
         <hr>
         
-        <div v-if="courses.length">
+        <div v-if="courses.length" dusk="courses">
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-3" v-for="course in courses" v-bind:key="course.id">
-                    <course-card :course="course"></course-card>
+                    <course-card :course="course" :dusk="course.slug"></course-card>
                 </div>
             </div>
 

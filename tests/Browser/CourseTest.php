@@ -39,9 +39,10 @@ class CourseTest extends DuskTestCase {
     /** @test */
     public function view_course() {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit('/admin/courses/abcd0123')
-                    ->assertSee('Hello World');
+            $browser->visit('/courses')
+                    ->waitFor('@courses')
+                    ->click('@abcd0123')
+                    ->assertPresent('@overview-tab-content');
         });
     }
 
