@@ -20,7 +20,7 @@
                     <input class="form-control br-0" style="width: 40%" type="search" placeholder="Search by file name" v-model="searchInput" @keyup="searchInputChanged()">
                 </div>
                 <div class="col-md-3 text-right">
-                    <a class="btn btn-primary btn-form br-0" :href="uploadFilesUrl" role="button">Upload Files</a>
+                    <a class="btn btn-primary btn-form br-0" :href="uploadFilesUrl" role="button" dusk="upload-files-button">Upload Files</a>
                 </div>
             </div>
 
@@ -32,8 +32,8 @@
                         <th style="width: 20%">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px">
+                <tbody dusk="files">
+                    <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px" :dusk="file.name">
                         <td style="width: 70%">
                             <a class="anchor-custom" :href="getFileUrl(file)">{{ file.name }}</a>
                         </td>
@@ -43,7 +43,7 @@
                                 <a class="btn p-1" :href="getEditFileUrl(file)">
                                     <i class="material-icons">create</i>
                                 </a>
-                                <button class="btn p-1 bg-transparent" @click="deleteFile(file)">
+                                <button class="btn p-1 bg-transparent" @click="deleteFile(file)" :dusk="file.name + '-delete-button'">
                                     <i class="material-icons" style="color: red;">delete</i>
                                 </button>
                             </div>

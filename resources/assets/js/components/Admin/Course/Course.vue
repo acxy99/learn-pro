@@ -109,7 +109,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light br-0" :href="manageFilesUrl" role="button" dusk="manage-files_button">Manage Files</a>
+                    <a class="btn bg-light br-0" :href="manageFilesUrl" role="button" dusk="manage-files-button">Manage Files</a>
                 </div>
             </div>
         </div>

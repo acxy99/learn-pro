@@ -19,7 +19,7 @@
             <form enctype="multipart/form-data" @submit.prevent="onSubmit">
                 <div class="form-group">
                     <label for="files">Files</label>
-                    <input type="file" id="files" ref="files" multiple v-on:change="handleFiles()" class="form-control">
+                    <input type="file" id="files" name="files" ref="files" multiple v-on:change="handleFiles()" class="form-control">
                 </div>
 
                 <table v-if="fileList.length" class="bg-white table table-hover table-bordered">
@@ -43,7 +43,7 @@
                 </table>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-form br-0">Upload</button>
+                    <button type="submit" class="btn btn-primary btn-form br-0" dusk="upload-button">Upload</button>
                     <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
                 </div>
             </form>

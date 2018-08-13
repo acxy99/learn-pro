@@ -72795,7 +72795,7 @@ var render = function() {
               attrs: {
                 href: _vm.manageFilesUrl,
                 role: "button",
-                dusk: "manage-files_button"
+                dusk: "manage-files-button"
               }
             },
             [_vm._v("Manage Files")]
@@ -112297,7 +112297,11 @@ var render = function() {
             "a",
             {
               staticClass: "btn btn-primary btn-form br-0",
-              attrs: { href: _vm.uploadFilesUrl, role: "button" }
+              attrs: {
+                href: _vm.uploadFilesUrl,
+                role: "button",
+                dusk: "upload-files-button"
+              }
             },
             [_vm._v("Upload Files")]
           )
@@ -112312,12 +112316,14 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
+            { attrs: { dusk: "files" } },
             _vm._l(_vm.files, function(file) {
               return _c(
                 "tr",
                 {
                   key: file.id,
                   staticStyle: { height: "65px" },
+                  attrs: { dusk: file.name },
                   on: {
                     mouseover: function($event) {
                       _vm.active = file.id
@@ -112371,6 +112377,7 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn p-1 bg-transparent",
+                            attrs: { dusk: file.name + "-delete-button" },
                             on: {
                               click: function($event) {
                                 _vm.deleteFile(file)
@@ -112785,7 +112792,7 @@ var render = function() {
             _c("input", {
               ref: "files",
               staticClass: "form-control",
-              attrs: { type: "file", id: "files", multiple: "" },
+              attrs: { type: "file", id: "files", name: "files", multiple: "" },
               on: {
                 change: function($event) {
                   _vm.handleFiles()
@@ -112863,7 +112870,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary btn-form br-0",
-                attrs: { type: "submit" }
+                attrs: { type: "submit", dusk: "upload-button" }
               },
               [_vm._v("Upload")]
             ),
@@ -115403,7 +115410,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _vm.files.length
-      ? _c("div", [
+      ? _c("div", { attrs: { dusk: "files" } }, [
           _c(
             "div",
             { staticClass: "list-group mb-3" },

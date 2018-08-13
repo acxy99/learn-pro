@@ -2,7 +2,7 @@
     <div class="container col-md-10">
         <input class="form-control br-0 mb-3" style="width: 40%" type="search" placeholder="Search" v-model="searchInput" @keyup="searchInputChanged()">
 
-        <div v-if="files.length">
+        <div v-if="files.length" dusk="files">
             <div class="list-group mb-3">
                 <a class="list-group-item list-group-item-action br-0" v-for="file in files" :key="file.id" :href="getFileUrl(file)">
                     <div class="d-inline-flex align-items-center">                 
