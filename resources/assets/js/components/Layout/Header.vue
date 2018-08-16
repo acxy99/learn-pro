@@ -53,7 +53,6 @@ export default {
     },
     created() {
         this.initData();
-        console.log(this.$user);
     },
     methods: {
         initData() {

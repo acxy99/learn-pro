@@ -66088,7 +66088,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         this.initData();
-        console.log(this.$user);
     },
 
     methods: {
@@ -116695,31 +116694,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var picture = document.querySelector('#picture').files[0];
             if (picture) formData.append('picture', picture);
             formData.append('_method', 'PUT');
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = formData.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var pair = _step.value;
-
-                    console.log(pair[0] + ', ' + pair[1]);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
 
             axios.post('/api/profiles/' + this.profile.user_id, formData, {
                 _method: 'put',

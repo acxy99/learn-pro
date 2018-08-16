@@ -120,10 +120,6 @@ export default {
             if (picture) formData.append('picture', picture);
             formData.append('_method', 'PUT');
 
-            for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
-            }
-
             axios.post('/api/profiles/' + this.profile.user_id, formData, {
                 _method: 'put',
                 headers: {
