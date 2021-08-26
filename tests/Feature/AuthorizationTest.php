@@ -13,7 +13,7 @@ class AuthorizationTest extends TestCase {
 
     protected $admin, $instructor, $learner;
 
-    public function setUp() {
+    public function setUp(): void {
         parent::setUp();
 
         $this->admin = factory(User::class)->create();

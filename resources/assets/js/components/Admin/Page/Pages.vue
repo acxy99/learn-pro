@@ -5,6 +5,8 @@
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                 <li  class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicUrl">Topic</a></li>
+                <li v-if="topic.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicViewUrl">{{topic.id}}</a></li>
                 <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Pages</li>
             </ol>
         </nav>
@@ -70,23 +72,29 @@
 
 <script>
 export default {
-    props: ['course'],
+    props: ['course','topic'],
     data() {
         return {
             courseUrl: '/admin/courses/' + this.course.slug,
             active: '',
-            createPageUrl: '/admin/courses/' + this.course.slug + '/pages/create',
+            createPageUrl: '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id+'/pages/create',
+            topicUrl:'/admin/courses/'+this.course.slug+'/topic',
+            topicViewUrl:'/admin/courses/'+this.course.slug+'/topic/'+this.topic.id,
             pages: [],
             pagination: {},
             searchInput: '',
         }
     },
+    mounted(){
+        window.console.log(this.topic.id);
+    },
     created() {
+        
         this.getPages();
     },
     methods: {
         getPages(url) {
-            url = url || '/api/admin/courses/' + this.course.id + '/pages'
+            url = url || '/api/admin/courses/topic/'+this.topic.id  + '/pages'
 
             axios.get(url, {
                     params: {
@@ -117,7 +125,7 @@ export default {
             return '/courses/' + this.course.slug + '/pages/' + page.slug;
         },
         getEditPageUrl(page) {
-            return '/admin/courses/' + this.course.slug + '/pages/' + page.slug + '/edit';
+            return '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id+ '/pages/' + page.slug + '/edit';
         },
         deletePage(page) {
             if(confirm('Are you sure you want to delete this page?')) {

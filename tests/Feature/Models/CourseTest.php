@@ -15,7 +15,7 @@ class CourseTest extends TestCase {
 
     protected $admin, $courseTitle;
     
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
 
         $this->admin = factory(User::class)->create();

@@ -11,12 +11,14 @@ use App\Course;
 use App\Page;
 use App\File;
 use App\Category;
+use App\Topic;
 use App\Policies\UserPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\CoursePolicy;
 use App\Policies\PagePolicy;
 use App\Policies\FilePolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\TopicPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         Page::class => PagePolicy::class,
         File::class => FilePolicy::class,
         Category::class => CategoryPolicy::class,
+        Topic::class=> TopicPolicy::class,
     ];
 
     /**

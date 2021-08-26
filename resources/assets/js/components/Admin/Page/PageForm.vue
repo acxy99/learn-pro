@@ -5,6 +5,8 @@
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li  class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicUrl">Topic</a></li>
+                <li v-if="topic.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicViewUrl">{{topic.id}}</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="pagesUrl">Pages</a></li>
                 <li v-if="page.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="pageUrl">{{ page.title }}</a></li>
                 <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">{{ title }}</li>
@@ -24,12 +26,16 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-7 form-group">
+                    <div class="col-md-12 form-group">
                         <label for="title">Title</label>
                         <input type="text" class="form-control" id="title" name="title" v-model="page.title" v-on:change="pageTitleChanged()" :class="{'is-invalid': errors['title']}">
                         <div class="invalid-feedback" v-if="errors['title']">{{ errors['title'][0] }}</div>
                     </div>
-                    <div class="col-md-5 form-group">
+                    
+                </div>
+                
+                <div class="row">   
+                    <div class="col-md-6 form-group">
                         <label for="parent_id">Parent</label>
                         <multiselect 
                             v-model="parent"
@@ -43,6 +49,7 @@
                             placeholder="Select parent">
                         </multiselect>
                     </div>
+
                 </div>
 
                 <div class="form-group">
@@ -82,9 +89,10 @@ import Multiselect from 'vue-multiselect/src/Multiselect.vue';
 import tinymce from 'tinymce/tinymce.js';
 import 'tinymce/themes/modern/theme';
 
+
 export default {
     components: { Multiselect },
-    props: ['course', 'parents', 'files', 'page'],
+    props: ['course', 'parents', 'files', 'page','topic'],
     data() {
         return {
             title: '',
@@ -98,6 +106,8 @@ export default {
             pageBody: this.page.body,
             parent: this.parents.find(parent => parent.id === this.page.parent_id),
             parentOptions: this.parents,
+            topicUrl:'/admin/courses/'+this.course.slug+'/topic',
+            topicViewUrl:'/admin/courses/'+this.course.slug+'/topic/'+this.topic.id,
         }
     },
     created() {
@@ -109,7 +119,7 @@ export default {
         setTitle() {
             if (this.page.id) { 
                 this.title = 'Update Page';
-                this.pageUrl = '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug;
+                this.pageUrl = '/admin/courses/' + this.course.slug + '/topic/'+this.topic.id+'/pages/' + this.page.slug;
             } else {
                 this.title = 'Create Page';
             }
@@ -171,6 +181,7 @@ export default {
             formData.append('body', tinymce.get('body').getContent());
             formData.append('course_id', this.course.id);
             formData.append('parent_id', this.parent ? this.parent.id : '');
+            formData.append('topic_id', this.topic.id);
 
             if (this.page.id) {
                 this.updatePage(formData);

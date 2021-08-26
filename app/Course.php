@@ -24,6 +24,9 @@ class Course extends Model
         'image_path',
         'pages_count',
         'files_count',
+        'topic_count',
+        'pla_count',
+        'leap_count',
         'categories',
         'instructors',
         'co_instructors'
@@ -40,7 +43,7 @@ class Course extends Model
     }
 
     public function learners() {
-        return $this->belongsToMany(User::class, 'course_learner');
+        return $this->belongsToMany(User::class, 'learner_courses');
     }
 
     public function pages() {
@@ -51,6 +54,20 @@ class Course extends Model
         return $this->hasMany(File::class);
     }
 
+    public function topic(){
+        return $this->hasMany(Topic::class);
+    }
+
+    public function pla(){
+        return $this->hasMany(Pla::class);
+    }
+
+    public function leap(){
+        return $this->hasMany(Leap::class);
+    }
+
+
+
     public function getInstructorsAttribute() {
         return $this->instructors()->get(['id', 'username', 'email'])->each->setAppends([]);
     }
@@ -59,12 +76,24 @@ class Course extends Model
         return $this->instructors()->where('id', '!=', $this->owner_id)->get(['id', 'username', 'email'])->each->setAppends([]);
     }
 
+    public function getTopicCountAttribute(){
+        return $this->topic()->count();
+    }
+
     public function getPagesCountAttribute() {
         return $this->pages()->count();
     }
 
     public function getFilesCountAttribute() {
         return $this->files()->count();
+    }
+
+    public function getPlaCountAttribute() {
+        return $this->pla()->count();
+    }
+
+    public function getLeapCountAttribute() {
+        return $this->leap()->count();
     }
 
     protected static function boot() {
@@ -76,6 +105,8 @@ class Course extends Model
             $course->categories()->detach();
             $course->pages()->delete();
             $course->files()->delete();
+            $course->topic()->delete();
+            $course->pla()->delete();
         });
     }
 

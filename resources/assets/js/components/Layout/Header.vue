@@ -17,6 +17,12 @@
                 </li>
             </ul>
 
+            <ul class="navbar-nav mr-2">
+                <li class="" v-if="$userIsLearner()">
+                    <a class="nav-link" :class="{ active: isCurrentPath('/') }" href="/">My Courses</a>
+                </li>
+            </ul>
+
             <ul v-if="$user" class="navbar-nav">
                 <li class="dropdown"> 
                     <a class="nav-link dropdown-toggle p-0 d-flex align-items-center" href="#" style="height: 40px;" dusk="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

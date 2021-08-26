@@ -3,5 +3,5 @@
 @section('title', '| Manage Pages')
 
 @section('content')
-    <admin-pages :course="{{ $course }}"></admin-pages>
+    <admin-pages :course="{{ $course }}" :topic="{{$topic}}"></admin-pages>
 @endsection

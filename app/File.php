@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Course;
 
 class File extends Model
 {
     protected $fillable = [
         'name',
         'course_id',
+        'topic_id'
     ];
 
     protected $appends = [
@@ -21,8 +23,8 @@ class File extends Model
     }
 
     public function getFilePathAttribute() {
-        $course = $this->course;
-        return Storage::url('courses/' . $course['slug'] . '/files/' . $this->name);
+        
+        return Storage::url('courses/' . $this->course_id. '/files/' . $this->name);
     }
 
     public function scopeSearchByName($query, $name) {

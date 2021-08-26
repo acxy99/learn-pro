@@ -57,6 +57,7 @@ class User extends Authenticatable
         return $this->learningCourses()->pluck('id');
     }
 
+
     protected static function boot() {
         parent::boot();
 

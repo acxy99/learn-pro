@@ -14,7 +14,7 @@ class UserRelationshipTest extends TestCase {
     use WithFaker;
     use RefreshDatabase;
 
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
 
         $this->admin = factory(User::class)->create();

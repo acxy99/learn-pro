@@ -16,7 +16,7 @@ class PageHttpTest extends TestCase {
 
     protected $pageTitle;
     
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
 
         $sentence = $this->faker->sentence;

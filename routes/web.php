@@ -59,17 +59,34 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 
     Route::resource('/courses', 'CourseController');
 
-    Route::get('/courses/{course_slug}/pages', 'PageController@index');
-    Route::get('/courses/{course_slug}/pages/create', 'PageController@create');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/pages', 'PageController@index');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/pages/create', 'PageController@create');
     Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
-    Route::get('/courses/{course_slug}/pages/{page_slug}/edit', 'PageController@edit');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/pages/{page_slug}/edit', 'PageController@edit');
     Route::post('/courses/{course_slug}/pages/uploadImage', 'PageController@uploadImage');
     Route::resource('/pages', 'PageController')->only(['destroy']);
 
-    Route::get('/courses/{course_slug}/files', 'FileController@index');
-    Route::get('/courses/{course_slug}/files/create', 'FileController@create');
-    Route::get('/courses/{course_slug}/files/{file_id}/edit', 'FileController@edit');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/files', 'FileController@index');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/files/create', 'FileController@create');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/files/{file_id}/edit', 'FileController@edit');
     Route::resource('/files', 'FileController')->only(['destroy']);
+
+    Route::get('/courses/{course_slug}/topic', 'TopicController@index');
+    Route::get('/courses/{course_slug}/topic/create', 'TopicController@create');
+    Route::get('/courses/{course_slug}/topic/{topic_id}', 'TopicController@show');
+    
+    Route::get('/courses/{course_slug}/topic/{topic_id}/edit', 'TopicController@edit');
+    Route::resource('/topic', 'TopicController')->only(['destroy']);
+    
+    Route::get('/courses/{course_slug}/topic/{topic_id}/pla', 'PlaController@index');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/pla/create', 'PlaController@create');
+    Route::get('/courses/{course_slug}/topic/{topic_id}/pla/{pla_id}/edit', 'PlaController@edit');
+    Route::resource('/pla', 'PlaController')->only(['destroy']);
+
+    Route::get('/courses/{course_slug}/leap', 'LeapController@index');
+    Route::get('/courses/{course_slug}/leap/create', 'LeapController@create');
+    Route::get('/courses/{course_slug}/leap/{leap_id}/edit', 'LeapController@edit');
+    Route::resource('/leap', 'LeapController')->only(['destroy']);
 });
 
 /*
@@ -77,6 +94,8 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 */
 Route::namespace('Frontend')->name('frontend.')->group(function() {
     Route::resource('/categories', 'CategoryController')->only(['index', 'show']);
+
+    Route::resource('/mycourse', 'LearnerCoursesController')->only(['index', 'show']);
 
     Route::resource('/courses', 'CourseController')->only(['index', 'show']);
     

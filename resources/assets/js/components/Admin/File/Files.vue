@@ -5,6 +5,8 @@
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+               <li  class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicUrl">Topic</a></li>
+                <li v-if="topic.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicViewUrl">{{topic.id}}</a></li>
                 <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Files</li>
             </ol>
         </nav>
@@ -27,18 +29,18 @@
             <table class="bg-white table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th style="width: 70%">File Name</th>
+                        <th style="width: 60%">File Name</th>
                         <th style="width: 10%">ID</th>
-                        <th style="width: 20%">Actions</th>
+                        <th style="width: 30%">Actions</th>
                     </tr>
                 </thead>
                 <tbody dusk="files">
                     <tr v-for="file in files" :key="file.id" @mouseover="active = file.id" style="height: 65px" :dusk="file.name">
-                        <td style="width: 70%">
+                        <td style="width: 60%">
                             <a class="anchor-custom" :href="getFileUrl(file)">{{ file.name }}</a>
                         </td>
                         <td style="width: 10%">{{ file.id }}</td>
-                        <td style="width: 20%">
+                        <td style="width: 30%">
                             <div v-show="active == file.id">
                                 <a class="btn p-1" :href="getEditFileUrl(file)">
                                     <i class="material-icons">create</i>
@@ -63,23 +65,30 @@
 
 <script>
 export default {
-    props: ['course'],
+    props: ['course','topic'],
     data() {
         return {
             courseUrl: '/admin/courses/' + this.course.slug,
             active: '',
-            uploadFilesUrl: '/admin/courses/' + this.course.slug + '/files/create',
+            uploadFilesUrl: '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id+ '/files/create',
             files: [],
             pagination: {},
             searchInput: '',
+            topicUrl:'/admin/courses/'+this.course.slug+'/topic',
+            topicViewUrl:'/admin/courses/'+this.course.slug+'/topic/'+this.topic.id,
         }
+    },
+    mounted(){
+        
     },
     created() {
         this.getFiles();
+        window.console.log(this.files.length);
+        
     },
     methods: {
         getFiles(url) {
-            url = url || '/api/admin/courses/' + this.course.id + '/files'
+            url = url || '/api/admin/courses/topic/' + this.topic.id + '/files'
 
             axios.get(url, {
                     params: {
@@ -88,6 +97,7 @@ export default {
                 })
                 .then(response => {
                     this.files = response.data.data;
+                    window.console.log(this.files.length);
                     this.makePagination(response.data.links, response.data.meta);
                 })
                 .catch(response => {
@@ -107,7 +117,7 @@ export default {
             return file.file_path;
         },
         getEditFileUrl(file) {
-            return '/admin/courses/' + this.course.slug + '/files/' + file.id + '/edit';
+            return '/admin/courses/' + this.course.slug + '/topic/'+this.topic.id+'/files/' + file.id + '/edit';
         },
         deleteFile(file) {
             if(confirm('Are you sure you want to delete this file?')) {

@@ -18,6 +18,7 @@ class Page extends Model
         'course_id',
         'parent_id',
         'slug',
+        'topic_id'
     ];
 
     protected $appends = ['children'];

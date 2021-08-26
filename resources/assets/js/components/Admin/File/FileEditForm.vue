@@ -5,6 +5,8 @@
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li  class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicUrl">Topic</a></li>
+                <li v-if="topic.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicViewUrl">{{topic.id}}</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="filesUrl">Files</a></li>
                 <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Edit</li>
             </ol>
@@ -38,13 +40,16 @@
 </template>
 
 <script>
+
 export default {
-    props: ['course', 'file'],
+    props: ['course', 'file','topic'],
     data() {
         return {
             errors: [],
             courseUrl: '/admin/courses/' + this.course.slug,
             filesUrl: '/admin/courses/' + this.course.slug + '/files',
+            topicUrl:'/admin/courses/'+this.course.slug+'/topic',
+            topicViewUrl:'/admin/courses/'+this.course.slug+'/topic/'+this.topic.id,
         }
     },
     methods: {
@@ -55,6 +60,7 @@ export default {
             formData.append('id', this.file.id);
             formData.append('name', this.file.name);
             formData.append('course_id', this.file.course_id);
+            formData.append('topic_id', this.topic.id);
             formData.append('_method', 'PUT');
 
             axios.post('/api/admin/files/' + this.file.id, formData, {
@@ -64,7 +70,7 @@ export default {
                 }
             })
             .then(response => {
-                window.location.href = this.courseUrl + '/files';
+                window.location.href = '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id +'/files';
             })
             .catch(error => {
                 console.log(error);

@@ -33,11 +33,21 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/courses/{id}', 'CourseController@apiShow');
     Route::apiResource('courses', 'CourseController')->only(['store', 'update']);
 
-    Route::get('/courses/{course_id}/pages', 'PageController@apiIndex');
+    Route::get('/courses/topic/{topic_id}/pages', 'PageController@apiIndex');
     Route::apiResource('pages', 'PageController')->only(['store', 'update']);
 
-    Route::get('/courses/{course_id}/files', 'FileController@apiIndex');
+    Route::get('/courses/topic/{topic_id}/files', 'FileController@apiIndex');
     Route::apiResource('files', 'FileController')->only(['store', 'update']);
+
+    Route::get('/courses/{course_id}/topic','TopicController@apiIndex');
+    Route::apiResource('topic', 'TopicController')->only(['store','update']);
+
+
+    Route::get('/courses/topic/{topic_id}/pla','PlaController@apiIndex');
+    Route::apiResource('pla', 'PlaController')->only(['store','update']);
+
+    Route::get('/courses/{course_id}/leap','LeapController@apiIndex');
+    Route::apiResource('leap', 'LeapController')->only(['store','update']);
 });
 
 /*

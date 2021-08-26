@@ -74,46 +74,50 @@
         </div>
    
         <hr>
-
+    
+        <!-- enhancement_v1 -->
         <div class="card-group mb-5">
+        
             <div class="card bg-light border-0 m-1">
                 <div class="card-body">
                     <div class="row m-0 p-3">
                         <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons p-1" style="font-size: 100px; color: #004ecc;">format_align_left</i><br>
+                            <i class="material-icons p-1" style="font-size: 100px; color: #fd8d29;">filter_list</i><br>
                         </div>
                         <div class="col-md-8 align-self-center text-right">
-                            <p class="mb-1" style="font-size: 20;">Pages</p>
-                            <h1>{{ course.pages_count }}</h1>
-                            <small v-if="lastUpdatedPage" class="text-muted">Last updated at {{ lastUpdatedPage }}</small>
-                            <small v-else class="text-muted">Last updated at ---</small>
+                            <p class="m-0" style="font-size: 20;">LEAP</p>
+                            <h1>{{ course.leap_count }}</h1>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light br-0" :href="managePagesUrl" role="button" dusk="manage-pages-button">Manage Pages</a>
+                    <a class="btn bg-light br-0" :href="manageLeapUrl" role="button" dusk="manage-leap-button">Manage LEAP</a>
                 </div>
             </div>
             <div class="card bg-light border-0 m-1">
                 <div class="card-body">
                     <div class="row m-0 p-3">
                         <div class="col-md-4 align-self-center text-center">
-                            <i class="material-icons p-1" style="font-size: 100px; color: #ffc800;">folder_open</i><br>
+                            <i class="material-icons p-1" style="font-size: 100px; color: #a3fb81;">view_list</i><br>
                         </div>
                         <div class="col-md-8 align-self-center text-right">
-                            <p class="m-0" style="font-size: 20;">Files</p>
-                            <h1>{{ course.files_count }}</h1>
-                            <small v-if="lastUpdatedFile" class="text-muted">Last updated at {{ lastUpdatedFile }}</small>
-                            <small v-else class="text-muted">Last updated at ---</small>
+                            <p class="m-0" style="font-size: 20;">Topics</p>
+                            <h1>{{ course.topic_count }}</h1>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a class="btn bg-light br-0" :href="manageFilesUrl" role="button" dusk="manage-files-button">Manage Files</a>
+                    <a class="btn bg-light br-0" :href="manageTopicUrl" role="button" dusk="manage-topic-button">Manage Topic</a>
                 </div>
             </div>
-        </div>
+            
 
+
+        </div>
+        <div class = "card-group mb-5">
+           
+
+        </div>
     </div>
 </template>
 
@@ -124,8 +128,9 @@ export default {
         return {
             indexUrl: '/admin/courses',
             editCourseUrl: '/admin/courses/' + this.course.slug + '/edit',
-            managePagesUrl: '/admin/courses/' + this.course.slug + '/pages',
-            manageFilesUrl: '/admin/courses/' + this.course.slug + '/files',
+            manageLeapUrl: '/admin/courses/'+ this.course.slug + '/leap',
+        
+            manageTopicUrl: '/admin/courses/'+ this.course.slug + '/topic',
         }
     },
     methods: {

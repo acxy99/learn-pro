@@ -17,11 +17,14 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->string('name')->index();
             $table->unsignedInteger('course_id');
+            $table->unsignedInteger('topic_id')->nullable();
+            
             $table->timestamps();
+            
+            $table->unique(['name', 'course_id','topic_id']);
 
-            $table->unique(['name', 'course_id']);
-
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
         });
     }
 

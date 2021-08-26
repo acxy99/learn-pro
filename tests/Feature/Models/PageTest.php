@@ -16,7 +16,7 @@ class PageTest extends TestCase {
 
     protected $admin, $pageTitle;
     
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
 
         $this->admin = factory(User::class)->create();

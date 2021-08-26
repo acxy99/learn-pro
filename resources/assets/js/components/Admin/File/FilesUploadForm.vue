@@ -5,6 +5,8 @@
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                <li  class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicUrl">Topic</a></li>
+                <li v-if="topic.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicViewUrl">{{topic.id}}</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="filesUrl">Files</a></li>
                 <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Upload Files</li>
             </ol>
@@ -53,7 +55,7 @@
 
 <script>
 export default {
-    props: ['course'],
+    props: ['course','topic'],
     data() {
         return {
             fileList: [],
@@ -61,8 +63,13 @@ export default {
             files: [],
             errors: {},
             courseUrl: '/admin/courses/' + this.course.slug,
-            filesUrl: '/admin/courses/' + this.course.slug + '/files',
+            filesUrl: '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id +'/files',
+            topicUrl:'/admin/courses/'+this.course.slug+'/topic',
+            topicViewUrl:'/admin/courses/'+this.course.slug+'/topic/'+this.topic.id,
         }
+    },
+     mounted(){
+        window.console.log(this.topic.id);
     },
     methods: {
         handleFiles() {
@@ -88,7 +95,9 @@ export default {
 
             var formData = new FormData();
             formData.append('course_id', this.course.id);
-            formData.append('course_slug', this.course.slug);
+            formData.append('topic_id',this.topic.id);
+            formData.append('course_slug',this.course.slug);
+            
             for (var i = 0; i < this.files.length; i++) {
                 formData.append('files[]', this.files[i]);
             }
@@ -99,7 +108,7 @@ export default {
                 }
             })
             .then(response => {
-                window.location.href = '/admin/courses/' + this.course.slug + '/files';
+                window.location.href = '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id +'/files';
             })
             .catch(error => {
                 console.log(error);

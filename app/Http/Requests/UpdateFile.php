@@ -13,12 +13,14 @@ class UpdateFile extends FormRequest {
     public function rules() {
         $course_id = $this->request->get('course_id');
         $file_id = $this->request->get('id');
+        $topic_id = $this->request->get('topic_id');
 
         return [
             'name' => [
                 'required',
-                'unique:files,name,' . $file_id . ',id,course_id,' . $course_id,
+                'unique:files,name,' . $file_id . ',id,topic_id,' . $topic_id,
             ],
+            'topic_id' => 'required',
         ];
     }
 }

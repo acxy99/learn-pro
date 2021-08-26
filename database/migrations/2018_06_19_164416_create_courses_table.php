@@ -21,6 +21,10 @@ class CreateCoursesTable extends Migration
             $table->string('image')->nullable();
             $table->string('slug')->unique();
             $table->unsignedInteger('owner_id');
+            $table->unsignedInteger('num_ques_ans')->nullable();
+            $table->unsignedInteger('passing_mark_beginner')->nullable();
+            $table->unsignedInteger('passing_mark_intermediate')->nullable();
+            $table->unsignedInteger('passing_mark_advanced')->nullable();
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users');

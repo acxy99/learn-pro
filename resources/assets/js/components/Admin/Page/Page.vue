@@ -5,6 +5,8 @@
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" href="/admin/courses">Courses</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="courseUrl">{{ course.code }}</a></li>
+                 <li  class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicUrl">Topic</a></li>
+                <li v-if="topic.id" class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="topicViewUrl">{{topic.id}}</a></li>
                 <li class="breadcrumb-item d-inline-flex align-self-center"><a class="anchor-custom" :href="pagesUrl">Pages</a></li>
                 <li class="breadcrumb-item active d-inline-flex align-self-center" aria-current="page">Page Details</li>
             </ol>
@@ -63,13 +65,15 @@
 
 <script>
 export default {
-    props: ['course', 'page'],
+    props: ['course', 'page', 'topic'],
     data() {
         return {
             courseUrl: '/admin/courses/' + this.course.slug,
             pagesUrl: '/admin/courses/' + this.course.slug + '/pages',
-            editPageUrl: '/admin/courses/' + this.course.slug + '/pages/' + this.page.slug + '/edit',
+            editPageUrl: '/admin/courses/' + this.course.slug +'/topic/'+this.topic.id +'/pages/' + this.page.slug + '/edit',
             indexUrl: '/admin/courses/' + this.course.slug + '/pages',
+            topicUrl:'/admin/courses/'+this.course.slug+'/topic',
+            topicViewUrl:'/admin/courses/'+this.course.slug+'/topic/'+this.topic.id,
         }
     },
     methods: {

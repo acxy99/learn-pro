@@ -55,7 +55,19 @@ import Page from './components/Frontend/Page/Page.vue';
 import Profile from './components/Frontend/Profile/Profile';
 import ProfileForm from './components/Frontend/Profile/ProfileForm';
 
+import AdminLeap from './components/Admin/Leap/Questions.vue';
+import AdminLeapQuestionForm from './components/Admin/Leap/QuestionForm.vue';
+
+import AdminTopic from './components/Admin/Topic/Topic.vue';
+import AdminTopicForm from './components/Admin/Topic/TopicForm.vue';
+import AdminTopicView from './components/Admin/Topic/TopicView.vue';
+
+import AdminPlaQuestions from './components/Admin/Pla/Questions.vue';
+import AdminPlaQuestionForm from './components/Admin/Pla/QuestionForm.vue';
+
 import VueRouter from 'vue-router';
+import Vue from 'vue';
+
 Vue.use(VueRouter);
 const router = new VueRouter({ 
     mode:'history' 
@@ -92,5 +104,9 @@ const app = new Vue({
         Courses, Course,
         Page,
         Profile, ProfileForm,
+        AdminLeap,AdminLeapQuestionForm,
+        AdminTopic,AdminTopicForm,AdminTopicView,
+        AdminPlaQuestions,AdminPlaQuestionForm,
     }
+
 });

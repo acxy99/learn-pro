@@ -11,6 +11,7 @@ use App\Course;
 use App\Page;
 use App\Category;
 
+
 use App\Http\Requests\StoreCourse;
 use App\Http\Requests\UpdateCourse;
 
@@ -44,6 +45,7 @@ class CourseController extends Controller {
         $course = new Course;
         $instructors = User::whereIs('instructor')->get(['id', 'username'])->each->setAppends([]);
         $categories = Category::get(['id', 'title'])->each->setAppends([]);
+        
 
         return view('admin.courses.create', ['course' => $course, 'instructors' => $instructors, 'categories' => $categories]);
     }
@@ -122,7 +124,7 @@ class CourseController extends Controller {
                 Storage::delete('courses/' . $course->code . '/' . $course->image);
             $course->image = null;
         }
-         
+        
         $course->save();
 
         $categories = $request->categories ? array_map('intval', explode(',', $request->categories)) : [];

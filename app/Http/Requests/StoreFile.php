@@ -38,10 +38,11 @@ class StoreFile extends FormRequest {
 
     public function rules() {
         $course_id = $this->request->get('course_id');
+        $topic_id = $this->request->get('topic_id');
         
         return [
             'files' => 'required',
-            'file_names.*' => 'required|distinct|unique:files,name,NULL,id,course_id,' . $course_id,
+            'file_names.*' => 'required|distinct|unique:files,name,NULL,id,topic_id,' . $topic_id,
         ];
     }
 

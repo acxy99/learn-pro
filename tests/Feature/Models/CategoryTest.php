@@ -15,7 +15,7 @@ class CategoryTest extends TestCase {
 
     protected $admin, $createRequest;
 
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
 
         $this->admin = factory(User::class)->create();

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Course;
 use App\Page;
 use App\File;
+use App\LearnerCourses;
 
 use App\Http\Resources\CourseResourceCollection;
 use App\Http\Resources\PageResourceCollection;

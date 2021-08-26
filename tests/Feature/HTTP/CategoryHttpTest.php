@@ -16,7 +16,7 @@ class CategoryHttpTest extends TestCase {
 
     protected $categoryTitle;
     
-    public function setUp() {
+    public function setUp(): void {
         parent::setUp();
 
         $sentence = $this->faker->sentence;
