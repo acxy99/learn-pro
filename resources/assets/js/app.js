@@ -52,6 +52,12 @@ import Course from './components/Frontend/Course/Course.vue';
 
 import Page from './components/Frontend/Page/Page.vue';
 
+import MyCourses from './components/Frontend/MyCourse/Courses.vue';
+import Question from './components/Frontend/MyCourse/Question.vue';
+import PlaTopic from './components/Frontend/MyCourse/PlaTopic.vue';
+import Topic from './components/Frontend/MyCourse/Topic.vue';
+import TopicView from './components/Frontend/MyCourse/TopicView.vue';
+
 import Profile from './components/Frontend/Profile/Profile';
 import ProfileForm from './components/Frontend/Profile/ProfileForm';
 
@@ -107,6 +113,7 @@ const app = new Vue({
         AdminLeap,AdminLeapQuestionForm,
         AdminTopic,AdminTopicForm,AdminTopicView,
         AdminPlaQuestions,AdminPlaQuestionForm,
+        MyCourses,Question,PlaTopic,Topic,TopicView,
     }
 
 });

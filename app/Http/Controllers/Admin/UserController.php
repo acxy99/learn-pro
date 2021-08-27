@@ -21,6 +21,7 @@ class UserController extends Controller {
         $this->authorize('view', User::class);
 
         $roles = Bouncer::role()->all();
+
         
         return view('admin.users.index', ['roles' => $roles]);
     }

@@ -19,7 +19,7 @@
 
             <ul class="navbar-nav mr-2">
                 <li class="" v-if="$userIsLearner()">
-                    <a class="nav-link" :class="{ active: isCurrentPath('/') }" href="/">My Courses</a>
+                    <a class="nav-link" :class="{ active: isCurrentPath('/') }" href="/mycourses">My Courses</a>
                 </li>
             </ul>
 

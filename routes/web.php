@@ -95,9 +95,13 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 Route::namespace('Frontend')->name('frontend.')->group(function() {
     Route::resource('/categories', 'CategoryController')->only(['index', 'show']);
 
-    Route::resource('/mycourse', 'LearnerCoursesController')->only(['index', 'show']);
-
     Route::resource('/courses', 'CourseController')->only(['index', 'show']);
+    Route::get('/mycourses/{course_slug}', 'CourseController@takeCourse');
+    Route::get('/mycourses', 'CourseController@viewMyCourses');
+    Route::get('/mycourses/show', 'PlaController@show');
+
+    Route::get('/mycourses/{course_slug}/topic', 'TopicController@index');
+    Route::get('/mycourses/{course_slug}/topic/{topic_id}', 'TopicController@show');
     
     Route::get('/courses/{course_slug}/pages/{page_slug}', 'PageController@show');
 

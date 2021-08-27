@@ -61,7 +61,10 @@ Route::namespace('Frontend')->group(function() {
     Route::get('/categories/popular', 'CategoryController@apiPopular');
 
     Route::get('/courses', 'CourseController@apiIndex');
-    Route::get('/courses/{course_id}/pages', 'CourseController@apiPages');
-    Route::get('/courses/{course_id}/files', 'CourseController@apiFiles');
+    Route::get('/mycourses/topic/{topic_id}/pages', 'CourseController@apiPages');
+    Route::get('/mycourses/topic/{topic_id}/files', 'CourseController@apiFiles');
     Route::get('/courses/new', 'CourseController@apiNew');
+    Route::get('/mycourses/{id}', 'CourseController@apiMyCourses');
+
+    Route::get('/mycourses/{id}/topic','TopicController@apiIndex');
 });

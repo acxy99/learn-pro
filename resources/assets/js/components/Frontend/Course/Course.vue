@@ -2,9 +2,13 @@
     <div>
         <div class="jumbotron" :style="jumbotronStyle">
             <div class="p-5">
-                <h1 class="text-center" style="text-decoration:overline underline;">  Overview   </h1>
+                <h1 class="text-center" style="text-decoration:overline underline;">  Overview </h1>
                 <div class="text-center"><small>{{ course.code }}</small></div>
                 <h3 class="text-center">{{ course.title }}</h3>
+
+                <div class="col-md-12 text-center">
+                    <a v-if="userCanTakeCourse()" class="btn btn-info br-0 center" :href="takeCourseUrl" role="button" dusk="edit-button">Take This Course</a>
+                </div>
             </div>
         </div>
 
@@ -38,8 +42,19 @@ export default {
             jumbotronStyle: {
                 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(' + this.course.image_path + ')',
             },
+
+            takeCourseUrl:'/mycourses/'+this.course.slug
         }
     },
+    mounted(){
+        console.log(!this.$user.learning_courses.includes(this.course.id));
+    },
+    methods:{
+
+        userCanTakeCourse(){
+            return this.$userIsLearner() && !this.$user.learning_courses.includes(this.course.id);
+        }
+    }
 }
 </script>
 

@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
 
     public function learningCourses() {
-        return $this->belongsToMany(Course::class, 'course_learner');
+        return $this->belongsToMany(Course::class,'course_learner');
     }
 
     public function getOwningCoursesAttribute() {

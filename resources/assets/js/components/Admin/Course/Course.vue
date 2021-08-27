@@ -135,7 +135,7 @@ export default {
     },
     methods: {
         userCanEditCourse() {
-            return this.$userIsAdmin() || this.$user.teaching_courses.includes(this.course.id);
+            return this.$userIsAdmin()|| this.$user.teaching_courses.includes(this.course.id);
         },
         userCanDeleteCourse() {
             return this.$userIsAdmin() || this.course.owner_id == this.$user.id;

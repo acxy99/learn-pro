@@ -6,11 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Support\Facades\Storage;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Course extends Model
 {
     use Sluggable;
     use SluggableScopeHelpers;
+    use SearchableTrait;
+
+    protected $searchable = [
+
+        'columns' => [
+            'courses.code' => 10,
+            'courses.title' => 10,
+        ]
+    ];
 
     protected $fillable = [
         'code',
@@ -40,10 +50,6 @@ class Course extends Model
 
     public function instructors() {
         return $this->belongsToMany(User::class, 'course_instructor');
-    }
-
-    public function learners() {
-        return $this->belongsToMany(User::class, 'learner_courses');
     }
 
     public function pages() {

@@ -20,6 +20,7 @@ use App\Http\Resources\CourseResourceCollection;
 
 class CourseController extends Controller {
     
+  
     public function index() {
         $this->authorize('view', Course::class);
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="card br-0Z">
+    <div  class="card br-0Z">
         <a :href="courseUrl" class="anchor-custom" style="color: #000">
             <div class="wrapper">
                 <img class="card-img-top img" :src="course.image_path">
@@ -24,9 +24,21 @@ export default {
     props: ['course', 'homepage'],
     data() {
         return {
-            courseUrl: '/courses/' + this.course.slug
+            courseUrl: '/courses/'+this.course.slug,
+            mycourseUrl: '/mycourses/'+this.course.slug+'/topic',
+        }
+    },
+    methods:{
+        userTakeThisCourse(){
+            if(this.$user === null){
+                return this.courseUrl;
+            }
+            else{
+                return this.mycourseUrl;
+            }
         }
     }
+
 }
 </script>
 
