@@ -80,7 +80,6 @@ export default
     },
     created () {
         this.getPla();
-        console.log(this.questions);
     },
     mounted () {
 
@@ -111,6 +110,7 @@ export default
             this.storeAnswer(ans)
                 .then(res => {
                     this.answers = res.answers
+                    console.log(res.answers);
                     const i = this.questions.findIndex(q => this.showQuestionNumber === q.id)
                     if (i + 1 === this.questions.length) {
                         this.showQuestionNumber = this.questions[0].id

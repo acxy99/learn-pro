@@ -44,7 +44,7 @@
                     <files :course="course" :topic="topic" dusk="files-tab-content"></files>
                 </div>
                 <div class="tab-pane" id="code" role="tabpanel">
-                    <Code :course="course" :topic="topic"/>
+                    <Code :course="course" :topic="topic" :result="result"/>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@ import  Files from './Files';
 
 export default {
     components:{Pages,Files,Code},
-    props: ['course','topic'],
+    props: ['course','topic','result'],
     data() {
         return {
             jumbotronStyle: {
@@ -67,7 +67,6 @@ export default {
         }
     },
     mounted(){
-        console.log(this.topic.id);
     }
 }
 </script>

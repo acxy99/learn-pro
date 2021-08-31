@@ -10,7 +10,9 @@ use Carbon\Carbon;
 use App\User;
 use App\Topic;
 use App\Course;
+use App\PlaResult; 
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TopicResource;
 use App\Http\Resources\TopicResourceCollection;
 class TopicController extends Controller
@@ -70,7 +72,13 @@ class TopicController extends Controller
     {
         $course = Course::findBySlugOrFail($course_slug);
         $topic = Topic::find($topic_id);
-        return view('frontend.mycourse.topic_view',['course'=>$course,'topic'=>$topic]);
+        $user =Auth::user();
+
+        $result = PlaResult::where('learner_id','=',$user->id)
+                            ->where('topic_id','=',$topic_id)->get();
+
+
+        return view('frontend.mycourse.topic_view',['course'=>$course,'topic'=>$topic ,'result'=>$result]);
     }
 
     /**

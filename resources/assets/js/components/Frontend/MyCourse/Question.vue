@@ -83,12 +83,14 @@ export default {
     },
     data: () => ({
         answer: [],
-        options:[]
+        options:[],
+        ans:[]
     }),
     mounted () {
         this.options = JSON.parse(JSON.parse(this.question.options));
- 
+        this.ans =JSON.parse(this.question.answers);
         this.answer = this.answers.find(a => a.id === this.question.id)|| []
+        console.log(this.answer);
     },
     methods: {
         clearAns () {
