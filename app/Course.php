@@ -112,7 +112,6 @@ class Course extends Model
             $course->pages()->delete();
             $course->files()->delete();
             $course->topic()->delete();
-            $course->pla()->delete();
         });
     }
 

@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         getFiles(url) {
-            url = url || '/api/courses/topic/' + this.topic.id + '/files';
+            url = url || '/api/mycourses/topic/' + this.topic.id + '/files';
             axios.get(url, {
                     params: {
                         searchInput: this.searchInput,

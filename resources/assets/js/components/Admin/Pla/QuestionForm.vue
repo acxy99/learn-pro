@@ -143,21 +143,9 @@ export default {
         }
     },
     mounted () {
-        // console.log(this.pla);
-        // let pla2 = {...this.pla};
-        // pla2.options = JSON.parse(pla2.options);
+
         const plaOptions = JSON.parse(JSON.parse(this.pla.options));
         console.log(plaOptions.length);
-        // if (this.pla.options.length) {
-        //     this.aoptions = []
-        //     window.console.log(pla.option);
-        //     this.pla.options.map(o => {
-        //         const option = o
-        //         option.answer = this.pla.answers.indexOf(o.id) !== -1
-        //         this.aoptions.push(option)
-        //         console.log(option);
-        //     })
-        // }
         if (plaOptions.length) {
             this.aoptions = []
             window.console.log(plaOptions);

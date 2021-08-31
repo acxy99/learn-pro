@@ -26,8 +26,10 @@
         "vue": "^2.5.16",
         "vue-multiselect": "^2.1.0",
         "vue-prism-component": "^1.0.1",
-        "vue-router": "^3.0.1",
+        "vue-router": "^3.5.2",
+        "vue-simple-accordion": "^0.1.0",
         "vue-simple-search-dropdown": "^1.0.1",
+        "vue2-collapse": "^1.0.15",
         "vue2-datepicker": "^2.1.0"
     }
 }

@@ -74,9 +74,7 @@ class CourseController extends Controller {
 
     public function viewMyCourses() {
         
-        $user = Auth::user();
 
-        
 
         return view('frontend.mycourse.index');
     }

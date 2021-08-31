@@ -76,7 +76,7 @@ import Vue from 'vue';
 
 Vue.use(VueRouter);
 const router = new VueRouter({ 
-    mode:'history' 
+    mode:'history',
 });
 
 Vue.prototype.$user = window.user
@@ -92,6 +92,7 @@ Vue.prototype.$userIsInstructor = function() {
 Vue.prototype.$userIsLearner = function() {
     return this.$user && this.$user.role.name == 'learner';
 }
+
 
 const app = new Vue({
     el: '#app',

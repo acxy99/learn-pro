@@ -21,8 +21,8 @@ class Pla extends Model
         ]
     ];
     protected $fillable = [
-        'course_id',
         'topic_id',
+        'course_id',
         'question',
         'options',
         'status',

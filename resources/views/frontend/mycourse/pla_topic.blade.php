@@ -3,5 +3,5 @@
 @section('title', '| Course')
 
 @section('content')
-    <pla-topic :course="{{ $course }}"></pla-topic>
+    <pla-topic :topic ="{{$topic}}" :course="{{$course}}"></pla-topic>
 @endsection

@@ -2,8 +2,10 @@
     <div class="card-body px-5">
         <div class="row mt-5">
             <div class="col-12">
-                <div class="question d-flex">
-                    {{ question.question }}
+                <div class="question">
+                    <div class="p-5 bg-light text-center text-muted">
+                            <h5 class="font-weight-light">{{question.question}}</h5>
+                    </div>
                 </div>
             </div>
         </div>
@@ -11,7 +13,7 @@
         <div class="row mt-5">
             <div class="col">
                 <div
-                    v-for="option in question.options"
+                    v-for="option in options"
                     :key="option.id"
                     class="custom-control custom-checkbox"
                 >
@@ -38,7 +40,7 @@
                         class="btn btn-outline-success"
                         @click="previous"
                     >
-                        previous
+                        Previous
                     </button>
                     <button
                         type="button"
@@ -52,7 +54,7 @@
                         class="btn btn-outline-dark"
                         @click="clearAns"
                     >
-                        Clear Ans
+                        Clear Answer
                     </button>
                     <button
                         type="button"
@@ -80,10 +82,13 @@ export default {
         }
     },
     data: () => ({
-        answer: []
+        answer: [],
+        options:[]
     }),
     mounted () {
-        this.answer = this.answers.find(a => a.id === this.question.id).answer || []
+        this.options = JSON.parse(JSON.parse(this.question.options));
+ 
+        this.answer = this.answers.find(a => a.id === this.question.id)|| []
     },
     methods: {
         clearAns () {

@@ -1,29 +1,22 @@
 <template>
-    <div
-        v-if="!loading"
-        class="single-exam exam"
-    >
-        <section
-            v-if="startTime"
-            class="exam-bord"
-        >
-            <div class="card">
-                <Question
-                    v-for="question in questions"
-                    v-show="showQuestionNumber === question.id"
-                    :key="question.id"
-                    :question="question"
-                    :answers="answers"
-                    @previous="previousQuestion"
-                    @next="nextQuestion"
-                    @finish="finishExam"
-                />
-                
-                <div class="card-body">
-                    <div class="row mt-5">
-                        <div class="col-12">
+<div class="container pt-4">
+        <div class="row">
+            <div class="col-md-8 align-self-end">
+                <h3 class="align-self-end font-weight-normal m-0">
+                    <span>PLA Activities</span>
+                </h3>
+            </div>
+            <div class="col-md-4 align-self-end">
+                <h6 class=" align-self-end font-weight-light m-0">
+                    <span  v-bind:data-identity="topic.passing_mark" >Total Mark: {{topic.passing_mark}} </span>
+                </h6>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-4">
+                        <div class="col-md-10">
                             <div>
-                                <h5>QUESTIONS</h5>
+                                <h5 class="font-weight-light">Questions</h5>
                             </div>
                         </div>
                         <div class="col-12">
@@ -36,7 +29,7 @@
                                     v-for="(question, i ) in questions"
                                     :key="question.id"
                                     type="button"
-                                    class="btn btn-primary mr-1"
+                                    class="btn btn-link mr-4"
                                     :class="{'answered': hasAnswer(question.id), 'active': showQuestionNumber === question.id}"
                                     @click.prevent="showQuestionNumber = question.id"
                                 >
@@ -45,90 +38,67 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                <Question
+                    v-for="question in questions"
+                    v-show="showQuestionNumber === question.id"
+                    :key="question.id"
+                    :question="question"
+                    :answers="answers"
+                    @previous="previousQuestion"
+                    @next="nextQuestion"
+                    @finish="finishPla"
+                />
+                <hr>
+                    
+
     </div>
+                
 </template>
 <script>
 import Question from './Question.vue'
-export default {
+
+export default 
+{    
+    props:['topic','course'],
     components: {
-        Question
+        Question,
     },
-    data: () => ({
-        loading: false,
-        startTime: null,
-        exam: {},
-        questions: [],
-        examRemainingTime: null,
-        showQuestionNumber: null,
-        answers: [],
-        result: null,
-        showAnswerdQuestion: false
-    }),
+    data () {
+        
+        return {
+            questions: [],
+            showQuestionNumber: null,
+            answers: [],
+            result: null,
+            showAnswerdQuestion: false
+        }
+    },
     computed: {
     },
     watch: {
-        '$route' () {
-            this.getExam()
-        },
+
     },
     created () {
-        this.getExam()
+        this.getPla();
+        console.log(this.questions);
     },
     mounted () {
 
+        console.log(this.topic.id);
+        console.log('pla com mounted');
+        
     },
     methods: {
-        getExam () {
-            if (this.loading) {
-                return
-            }
-            this.loading = true
-
-            const params = {
-                id: this.$route.params.exam
-            }
-
-            axios.get(`/api/take-exam/${params.id}`, { params })
-                .then(res => {
-                    this.exam = res.data.exam
-                    this.startTime = res.data.time
-                    this.result = res.data.result
-                    this.questions = res.data.questions
-
-                    this.loading = false
-                    if (this.startTime) {
-                        this.start()
-                    }
-                })
-        },
-
-        start () {
-            if (this.loading) {
-                return
-            }
-            this.loading = true
-
-            const params = {
-                id: this.$route.params.exam
-            }
-
-            axios.post(`/api/start-exam/${params.id}`, { params })
+        getPla () {
+            axios.get('/api/load-pla/'+this.topic.id)
                 .then(res => {
                     this.questions = res.data.questions
-                    this.startTime = res.data.time
-                    this.showQuestionNumber = res.data.questions[0].id
-                    this.answers = res.data.answers
-                })
-                .finally(() => {
-                    this.loading = false
                 })
         },
+    
         storeAnswer (ans) {
             return new Promise((resolve, reject) => {
-                axios.post(`/api/answer/${this.exam.id}`, ans)
+                axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, ans)
                     .then(res => {
                         resolve(res.data)
                     })
@@ -161,18 +131,17 @@ export default {
                     }
                 })
         },
-        finishExam (ans) {
+        finishPla (ans) {
             this.storeAnswer(ans)
                 .then(res => {
                     this.complete()
                 })
         },
         complete () {
-            axios.post(`/api/complete-exam/${this.exam.id}`)
+            axios.post('/api/mycourses/'+this.$user.id+'/topic/complete-pla/'+this.topic.id)
                 .then(res => {
                     this.result = res.data.result
-                    this.startTime = null
-                    window.location.reload()
+                    window.location.href= '/mycourses/'+this.course.slug+'/topic/'+this.topic.id+'/pla'
                 })
         },
         hasAnswer (id) {

@@ -26,6 +26,14 @@
                         </div>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #495057" id="code-tab" data-toggle="tab" href="#code" role="tab" dusk="code-tab">
+                        <div class="d-inline-flex align-middle">
+                            <i class="material-icons mr-3">code</i>
+                            <span>Code</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
 
             <div class="tab-content mt-4" id="myTabContent">
@@ -35,17 +43,21 @@
                 <div class="tab-pane" id="files" role="tabpanel">
                     <files :course="course" :topic="topic" dusk="files-tab-content"></files>
                 </div>
+                <div class="tab-pane" id="code" role="tabpanel">
+                    <Code :course="course" :topic="topic"/>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Code from './Code';
 import  Pages from './Pages';
 import  Files from './Files';
 
 export default {
-    components:{Pages,Files},
+    components:{Pages,Files,Code},
     props: ['course','topic'],
     data() {
         return {
@@ -54,6 +66,9 @@ export default {
             },
         }
     },
+    mounted(){
+        console.log(this.topic.id);
+    }
 }
 </script>
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Course;
 use App\Pla;
+use App\PlaResult;
 
 class Topic extends Model
 {
@@ -50,9 +51,15 @@ class Topic extends Model
 
         return $this->hasMany(Page::class);
     }
-
     public function pla(){
+
         return $this->hasMany(Pla::class);
+    }
+
+
+    public function pla_results(){
+
+        return $this->hasMany(PlaResult::class);
     }
 
     public function getPlaCountAttribute() {

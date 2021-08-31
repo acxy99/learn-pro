@@ -16,13 +16,12 @@ class CreatePlaResultsTable extends Migration
         Schema::create('pla_results', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('learner_id');
+            $table->json('answers');
             $table->float('obtain_mark');
             $table->boolean('is_pass')->default(false);
             $table->unsignedInteger('topic_id');
-            $table->unsignedInteger('course_id');
             $table->foreign('learner_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

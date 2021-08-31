@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         getPages(url) {
-            url = url || '/api/courses/topic/' +this.topic.id + '/pages';
+            url = url || '/api/mycourses/topic/' +this.topic.id + '/pages';
             axios.get(url, {
                     params: {
                         searchInput: this.searchInput,
