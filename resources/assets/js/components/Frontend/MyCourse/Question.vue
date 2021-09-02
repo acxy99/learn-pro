@@ -20,7 +20,7 @@
                     <input
                         :id="option.id"
                         v-model="answer"
-                        :value="option.id"
+                        v-bind:value="option.id"
                         type="checkbox"
                         class="custom-control-input"
                     >
@@ -84,13 +84,12 @@ export default {
     data: () => ({
         answer: [],
         options:[],
-        ans:[]
     }),
     mounted () {
         this.options = JSON.parse(JSON.parse(this.question.options));
-        this.ans =JSON.parse(this.question.answers);
-        this.answer = this.answers.find(a => a.id === this.question.id)|| []
-        console.log(this.answer);
+
+        this.answer = this.answers.find(a => a.id === this.question.id)||[]
+  
     },
     methods: {
         clearAns () {

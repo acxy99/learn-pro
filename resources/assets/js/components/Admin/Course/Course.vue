@@ -61,6 +61,7 @@
             </a>
         </p>
         <p v-else>none</p>
+        
 
         <div class="row">
             <div class="col-md-4">
@@ -73,6 +74,31 @@
             </div>
         </div>
    
+        <hr>
+
+        <div class="row">
+             <div class="col-md-6 col-xl-7 align-self-center">
+                <h6 class="m-0">LEAP Setting</h6>
+            </div>
+        </div>
+        <div class ="row">
+            <div class="col-md-3">
+                <small class="text-muted">No.Questions</small>
+                <p>{{course.num_ques_ans}}</p>
+            </div>
+            <div class="col-md-3">
+                <small class="text-muted">Passing Mark(Advanced)</small>
+                <p>{{course.passing_mark_beginner}}</p>
+            </div>
+            <div class="col-md-3">
+                <small class="text-muted">Passing Mark(Intermediate)</small>
+                <p>{{course.passing_mark_intermediate}}</p>
+            </div>
+            <div class="col-md-3">
+                <small class="text-muted">Passing Mark(Advanced)</small>
+                <p>{{course.passing_mark_advanced}}</p>
+            </div>
+        </div>
         <hr>
     
         <!-- enhancement_v1 -->
@@ -110,13 +136,8 @@
                     <a class="btn bg-light br-0" :href="manageTopicUrl" role="button" dusk="manage-topic-button">Manage Topic</a>
                 </div>
             </div>
-            
-
-
         </div>
         <div class = "card-group mb-5">
-           
-
         </div>
     </div>
 </template>

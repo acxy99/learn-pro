@@ -97,6 +97,32 @@
                     </multiselect>
                 </div>
 
+                <label>LEAP Setting:</label>
+                <div class="row">
+                    
+                    <div class="col-md-3 form-group">
+                        <label for="custom_index">No.Question</label>
+                        <input type="number" id="num_ques_ans" name="num_ques_ans" v-model="course.num_ques_ans" class="form-control"   :class="{'is-invalid': errors['num_ques_ans']}" maxlength="100">
+                        <div class="invalid-feedback" v-if="errors['num_ques_ans']">{{ errors['num_ques_ans'][0] }}</div>
+                    </div>
+                     <div class=" col-md-3 form-group">
+                        <label for="passing_mark_beginner">Passing Mark Beginner</label>
+                        <input type="number" id="passing_mark_beginner" name="passing_mark_beginner" v-model="course.passing_mark_beginner" class="form-control"   :class="{'is-invalid': errors['passing_mark_beginner']}" maxlength="100">
+                        <div class="invalid-feedback" v-if="errors['passing_mark_beginner']">{{ errors['passing_mark_beginner'][0] }}</div>
+                    </div>
+                    <div class=" col-md-3 form-group">
+                        <label for="passing_mark_intermediate">Passing Mark intermediate</label>
+                        <input type="number" id="passing_mark_intermediate" name="passing_mark_advanced" v-model="course.passing_mark_intermediate" class="form-control"   :class="{'is-invalid': errors['passing_mark_intermediate']}" maxlength="100">
+                        <div class="invalid-feedback" v-if="errors['passing_mark_intermediate']">{{ errors['passing_mark_intermediate'][0] }}</div>
+                    </div>
+                    <div class=" col-md-3 form-group">
+                        <label for="passing_mark_advanced">Passing Mark Advanced</label>
+                        <input type="number" id="passing_mark_advanced" name="passing_mark_advanced" v-model="course.passing_mark_advanced" class="form-control"   :class="{'is-invalid': errors['passing_mark_advanced']}" maxlength="100">
+                        <div class="invalid-feedback" v-if="errors['passing_mark_advanced']">{{ errors['passing_mark_advanced'][0] }}</div>
+                    </div>
+           
+                    
+                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-form br-0" dusk="save-button">Save</button>
                     <button type="button" class="btn btn-secondary btn-form br-0" @click="cancel()">Cancel</button>
@@ -157,6 +183,11 @@ export default {
                 formData.append('co_instructors_id[]', this.selectedCoInstructors[i].id);
             }
             formData.append('categories', this.selectedCategories.map(category => (category.id)));
+            formData.append('num_ques_ans', this.course.num_ques_ans);
+            formData.append('passing_mark_beginner', this.course.passing_mark_beginner);
+            formData.append('passing_mark_intermediate', this.course.passing_mark_intermediate);
+            formData.append('passing_mark_advanced', this.course.passing_mark_advanced);
+
 
             if (!this.course.id) {
                 this.createCourse(formData);

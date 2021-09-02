@@ -105,4 +105,5 @@ Route::namespace('Frontend')->name('frontend.')->group(function() {
     Route::resource('/profiles', 'ProfileController')->only(['show', 'edit']);
 
     Route::get('/mycourses/{course_slug}/topic/{topic_id}/pla','PlaController@index');
+
 });

@@ -10,7 +10,8 @@ use Carbon\Carbon;
 use App\User;
 use App\Topic;
 use App\Course;
-use App\PlaResult; 
+use App\PlaResult;
+use App\LeapResult;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TopicResource;
@@ -26,7 +27,12 @@ class TopicController extends Controller
     {
         $course = Course::findBySlugOrFail($course_slug);
 
-        return view('frontend.mycourse.topic',['course'=>$course]);
+        $user = Auth::user();
+
+        $result = LeapResult::where('learner_id','=',$user->id)
+                            ->where('course_id','=',$course->id)->first();
+
+        return view('frontend.mycourse.topic',['course'=>$course, 'result'=>$result]);
     }
 
     public function apiIndex(Request $request,$course_id) {

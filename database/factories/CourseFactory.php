@@ -10,6 +10,6 @@ $factory->define(App\Course::class, function (Faker $faker) {
         'code' => $faker->unique()->bothify('????####'),
         'title' => $title,
         'description' => $faker->text,
-        'owner_id' => factory('App\User')->create()->id,
+        'owner_id' => 2,
     ];
 });

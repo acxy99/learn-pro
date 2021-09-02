@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="col-md-4 form-group">
-                        <label for="custom_index">Passing mark</label>
+                        <label for="custom_index">Passing mark PLA</label>
                         <input type="number" id="passing_mark" name="passing_mark" v-model="topic.passing_mark" class="form-control"   :class="{'is-invalid': errors['passing_mark']}" maxlength="100">
                         <div class="invalid-feedback" v-if="errors['passing_mark']">{{ errors['passing_mark'][0] }}</div>
                     </div>

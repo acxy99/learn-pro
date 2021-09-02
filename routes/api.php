@@ -70,8 +70,17 @@ Route::namespace('Frontend')->group(function() {
 
     Route::get('/mycourses/{id}/topic/{topic_id}/pla/result', 'PlaController@result');
     Route::get('/load-pla/{topic_id}', 'PlaController@show');
-    Route::post('/mycourses/{id}/topic/start-pla/{topic_id}', 'PlaController@startPla');
+    // Route::post('/mycourses/{id}/topic/start-pla/{topic_id}', 'PlaController@startPla');
     Route::post('/mycourses/{id}/topic/answer-pla/{topic_id}', 'PlaController@answerPla');
     Route::post('/mycourses/{id}/topic/complete-pla/{topic_id}', 'PlaController@completePla');
+
+    Route::get('/mycourses/{id}/topic/{topic_id}/pla/result', 'PlaController@result');
+    Route::get('/load-pla/{topic_id}', 'PlaController@show');
+    Route::post('/mycourses/{id}/topic/answer-pla/{topic_id}', 'PlaController@answerPla');
+    Route::post('/mycourses/{id}/topic/complete-pla/{topic_id}', 'PlaController@completePla');
+
+    Route::get('/load-leap/{course_slug}', 'LeapController@show');
+    Route::post('/mycourses/{id}/answer-leap/{course_slug}', 'LeapController@answerLeap');
+    Route::post('/mycourses/{id}/complete-leap/{course_slug}', 'LeapController@completeLeap');
 
 });

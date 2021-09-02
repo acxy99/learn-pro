@@ -57,6 +57,7 @@ import Question from './components/Frontend/MyCourse/Question.vue';
 import PlaTopic from './components/Frontend/MyCourse/PlaTopic.vue';
 import Topic from './components/Frontend/MyCourse/Topic.vue';
 import TopicView from './components/Frontend/MyCourse/TopicView.vue';
+import LeapCourse from './components/Frontend/MyCourse/LeapCourse.vue';
 
 import Profile from './components/Frontend/Profile/Profile';
 import ProfileForm from './components/Frontend/Profile/ProfileForm';
@@ -114,7 +115,7 @@ const app = new Vue({
         AdminLeap,AdminLeapQuestionForm,
         AdminTopic,AdminTopicForm,AdminTopicView,
         AdminPlaQuestions,AdminPlaQuestionForm,
-        MyCourses,Question,PlaTopic,Topic,TopicView,
+        MyCourses,Question,PlaTopic,Topic,TopicView,LeapCourse
     }
 
 });

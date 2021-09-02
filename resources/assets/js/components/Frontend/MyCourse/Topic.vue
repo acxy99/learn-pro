@@ -8,6 +8,7 @@
             </div>
         </div>
             <div class="container col-md-11">
+                <h5 class="font-weight-light">Suggested to learn from <b> {{result.learner_type}}</b> topic</h5>
                 <input class="form-control br-0 mb-3" style="width: 40%" type="search" placeholder="Search" v-model="searchInput" @keyup="searchInputChanged()">
 
                 <table class="bg-white table table-hover table-bordered">
@@ -34,7 +35,7 @@
 <script>
 export default {
 
-    props: ['course'],
+    props: ['course', 'result'],
     data() {
         return {
             jumbotronStyle: {
@@ -42,7 +43,8 @@ export default {
             },
 
             topic:[],
-            searchInput:''
+            searchInput:'',
+            pagination:{}
 
         }
     },

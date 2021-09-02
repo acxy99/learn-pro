@@ -18,7 +18,7 @@ class CreateLeapResultsTable extends Migration
             $table->unsignedInteger('learner_id');
             $table->float('obtain_mark');
             $table->json('answers');
-            $table->string('learner_type');
+            $table->string('learner_type')->default("easy");
             $table->unsignedInteger('course_id');
             $table->foreign('learner_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

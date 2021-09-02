@@ -56,7 +56,7 @@ export default {
       
     },
     created(){
-        this.getPlaResult();
+        // this.getPlaResult();
     },
     methods:{
         async getPlaResult(){

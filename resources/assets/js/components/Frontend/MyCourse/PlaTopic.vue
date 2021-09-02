@@ -94,23 +94,30 @@ export default
                     this.questions = res.data.questions
                 })
         },
-    
-        storeAnswer (ans) {
-            return new Promise((resolve, reject) => {
-                axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, ans)
-                    .then(res => {
-                        resolve(res.data)
-                    })
-                    .catch((error) => {
-                        reject(error)
-                    })
-            })
+        startPla () {
+            const params =this.topic
+            axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, { params })
+                .then(res => {
+                    this.questions = res.data.questions
+                    this.answers = res.data.answers
+                })
         },
+    
+        // storeAnswer (ans) {
+        //     return new Promise((resolve, reject) => {
+        //         axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, ans)
+        //             .then(res => {
+        //                 resolve(res.data)
+        //             })
+        //             .catch((error) => {
+        //                 reject(error)
+        //             })
+        //     })
+        // },
         nextQuestion (ans) {
             this.storeAnswer(ans)
                 .then(res => {
                     this.answers = res.answers
-                    console.log(res.answers);
                     const i = this.questions.findIndex(q => this.showQuestionNumber === q.id)
                     if (i + 1 === this.questions.length) {
                         this.showQuestionNumber = this.questions[0].id
@@ -141,7 +148,7 @@ export default
             axios.post('/api/mycourses/'+this.$user.id+'/topic/complete-pla/'+this.topic.id)
                 .then(res => {
                     this.result = res.data.result
-                    window.location.href= '/mycourses/'+this.course.slug+'/topic/'+this.topic.id+'/pla'
+                    window.location.href= '/mycourses/'+this.course.slug+'/topic/'+this.topic.id
                 })
         },
         hasAnswer (id) {

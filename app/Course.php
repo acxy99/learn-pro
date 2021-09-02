@@ -28,6 +28,10 @@ class Course extends Model
         'description',
         'slug',
         'owner_id',
+        'num_ques_ans',
+        'passing_mark_beginner',
+        'passing_mark_intermediate',
+        'passing_mark_advanced'
     ];
 
     protected $appends = [

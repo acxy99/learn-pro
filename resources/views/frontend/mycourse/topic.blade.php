@@ -31,5 +31,5 @@ use App\Course;
 @endsection
 
 @section('content')
-    <topic :course ="{{$course}}"></topic>
+    <topic :course ="{{$course}}" :result="{{$result}}"></topic>
 @endsection

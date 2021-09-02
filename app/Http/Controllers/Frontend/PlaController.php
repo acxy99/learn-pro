@@ -19,6 +19,7 @@ use App\Http\Resources\PageResourceCollection;
 use App\Http\Resources\FileResourceCollection;
 use App\Http\Resources\PlaResultResource;
 
+
 class PlaController extends Controller
 {
     /**
@@ -37,7 +38,7 @@ class PlaController extends Controller
     public function result($id,$topic_id) {
         
         $result = PlaResult::where('learner_id','=',$id)
-                            ->where('topic_id','=',$topic_id)->first();
+                            ->where('topic_id','=',$topic_id)->get();
         return new PlaResultResource($result);
     }
     
@@ -49,44 +50,25 @@ class PlaController extends Controller
         $questions= collect();
         $topic =Topic::find($topic_id);
         
-        $questions=$topic->pla()->inRandomOrder()->limit($topic->num_ques)->get();
+        $questions=$topic->pla()->inRandomOrder()->where('status','=','active')->limit($topic->num_ques)->get();
 
         return response()->json(compact(['questions']));
     }
 
-    public function startPla(Request $request, Topic $topic)
-    {
-        // $user = $request->user();
-        // $topic = Topic::find ($topic_id);
+    // public function startPla(Request $request, Topic $topic)
+    // {
+    //     $user = $request->user();
+    //     $topic = Topic::find ($topic_id);
 
-        // $answers = Session::get("topic_pla");
-        // $answers = collect($answers);
+    //     $answers = Session::get("topic_pla");
+    //     $answers = collect($answers);
+    //     $questions = collect($questions);
+    //     $answers->map(function($qi) use($q, $questions){
+    //         $questions->push($q->firstWhere('id', $qi['id']));
+    //     });
 
-        // $questionFields = ['id', 'qtype', 'question', 'options' , 'mark',];
-
-        // if ($answers->isEmpty()) {
-        //     $plas = $topic->pla->shuffle()->take($topic->num_ques)->map(function($q) use($answers, $questionFields){
-        //         $answers->push(['id'=> $q->id]);
-        //         return collect($q->toArray())->only($questionFields)->all();
-        //     })->values()->all(); //
-
-        //     Session::put("topic_pla", $answers);
-        // } else {
-
-        //     $q = $topic->pla;
-        //     $questions= collect();
-
-        //     $answers->map(function($qi) use($q, $questions){
-        //         $questions->push($q->firstWhere('id', $qi['id']));
-        //     });
-
-        //     $questions = $questions->map(function($q) use($questionFields){
-        //         return collect($q->toArray())->only($questionFields)->all();
-        //     })->values()->all();
-        // }
-
-        // return response()->json(compact('topic','questions', 'answers'));
-    }
+    //     return response()->json(compact('topic','questions', 'answers'));
+    // }
 
     public function answerPla(Request $request, $id ,$topic_id)
     {        
@@ -124,17 +106,50 @@ class PlaController extends Controller
         $obtainMark = $this->obtain_mark($topic);
 
         $user = $request->user();
-        $result = new PlaResult;
-        
-        $result->learner_id = $id;
-        $result->topic_id = $topic->id;
-        $result->answers = $answers;
-        $result->obtain_mark = $obtainMark;
-        $result->is_pass = $topic->pass_mark < $obtainMark;
+        $result = PlaResult::where('learner_id','=',$id)
+                            ->where('topic_id','=',$topic_id)->first();
 
-        if ($result->save()) {
+        if(!$result){
+            $newResult = new PlaResult;
+            $newResult->learner_id = $id;
+            $newResult->topic_id = $topic->id;
+            $newResult->answers = $answers;
+            $newResult->obtain_mark = $obtainMark;
+            $newResult->is_pass = $topic->pass_mark < $obtainMark;
+
+            if ($newResult->save()) {
+                Session::forget("topic_pla");
+            }
+
+        }else{
+            // $result->learner_id = $id;
+            // $result->topic_id = $topic->id;
+            // $result->answers = $answers;
+            // $result->obtain_mark = $obtainMark;
+            // $result->is_pass = $topic->pass_mark < $obtainMark;
+            // if ($result->update()) {
+            //     Session::forget("topic_pla");
+            // }
+            $result->fill([
+                        'learner_id' => $id,
+                        'topic_id' => $topic->id,
+                        'answers' => $answers,
+                        'obtain_mark' => $obtainMark,
+                        'is_pass' => $topic->pass_mark < $obtainMark,
+                        ])->save();
             Session::forget("topic_pla");
-        }
+        } 
+
+    //    else{
+    //         $result->update([
+    //         'learner_id' => $id,
+    //         'topic_id' => $topic->id,
+    //         'answers' => $answers,
+    //         'obtain_mark' => $obtainMark,
+    //         'is_pass' => $topic->pass_mark < $obtainMark,
+    //         ]);
+    //         Session::forget("topic_pla");
+    //     }
 
         return response()->json(compact('result'));
     }
@@ -145,7 +160,7 @@ class PlaController extends Controller
         $answers = Session::get("topic_pla");
         $answers = collect($answers);
 
-        $questions = $topic->questions;
+        $questions = $topic->pla();
 
         $answers->each(function($ans) use($questions, &$number) {
             if(!empty($ans['answer'])) {

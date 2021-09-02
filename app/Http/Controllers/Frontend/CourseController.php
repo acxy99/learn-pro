@@ -10,6 +10,7 @@ use App\Page;
 use App\File;
 use App\User;
 use App\Topic;
+use App\LeapResult;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,8 +69,10 @@ class CourseController extends Controller {
 
         DB::insert('insert into course_learner (course_id, user_id ) values (?, ?)', [$course->id, $user->id]);
         
-
-        return view('frontend.mycourse.index');
+        $result = LeapResult::where('learner_id','=',$user->id)
+                            ->where('course_id','=',$course->id)->first();
+        
+        return view('frontend.mycourse.leap_course',['course'=>$course]);
     }
 
     public function viewMyCourses() {
