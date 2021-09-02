@@ -11,7 +11,7 @@ $factory->define(Topic::class, function (Faker $faker) {
         'title'=> $faker->sentence(1),
         'custom_index'=> $faker->numberBetween(1,20),
         'difficulity'=>'easy',
-        'course_id' =>1,
+        'course_id' =>factory('App\Course')->create()->id,
 
     ];
 });

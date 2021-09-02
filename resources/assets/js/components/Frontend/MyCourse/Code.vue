@@ -9,7 +9,7 @@
         </vsa-heading>
     
         <vsa-content >
-            <div v-if="!result.length">
+            <div v-if="!result">
                 <p>You haven't participated yet !</p>
             <button  type="button" @click="participatePla()" class="btn btn-success " dusk="save-button">Start</button>  
             </div>
@@ -48,7 +48,6 @@ export default {
     },
     data() {
         return {
-            result:[],
         }
     },
     mounted(){

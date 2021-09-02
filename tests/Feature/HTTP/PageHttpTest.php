@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Course;
 use App\Page;
 use App\User;
+use App\Topic; 
+
 
 class PageHttpTest extends TestCase {
     use WithFaker;
@@ -26,20 +28,23 @@ class PageHttpTest extends TestCase {
     /** @test */
     public function admin_api_index() {
         $course = factory(Course::class)->create();
-        factory(Page::class, 2)->create(['course_id' => $course->id]);
+        $topic = factory(Topic::class)->create();
+        factory(Page::class, 2)->create(['course_id' => $course->id,'topic_id'=>$topic->id]);
 
-        $response = $this->json('GET', '/api/admin/courses/' . $course->id . '/pages');
+        $response = $this->json('GET', '/api/admin/courses/topic/' . $topic->id . '/pages');
         $response->assertOk()->assertJsonCount(2, 'data');
     }
 
     /** @test */
     public function admin_api_store() {
-        $course = factory(Course::class)->create();
+        $course = factory(Course::class)->create();        
+        $topic = factory(Topic::class)->create();
 
         $request = [
             'title' => $this->pageTitle,
             'body' => $this->faker->paragraphs($nb = 3, $asText = true),
             'course_id' => $course->id,
+            'topic_id'=>$topic->id
         ];
 
         $response = $this->json('POST', '/api/admin/pages', $request);
@@ -49,7 +54,8 @@ class PageHttpTest extends TestCase {
     /** @test */
     public function admin_api_update() {
         $course = factory(Course::class)->create();
-        $page = factory(Page::class)->create(['course_id' => $course->id]);
+        $topic = factory(Topic::class)->create();
+        $page = factory(Page::class)->create(['course_id' => $course->id,'topic_id'=> $topic->id]);
 
         $request = [
             'id' => $page->id,

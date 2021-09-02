@@ -68,13 +68,9 @@ Route::namespace('Frontend')->group(function() {
 
     Route::get('/mycourses/{id}/topic','TopicController@apiIndex');
 
-    Route::get('/mycourses/{id}/topic/{topic_id}/pla/result', 'PlaController@result');
-    Route::get('/load-pla/{topic_id}', 'PlaController@show');
-    // Route::post('/mycourses/{id}/topic/start-pla/{topic_id}', 'PlaController@startPla');
-    Route::post('/mycourses/{id}/topic/answer-pla/{topic_id}', 'PlaController@answerPla');
-    Route::post('/mycourses/{id}/topic/complete-pla/{topic_id}', 'PlaController@completePla');
+    // Route::get('/mycourses/{id}/topic/{topic_id}/pla/result', 'PlaController@result');
 
-    Route::get('/mycourses/{id}/topic/{topic_id}/pla/result', 'PlaController@result');
+    // Route::get('/mycourses/{id}/topic/{topic_id}/pla/result', 'PlaController@result');
     Route::get('/load-pla/{topic_id}', 'PlaController@show');
     Route::post('/mycourses/{id}/topic/answer-pla/{topic_id}', 'PlaController@answerPla');
     Route::post('/mycourses/{id}/topic/complete-pla/{topic_id}', 'PlaController@completePla');

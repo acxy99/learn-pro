@@ -12,7 +12,7 @@ class CreateCoursesTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
             $table->char('code', 8)->unique();
@@ -27,8 +27,9 @@ class CreateCoursesTable extends Migration
             $table->unsignedInteger('passing_mark_advanced')->nullable();
             $table->timestamps();
 
-            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
+
     }
 
     /**

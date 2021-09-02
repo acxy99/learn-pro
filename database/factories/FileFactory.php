@@ -7,5 +7,6 @@ $factory->define(App\File::class, function (Faker $faker) {
     return [
         'name' => UploadedFile::fake()->create($faker->word() . '.pdf')->name,
         'course_id' => factory('App\Course')->create(),
+        'topic_id' => factory('App\Topic')->create(),
     ];
 });

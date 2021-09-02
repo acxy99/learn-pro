@@ -94,26 +94,26 @@ export default
                     this.questions = res.data.questions
                 })
         },
-        startPla () {
-            const params =this.topic
-            axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, { params })
-                .then(res => {
-                    this.questions = res.data.questions
-                    this.answers = res.data.answers
-                })
-        },
-    
-        // storeAnswer (ans) {
-        //     return new Promise((resolve, reject) => {
-        //         axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, ans)
-        //             .then(res => {
-        //                 resolve(res.data)
-        //             })
-        //             .catch((error) => {
-        //                 reject(error)
-        //             })
-        //     })
+        // startPla () {
+        //     const params =this.topic
+        //     axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, { params })
+        //         .then(res => {
+        //             this.questions = res.data.questions
+        //             this.answers = res.data.answers
+        //         })
         // },
+    
+        storeAnswer (ans) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/mycourses/'+this.$user.id+'/topic/answer-pla/'+this.topic.id, ans)
+                    .then(res => {
+                        resolve(res.data)
+                    })
+                    .catch((error) => {
+                        reject(error)
+                    })
+            })
+        },
         nextQuestion (ans) {
             this.storeAnswer(ans)
                 .then(res => {

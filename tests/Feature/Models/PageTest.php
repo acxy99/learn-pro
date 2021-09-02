@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Course;
 use App\Page;
+use App\Topic;
 
 class PageTest extends TestCase {
     use WithFaker;
@@ -30,11 +31,12 @@ class PageTest extends TestCase {
     public function can_create_page() {
         $course = factory(Course::class)->create();
         // $page = factory(Page::class)->create(['course_id' => $course->id]);
-
+        $topic =factory(Topic::class)->create();
         $request = [
             'title' => $this->pageTitle,
             'body' => $this->faker->paragraphs($nb = 3, $asText = true) ,
             'course_id' => $course->id,
+            'topic_id' =>$topic->id
         ];
 
         $response = $this->actingAs($this->admin)->json('POST', '/api/admin/pages', $request);
@@ -50,7 +52,8 @@ class PageTest extends TestCase {
     /** @test */
     public function can_retrieve_page() {
         $course = factory(Course::class)->create();
-        $page = factory(Page::class)->create(['course_id' => $course->id]);
+        $topic = factory(Topic::class)->create();
+        $page = factory(Page::class)->create(['course_id' => $course->id],['topic_id'=>$topic->id]);
 
         $retrievedPage = Page::find($page->id);
 
@@ -61,7 +64,8 @@ class PageTest extends TestCase {
     /** @test */
     public function can_update_page() {
         $course = factory(Course::class)->create();
-        $originalPage = factory(Page::class)->create(['course_id' => $course->id]);
+        $topic = factory(Topic::class)->create();
+        $originalPage = factory(Page::class)->create(['course_id' => $course->id],['topic_id'=>$topic->id]);
 
         $request = [
             'id' => $originalPage->id,
@@ -82,7 +86,8 @@ class PageTest extends TestCase {
     /** @test */
     public function can_delete_page() {
         $course = factory(Course::class)->create();
-        $page = factory(Page::class)->create(['course_id' => $course->id]);
+        $topic =factory(Topic::class)->create();
+        $page = factory(Page::class)->create(['course_id' => $course->id],['topic_id'=>$topic->id]);
 
         $this->assertCount(1, $course->pages()->get());
         $this->assertNotNull(Page::find($page->id));

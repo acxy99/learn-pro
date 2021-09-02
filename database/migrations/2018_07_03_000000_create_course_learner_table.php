@@ -16,8 +16,8 @@ class CreateCourseLearnerTable extends Migration
         Schema::create('course_learner', function (Blueprint $table) {
             $table->unsignedInteger('course_id');
             $table->unsignedInteger('user_id');
-            $table->foreign('course_id')->references('id')->on('courses');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

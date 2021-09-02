@@ -14,7 +14,7 @@ use App\File;
 class FileTest extends DuskTestCase {
     use DatabaseMigrations;
 
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
 
         Artisan::call('db:seed');

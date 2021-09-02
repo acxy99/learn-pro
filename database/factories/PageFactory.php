@@ -10,5 +10,6 @@ $factory->define(App\Page::class, function (Faker $faker) {
         'title' => $title,
         'body' => $faker->paragraphs($nb = 3, $asText = true) ,
         'course_id' => factory('App\Course')->create(),
+        'topic_id' => factory('App\Topic')->create(),
     ];
 });
